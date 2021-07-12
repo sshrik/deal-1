@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 const entries = fs.readdirSync("./asset/view");
 const filenames = entries.map((f) => {
@@ -64,4 +65,13 @@ const config = {
   },
 };
 
-module.exports = config;
+async function bundle(){
+  const compiler = webpack(config);
+  compiler.run((err, stats) => {
+    compiler.close((closeErr) => { 
+      if(err || closeErr) console.log("build 실패");
+    });
+  });
+}
+
+module.exports = {config, bundle};
