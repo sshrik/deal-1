@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const entries = fs.readdirSync("./asset/view");
 const filenames = entries.map((f) => {
@@ -41,7 +42,21 @@ const config = {
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    ...fs
+      .readdirSync("./views")
+      .filter((file) => file.includes(".html"))
+      .map((file) => {
+        if (file.split(".")[1] === "html") {
+          console.log(file);
+          return new HtmlWebpackPlugin({
+            filename: file,
+            template: path.resolve(__dirname, `/views/${file}`),
+            chunks: [file.split(".")[0]],
+          });
+        }
+      }),
+  ],
   optimization: {},
   resolve: {
     modules: ["node_modules"],
