@@ -44,8 +44,7 @@ const config = {
     ],
   },
   plugins: [
-    ...fs
-      .readdirSync("./views")
+    ...fs.readdirSync("./views")
       .filter((file) => file.includes(".html"))
       .map((file) => {
         if (file.split(".")[1] === "html") {

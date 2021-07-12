@@ -25,7 +25,7 @@ if(process.env.NODE_ENV === "dev"){
   app.locals.env = process.env;
 
   bundle().then(() => {
-    liveServer.watch([ path.resolve("public/dist")]);
+    liveServer.watch([path.resolve("public/dist"), path.resolve("views")]);
     liveServer.server.once("connection", () => {
       setTimeout(() => {
         liveServer.refresh("/");
@@ -38,7 +38,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/dist")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
