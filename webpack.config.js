@@ -21,7 +21,7 @@ const config = {
     return acc;
   }, {}),
   output: {
-    path: path.resolve(__dirname, "public/javascript/"),
+    path: path.resolve(__dirname, "public/dist/"),
     filename: "[name].js",
   },
   module: {
