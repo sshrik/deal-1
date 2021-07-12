@@ -141,4 +141,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
 
 # 난독화 한 코드 제외
-public/javascript/*
+public/dist

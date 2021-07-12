@@ -17,13 +17,13 @@ app.set("view engine", "jade");
 
 if(process.env.NODE_ENV === "dev"){
   const liveServer = livereload.createServer({
-    exts: ["js"],
+    exts: ["js", "html", "css"],
   });  
 
   app.locals.env = process.env;
 
   bundle().then(() => {
-    liveServer.watch([ path.resolve("public/javscript")]);
+    liveServer.watch([ path.resolve("public/dist")]);
     liveServer.server.once("connection", () => {
       setTimeout(() => {
         liveServer.refresh("/");

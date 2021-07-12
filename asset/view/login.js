@@ -1,3 +1,5 @@
+import "../css/test.css";
+
 console.log("Hello world!");
 
 const hello = () => {
