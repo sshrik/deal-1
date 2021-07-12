@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "build": "webpack --watch",
-    "dev": "NODE_ENV=dev nodemon ./bin/www"
+    "dev": "NODE_ENV=dev nodemon -e js,css,html ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
