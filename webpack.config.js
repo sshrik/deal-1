@@ -1,4 +1,3 @@
-const webpack = require("webpack");
 const fs = require("fs");
 const path = require("path");
 
@@ -20,7 +19,7 @@ const config = {
     return acc;
   }, {}),
   output: {
-    path: path.resolve(__dirname, 'public/js'),
+    path: path.resolve(__dirname, 'public/javascript/'),
     filename: '[name].js'
   },
   module: {
@@ -32,16 +31,6 @@ const config = {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx', '.css'],
   },
-}
-
-
-async function bundle(){
-  const compiler = webpack(config);
-  compiler.run((err, stats) => {
-    compiler.close((closeErr) => { 
-      if(err || closeErr) console.log("build 실패");
-    });
-  });
 }
 
 module.exports = config;
