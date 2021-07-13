@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const entries = fs.readdirSync('./asset/view');
+const entries = fs.readdirSync('./asset/pages');
 const filenames = entries.map((f) => {
   return f.split('.');
 });
@@ -17,7 +17,7 @@ const config = {
   mode: 'development',
   entry: filenames.reduce((acc, val) => {
     const [filename] = val;
-    acc[filename] = path.resolve(__dirname, `asset/view/${filename}.js`);
+    acc[filename] = path.resolve(__dirname, `asset/pages/${filename}.js`);
     return acc;
   }, {}),
   output: {
