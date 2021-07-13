@@ -6,6 +6,7 @@
   align-items: center;
 
   background-color: var(--grey2);
+  cursor: pointer;
 }
 
 .test-container > p {
