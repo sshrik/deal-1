@@ -22,3 +22,79 @@
   width: 100vw;
   height: 100vh;
 }
+
+.dest-container {
+  position: absolute;
+}
+
+.fadeInRight { 
+  /* 오른쪽에서 나오는 애니메이션 */
+  animation-name: fadeInRight;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.fadeInLeft { 
+  /* 왼쪽에서 나오는 애니메이션 */
+  animation-name: fadeInLeft;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.fadeOutRight { 
+  /* 오른쪽에서 나오는 애니메이션 */
+  animation-name: fadeOutRight;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.fadeOutLeft { 
+  /* 왼쪽에서 나오는 애니메이션 */
+  animation-name: fadeOutLeft;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInRight {
+  from {
+    top: 0vh;
+    right: -100vw;
+  }
+  to {
+    top: 0vh;
+    right: 0vw;
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    top: 0vh;
+    right: 100vw;
+  }
+  to {
+    top: 0vh;
+    right: 0vw;
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    top: 0vh;
+    right: 0vw;
+  }
+  to {
+    top: 0vh;
+    right: -100vw;
+  }
+}
+
+@keyframes fadeOutLeft {
+  from {
+    top: 0vh;
+    right: 0vw;
+  }
+  to {
+    top: 0vh;
+    right: 100vw;
+  }
+}
