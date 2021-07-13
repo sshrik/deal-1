@@ -1,0 +1,19 @@
+:root {
+  --title-active:#222222;
+  --grey1: #888888;
+  --grey2: #BBBBBB;
+  --grey3: #D7D7D7;
+  --off-white: #F6F6F6;
+  --white: #FFFFFF;
+  --primary1: #2AC1BC;
+  --primary2: #A0E1E0;
+  --primary3: #219A95;
+  --error: #F45452;
+  --text-large: 18px/24px inherit;
+  --text-medium: 16px/22px inherit;
+  --text-small: 14px/20px inherit;
+  --text-x-small: 12px/16px inherit;
+  --link-large: normal bold 16px/22px defaultFont;
+  --link-small: normal bold 14px/20px defaultFont;
+  --link-x-small: normal bold 12px/16px defaultFont;
+}
