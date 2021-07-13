@@ -13,7 +13,7 @@ export default class TestPage extends PageElement {
   init() {
     this.contents = document.createElement('div');
     const nextText = new TestTextComponent({
-      parent: this.contents,
+      parent: this,
       testText: this.testText,
       onClick: () => {
         console.log('Routing');
@@ -21,7 +21,7 @@ export default class TestPage extends PageElement {
       },
     });
     const backText = new TestTextComponent({
-      parent: this.contents,
+      parent: this,
       testText: 'go back',
       onClick: () => {
         console.log('Go back');
@@ -30,8 +30,6 @@ export default class TestPage extends PageElement {
     });
 
     this.contents.classList.add('test-container');
-    nextText.render();
-    backText.render();
 
     return this.contents;
   }
