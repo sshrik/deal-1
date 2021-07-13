@@ -38,6 +38,13 @@ const config = {
         },
       },
       {
+        test: /\.otf$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
