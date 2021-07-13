@@ -23,11 +23,20 @@
   height: 100vh;
 }
 
-.hidden-view {
-  overflow: hidden;
-  position: relative;
-}
-
 .dest-container {
   position: absolute;
+  animation-name: moveRightToLeft;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveRightToLeft {
+  from {
+    top: 0vh;
+    right: -100vw;
+  }
+  to {
+    top: 0vh;
+    right: 0vw;
+  }
 }

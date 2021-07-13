@@ -10,17 +10,39 @@ export default class Router {
     this.screens[screenName] = screenObject;
   }
 
+  setNowView(nowView) {
+    this.nowView = nowView;
+  }
+
+  setNowScreenToStack() {
+    this.viewStack.push(this.nowView);
+  }
+
+  goBack() {
+    this.nowView = this.viewStack[this.viewStack.length - 1];
+    this.nowView.render();
+  }
+
   route(destScreenName) {
     // 만약 등록되어있지 않은 Screen이라면 로딩하지 않는다.
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
-      this.screens[destScreenName].render();
+      const destObject = this.screens[destScreenName];
+      if (!destObject.contents) {
+        destObject.init();
+      }
+      const dest = destObject.contents;
+
+      this.setNowScreenToStack();
+      this.setNowView(destObject);
+
+      dest.classList.add('dest-container');
+      this.root.appendChild(dest);
+
+      setTimeout(() => {
+        destObject.render();
+      }, 500);
     } else {
       console.log('Not Included');
     }
-    // 현재 root에 등록되어있는 것을 viewStack의 맨 위로 올리고, dest로 들어온 것을 nowView로 설정한 다음 render 시키면 된다.
-    // this.root.classList.add('hidden-view');
-    // const destContainer = document.createElement('div');
-    // destContainer.classList.add('dest-container');
-    // this.root.appendChild(dest);
   }
 }

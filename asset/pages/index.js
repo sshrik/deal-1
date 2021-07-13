@@ -20,6 +20,8 @@ const $testPage2 = new TestPage($root, {
 
 router.addScreen('testPage1', $testPage);
 router.addScreen('testPage2', $testPage2);
-console.log(router);
+
+// 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
+router.setNowView($testPage2);
 
 $testPage2.render();
