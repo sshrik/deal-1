@@ -18,15 +18,35 @@ export default class Router {
     this.viewStack.push(this.nowView);
   }
 
-  goBack() {
-    this.nowView = this.viewStack[this.viewStack.length - 1];
+  back(viewDisappearLocation = 'right') {
+    if (this.viewStack.length === 0) {
+      return false;
+    }
+    const fadeOutView = this.nowView;
+    this.nowView = this.viewStack.pop();
     this.nowView.render();
+
+    const frontView = fadeOutView.contents;
+    frontView.classList.add('dest-container');
+
+    // FadeInMotion을 어디서 줄 것인지 결정 ( right 기본, right면 오른쪽 벽으로 들어감. )
+    if (viewDisappearLocation === 'right') {
+      frontView.classList.add('fadeOutRight');
+    } else if (viewDisappearLocation === 'left') {
+      frontView.classList.add('fadeOutLeft');
+    }
+
+    this.root.appendChild(frontView);
+
+    setTimeout(() => {
+      this.nowView.render();
+    }, 500);
+    return true;
   }
 
   route(destScreenName, viewEmergeLocation = 'right') {
     // 만약 등록되어있지 않은 Screen이라면 로딩하지 않는다.
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
-      console.log(this.viewStack);
       const destObject = this.screens[destScreenName];
       if (!destObject.contents) {
         destObject.init();
