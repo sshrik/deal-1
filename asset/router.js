@@ -1,3 +1,10 @@
+function attachApp(root, page) {
+  while (root.hasChildNodes()) {
+    root.removeChild(root.firstChild);
+  }
+  root.appendChild(page);
+}
+
 export default class Router {
   constructor(root) {
     this.viewStack = [];
@@ -24,7 +31,7 @@ export default class Router {
     }
     const fadeOutView = this.nowView;
     this.nowView = this.viewStack.pop();
-    this.nowView.render();
+    this.root.appendChild(this.nowView.contents);
 
     const frontView = fadeOutView.contents;
     frontView.classList.add('dest-container');
@@ -39,7 +46,13 @@ export default class Router {
     this.root.appendChild(frontView);
 
     setTimeout(() => {
-      this.nowView.render();
+      frontView.classList.remove('dest-container');
+      if (viewDisappearLocation === 'right') {
+        frontView.classList.remove('fadeOutRight');
+      } else if (viewDisappearLocation === 'left') {
+        frontView.classList.remove('fadeOutLeft');
+      }
+      attachApp(this.root, this.nowView.contents);
     }, 500);
     return true;
   }
@@ -70,7 +83,12 @@ export default class Router {
 
       setTimeout(() => {
         dest.classList.remove('dest-container');
-        destObject.render();
+        if (viewEmergeLocation === 'right') {
+          dest.classList.remove('fadeInRight');
+        } else if (viewEmergeLocation === 'left') {
+          dest.classList.remove('fadeInLeft');
+        }
+        attachApp(this.root, destObject.contents);
       }, 500);
     } else {
       console.log('Not Included');

@@ -3,8 +3,8 @@ import TestTextComponent from './TestTextComponent';
 import '../../css/test.css';
 
 export default class TestPage extends PageElement {
-  constructor(parent, props) {
-    super(parent);
+  constructor(props) {
+    super();
     this.testText = props.testText;
     this.router = props.router;
     this.dest = props.routeTo;
@@ -12,14 +12,14 @@ export default class TestPage extends PageElement {
 
   init() {
     this.contents = document.createElement('div');
-    const nextText = new TestTextComponent(this, {
+    const nextText = new TestTextComponent({
       testText: this.testText,
       onClick: () => {
         console.log('Routing');
         this.router.route(this.dest);
       },
     });
-    const backText = new TestTextComponent(this, {
+    const backText = new TestTextComponent({
       testText: 'go back',
       onClick: () => {
         console.log('Go back');

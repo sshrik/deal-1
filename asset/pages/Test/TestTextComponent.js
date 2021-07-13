@@ -2,8 +2,8 @@ import PageElement from '../../component/PageElement';
 import '../../css/test.css';
 
 export default class TestTextComponent extends PageElement {
-  constructor(parent, props) {
-    super(parent);
+  constructor(props) {
+    super();
     this.testText = props.testText;
     this.onClick = props.onClick;
   }
