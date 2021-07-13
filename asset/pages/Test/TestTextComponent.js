@@ -3,7 +3,7 @@ import '../../css/test.css';
 
 export default class TestTextComponent extends PageElement {
   constructor(props) {
-    super();
+    super(props.parent);
     this.testText = props.testText;
     this.onClick = props.onClick;
   }
