@@ -1,3 +1,3 @@
-import "../globalInit.js";
+import '../globalInit.js';
 
-console.log("Hello world!");
+const $root = document.querySelector('.app-container');
