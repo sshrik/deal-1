@@ -13,7 +13,7 @@
   --text-medium: 16px/22px inherit;
   --text-small: 14px/20px inherit;
   --text-x-small: 12px/16px inherit;
-  --link-large: normal bold 16px/22px defaultFont;
+  --link-medium: normal bold 16px/22px defaultFont;
   --link-small: normal bold 14px/20px defaultFont;
   --link-x-small: normal bold 12px/16px defaultFont;
 }
@@ -27,4 +27,26 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.img {
+  background-color: var(--off-white);
+}
+
+.img-small {
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+}
+
+.img-medium {
+  border-radius: 8px;
+  width: 76px;
+  height: 76px;
+}
+
+.img-large {
+  border-radius: 10px;
+  width: 106px;
+  height: 106px;
 }
