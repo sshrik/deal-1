@@ -22,3 +22,9 @@
   width: 100vw;
   height: 100vh;
 }
+
+.icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
