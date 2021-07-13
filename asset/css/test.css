@@ -1,0 +1,15 @@
+.test-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--grey2);
+}
+
+.test-container > p {
+  font-family: defaultFont;
+  font-size: 2rem;
+  color: var(--white);
+}
