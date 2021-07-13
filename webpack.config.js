@@ -4,9 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const entries = fs.readdirSync('./asset/pages');
-const filenames = entries.map((f) => {
-  return f.split('.');
-});
+const filenames = entries.map((f) => f.split('.'));
 
 /*
   entry : {
@@ -65,6 +63,7 @@ const config = {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx', '.css'],
   },
+  devtool: 'eval-cheap-source-map',
 };
 
 async function bundle() {
