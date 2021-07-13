@@ -1,4 +1,5 @@
 import PageElement from '../../component/PageElement';
+import TestTextComponent from './TestTextComponent';
 import '../../css/test.css';
 
 export default class TestPage extends PageElement {
@@ -11,15 +12,25 @@ export default class TestPage extends PageElement {
 
   init() {
     this.contents = document.createElement('div');
-    this.contents.innerHTML = `<p id="next-text">${this.testText}</p><p id="go-back">go back</p>`;
+    const nextText = new TestTextComponent(this, {
+      testText: this.testText,
+      onClick: () => {
+        console.log('Routing');
+        this.router.route(this.dest);
+      },
+    });
+    const backText = new TestTextComponent(this, {
+      testText: 'go back',
+      onClick: () => {
+        console.log('Go back');
+        this.router.back();
+      },
+    });
+
     this.contents.classList.add('test-container');
-    this.contents.querySelector('#next-text').addEventListener('click', () => {
-      console.log('Routing');
-      this.router.route(this.dest);
-    });
-    this.contents.querySelector('#go-back').addEventListener('click', () => {
-      console.log('Go back');
-      this.router.back();
-    });
+    this.contents.appendChild(nextText.init());
+    this.contents.appendChild(backText.init());
+
+    return this.contents;
   }
 }
