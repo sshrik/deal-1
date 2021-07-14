@@ -12,11 +12,16 @@ export default class ElementBuilder {
   }
 
   init() {
-    this.child.forEach((element) => {
-      element.init();
-    });
-    this.child = [];
-    this.contents = null;
+    const $element = this.constructElement();
+    this.setContents($element);
+  }
+
+  constructElement() {
+    throw 'Not Implemented Error : ElementBuilder를 위해선 constructElement를 구현해주세요!';
+  }
+
+  setContents(elements) {
+    this.contents = elements;
   }
 
   addClassToContainer(className) {
