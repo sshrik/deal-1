@@ -23,13 +23,11 @@ export default class TestPage extends ElementBuilder {
       placeHolder: '이것은 Placeholder',
       title: '이것은 Title',
     });
-
-    console.log(myInput1);
     const myInput2 = new Input({
       parent: this,
       type: 'password',
       size: 'medium',
-      id: 'my-input1',
+      id: 'my-input2',
       placeHolder: '이것은 두번째, Title은 없어요~',
     });
     const nextText = new TestTextComponent({
