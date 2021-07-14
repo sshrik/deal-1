@@ -52,9 +52,7 @@ export default class ElementBuilder {
 
     // 만약 App 하나만 달고 싶다면 clearAll 을 설정해줍니다. 다만 맨 윗 node에서 호출할 때만 사용됩니다. ( Page 단위로만.. )
     if (clearAll) {
-      while (DOMDestParent.hasChildNodes()) {
-        DOMDestParent.removeChild(DOMDestParent.firstChild);
-      }
+      DOMDestParent.innerHTML = '';
     }
     // 루트 노드의 맨 마지막에 자신을 추가해줍니다.
     DOMDestParent.appendChild(this.contents);
