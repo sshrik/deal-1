@@ -67,7 +67,7 @@ export default class ElementBuilder {
       this.init();
     }
 
-    // 하위 element의 rendering 시작. 재귀적으로 호출하여 DFS의 형태로 Rendering 합니다.
+    // 하위 element의 rendering 시작. 재귀적으로 호출하여 BFS의 형태로 Rendering 합니다.
     this.child.forEach((element) => {
       element.render();
     });
