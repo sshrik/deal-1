@@ -25,6 +25,10 @@ export default class ElementBuilder {
     this.contents = elements;
   }
 
+  isInited() {
+    return this.contents === false;
+  }
+
   addClassToContainer(className) {
     this.contents.classList.add(className);
   }
