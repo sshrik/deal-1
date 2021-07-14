@@ -5,8 +5,8 @@ import '../css/subHeader.css';
 
 export default class SubHeader extends ElementBuilder {
   constructor(props) {
-    const { parent, title, action, moveHandler } = props;
-    super(parent);
+    const { title, action, moveHandler } = props;
+    super(props);
     this.title = title;
     this.onMove = moveHandler;
     this.action = action;

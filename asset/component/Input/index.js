@@ -4,7 +4,7 @@ import '../../css/input.css';
 
 export default class Input extends ElementBuilder {
   constructor(props) {
-    super(props.parent);
+    super(props);
     this.placeHolder = props.placeHolder;
     this.title = props.title;
     this.type = props.type;

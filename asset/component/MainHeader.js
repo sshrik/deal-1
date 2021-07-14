@@ -5,8 +5,8 @@ import ElementBuilder from './ElementBuilder';
 
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
-    const { parent, moveHandler } = props;
-    super(parent);
+    const { moveHandler } = props;
+    super(props);
     this.onMove = moveHandler;
   }
 

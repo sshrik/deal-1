@@ -5,8 +5,8 @@ import $ from '../../util/domControll';
 
 export default class Category extends ElementBuilder {
   constructor(props) {
-    const { parent, routeTo, router } = props;
-    super(parent);
+    const { routeTo, router } = props;
+    super(props);
     this.state = {
       categories: ['가전기기', '생활가전', '가구인테리어', '게임/취미'],
     };

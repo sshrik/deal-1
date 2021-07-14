@@ -56,5 +56,5 @@ router.addScreen('category', $categoryPage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 // router.setNowView($testPage1);
-router.setNowView($mainPage);
+router.setNowView($categoryPage);
 $mainPage.render();

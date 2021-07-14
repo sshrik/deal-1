@@ -5,8 +5,8 @@ import '../../css/categoryBody.css';
 
 export default class CategoryBody extends ElementBuilder {
   constructor(props) {
-    const { parent, categories } = props;
-    super(parent);
+    const { categories } = props;
+    super(props);
     this.categories = categories;
   }
 

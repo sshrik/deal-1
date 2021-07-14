@@ -7,7 +7,7 @@ import '../../css/test.css';
 
 export default class TestPage extends ElementBuilder {
   constructor(props) {
-    super(props.parent);
+    super(props);
     this.testText = props.testText;
     this.router = props.router;
     this.dest = props.routeTo;

@@ -5,8 +5,8 @@ import $ from '../../util/domControll';
 
 export default class Main extends ElementBuilder {
   constructor(props) {
-    const { parent, routeTo, router } = props;
-    super(parent);
+    const { routeTo, router } = props;
+    super(props);
     this.router = router;
     this.routeTo = routeTo;
   }
