@@ -10,11 +10,18 @@ export default class Category extends ElementBuilder {
     this.state = {
       categories: ['가전기기', '생활가전', '가구인테리어', '게임/취미'],
     };
+    this.routeTo = routeTo;
+    this.router = router;
   }
 
   init() {
     this.contents = $.create('div');
-    new SubHeader({ parent: this, title: '카테고리', action: null });
+    new SubHeader({
+      parent: this,
+      title: '카테고리',
+      action: null,
+      moveHandler: () => this.router.route(this.routeTo),
+    });
     new CategoryBody({ parent: this, categories: this.state.categories });
   }
 }

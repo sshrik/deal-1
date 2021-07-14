@@ -23,7 +23,7 @@ const $mainPage = new Main({
 
 const $categoryPage = new Category({
   parent: $root,
-  routeTo: '',
+  routeTo: 'main',
   router,
 });
 

@@ -6,7 +6,7 @@ export default class Main extends ElementBuilder {
   constructor(props) {
     const { parent, routeTo, router } = props;
     super(parent);
-    this.router = props.router;
+    this.router = router;
     this.routeTo = routeTo;
   }
 

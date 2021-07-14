@@ -5,16 +5,17 @@ import '../css/subHeader.css';
 
 export default class SubHeader extends ElementBuilder {
   constructor(props) {
-    const { parent, title, action } = props;
+    const { parent, title, action, moveHandler } = props;
     super(parent);
     this.title = title;
+    this.onMove = moveHandler;
     this.action = action;
   }
 
   init() {
     this.contents = $.create('div').addClass('sub-header-container');
     console.log(this.contents);
-    this.contents.appendChild(icons.back());
+    this.contents.appendChild(icons.back(this.onMove));
 
     const $title = $.create('div')
       .addClass('sub-header__title')
