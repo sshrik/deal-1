@@ -1,0 +1,28 @@
+.sub-header-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 100%;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  background-color: var(--off-white);
+  padding: 17px 16px;
+}
+
+.sub-header-container.menu--white {
+  background-color: var(--white);
+}
+
+.sub-header__title {
+  display: flex;
+  align-items: center;
+  font: var(--text-medium);
+  justify-content: center;
+  grid-column-start: 2;
+  grid-column-end: 12;
+}
+
+.sub-header__action {
+  display: flex;
+  justify-content: flex-end;
+}
