@@ -1,5 +1,6 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import MainHeader from '../../component/MainHeader';
+import '../../css/main.css';
 import $ from '../../util/domControll';
 
 export default class Main extends ElementBuilder {
@@ -15,7 +16,7 @@ export default class Main extends ElementBuilder {
   };
 
   init() {
-    this.contents = $.create('div');
+    this.contents = $.create('div').addClass('main-contianer');
     new MainHeader({
       parent: this,
       moveHandler: this.moveHandler,
