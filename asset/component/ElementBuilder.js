@@ -1,4 +1,4 @@
-export default class PageElement {
+export default class ElementBuilder {
   constructor(parent) {
     this.isPageElement = true;
     this.parent = parent;
@@ -8,13 +8,11 @@ export default class PageElement {
       this.parent.appendChild(this);
     } else {
       // 부모가 pageElement가 아닌 경우는 수행하지 않습니다.
-      // console.log(e);
     }
   }
 
   init() {
     this.contents = document.createElement();
-    return this.contents;
   }
 
   addClass(className) {

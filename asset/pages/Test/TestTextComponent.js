@@ -1,7 +1,7 @@
-import PageElement from '../../component/PageElement';
+import ElementBuilder from '../../component/ElementBuilder';
 import '../../css/test.css';
 
-export default class TestTextComponent extends PageElement {
+export default class TestTextComponent extends ElementBuilder {
   constructor(props) {
     super(props.parent);
     this.testText = props.testText;
@@ -12,6 +12,5 @@ export default class TestTextComponent extends PageElement {
     this.contents = document.createElement('p');
     this.contents.innerText = this.testText;
     this.contents.addEventListener('click', this.onClick);
-    return this.contents;
   }
 }

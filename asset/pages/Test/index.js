@@ -1,8 +1,8 @@
-import PageElement from '../../component/PageElement';
+import ElementBuilder from '../../component/ElementBuilder';
 import TestTextComponent from './TestTextComponent';
 import '../../css/test.css';
 
-export default class TestPage extends PageElement {
+export default class TestPage extends ElementBuilder {
   constructor(props) {
     super(props.parent);
     this.testText = props.testText;
@@ -30,7 +30,5 @@ export default class TestPage extends PageElement {
     });
 
     this.contents.classList.add('test-container');
-
-    return this.contents;
   }
 }
