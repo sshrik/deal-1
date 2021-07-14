@@ -11,6 +11,7 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
     $pictureCount.appendChild($.create('span').setText(`10/${numOfFiles}`));
     $imgContainer.appendChild($pictureCount);
   } else if (type === 'delete') {
+    $imgContainer.addClass('img-erase');
     const $img = $.create('img');
     $img.src = src;
 
