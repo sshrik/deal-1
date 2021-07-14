@@ -9,10 +9,10 @@ export default class FaB extends ElementBuilder {
     this.onClick = props.onClick;
   }
 
-  init() {
+  constructElement() {
     const $fab = $.create('button').addClass('fab-btn');
     $fab.appendChild(icons.plus());
-    this.contents = $fab;
+    return $fab;
   }
 
   render() {
