@@ -5,13 +5,14 @@ import ElementBuilder from './ElementBuilder';
 
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
-    super(props.parent);
-    // console.log(props);
+    const { parent, moveHandler } = props;
+    super(parent);
+    this.onMove = moveHandler;
   }
 
   init() {
     this.contents = $.create('div').addClass('header-container');
-    this.contents.appendChild(icons.category());
+    this.contents.appendChild(icons.category(this.onMove));
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
@@ -26,9 +27,5 @@ export default class MainHeader extends ElementBuilder {
     $rightContainer.appendChild(icons.user());
     $rightContainer.appendChild(icons.menu());
     this.contents.appendChild($rightContainer);
-  }
-
-  render() {
-    super.render();
   }
 }

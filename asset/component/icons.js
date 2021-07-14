@@ -1,9 +1,16 @@
 import $ from '../util/domControll';
 
-const createSvgBtn = (name, svgTag) =>
-  $.create('button').addClass('icon').addClass(name).setHTML(svgTag);
-
-const category = () =>
+const createSvgBtn = (name, svgTag, eventHandler = null) => {
+  const $svgBtn = $.create('button')
+    .addClass('icon')
+    .addClass(name)
+    .setHTML(svgTag);
+  $svgBtn.addEventListener('click', (e) => {
+    eventHandler(name);
+  });
+  return $svgBtn;
+};
+const category = (eventHandler) =>
   createSvgBtn(
     'category',
     `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +19,8 @@ const category = () =>
   <path d="M19.3333 4H14.6667C14.2985 4 14 4.29848 14 4.66667V9.33333C14 9.70152 14.2985 10 14.6667 10H19.3333C19.7015 10 20 9.70152 20 9.33333V4.66667C20 4.29848 19.7015 4 19.3333 4Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M19.3333 14H14.6667C14.2985 14 14 14.2985 14 14.6667V19.3333C14 19.7015 14.2985 20 14.6667 20H19.3333C19.7015 20 20 19.7015 20 19.3333V14.6667C20 14.2985 19.7015 14 19.3333 14Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  `
+  `,
+    eventHandler
   );
 
 const mapPin = () =>
