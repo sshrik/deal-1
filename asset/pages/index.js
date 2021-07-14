@@ -64,7 +64,7 @@ router.addScreen('write', $writePage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 // router.setNowView($testPage1);
-// router.setNowView($categoryPage);
-router.setNowView($writePage);
-$writePage.render();
-// $mainPage.render();
+router.setNowView($mainPage);
+// router.setNowView($writePage);
+// $writePage.render();
+$mainPage.render();

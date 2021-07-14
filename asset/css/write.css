@@ -1,0 +1,9 @@
+.write-content-container {
+  padding: 24px 16px 16px 0;
+}
+
+.img-upload__container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  column-gap: 15px;
+}

@@ -2,6 +2,7 @@ import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
 import ImageUploader from './ImageUploader';
+import '../../css/write.css';
 
 export default class Write extends ElementBuilder {
   constructor(props) {
@@ -34,12 +35,14 @@ export default class Write extends ElementBuilder {
   };
 
   init() {
-    this.contents = $.create('div');
+    this.contents = $.create('div').addClass('write-container');
     new SubHeader({
       parent: this,
       title: '글쓰기',
       action: null,
     });
+
+    const $writeContent = $.create('div').addClass('write-content-container');
     new ImageUploader({
       parent: this,
       files: this.state.files,
