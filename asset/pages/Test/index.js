@@ -1,7 +1,9 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import TestTextComponent from './TestTextComponent';
 import MainHeader from '../../component/MainHeader';
+import FabButton from '../../component/FaB';
 import '../../css/test.css';
+import FaB from '../../component/FaB';
 
 export default class TestPage extends ElementBuilder {
   constructor(props) {
@@ -13,7 +15,11 @@ export default class TestPage extends ElementBuilder {
 
   init() {
     this.contents = document.createElement('div');
-    const header = new MainHeader({
+    const mainHeader = new MainHeader({
+      parent: this,
+      onClick: () => {},
+    });
+    const fab = new FabButton({
       parent: this,
       onClick: () => {},
     });

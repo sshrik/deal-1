@@ -12,7 +12,11 @@ export default class ElementBuilder {
   }
 
   init() {
-    this.contents = document.createElement();
+    this.child.forEach((element) => {
+      element.init();
+    });
+    this.child = [];
+    this.contents = null;
   }
 
   addClassToContainer(className) {
@@ -31,8 +35,20 @@ export default class ElementBuilder {
     this.child.push(target);
   }
 
-  render(clearAll = false) {
-    // init() 이 한번도 안됐다면 init 해주기
+  clear() {
+    this.contents = null;
+    this.child.forEach((element) => {
+      element.clear();
+    });
+  }
+
+  getContentsElement() {
+    if (!this.contents) this.init();
+    return this.contents;
+  }
+
+  render(option = {}) {
+    // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();
     }
@@ -51,7 +67,7 @@ export default class ElementBuilder {
     }
 
     // 만약 App 하나만 달고 싶다면 clearAll 을 설정해줍니다. 다만 맨 윗 node에서 호출할 때만 사용됩니다. ( Page 단위로만.. )
-    if (clearAll) {
+    if (option.clearAll) {
       DOMDestParent.innerHTML = '';
     }
     // 루트 노드의 맨 마지막에 자신을 추가해줍니다.

@@ -10,22 +10,25 @@ export default class MainHeader extends ElementBuilder {
   }
 
   init() {
-    const $headerContainer = $.create('div').addClass('header-container');
-    $headerContainer.appendChild(icons.category);
+    this.contents = $.create('div').addClass('header-container');
+    this.contents.appendChild(icons.category());
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
     );
     const $curLocation = $.create('span');
     $curLocation.innerHTML = '양재동';
-    $locationContainer.appendChild(icons.mapPin);
+    $locationContainer.appendChild(icons.mapPin());
     $locationContainer.appendChild($curLocation);
-    $headerContainer.appendChild($locationContainer);
+    this.contents.appendChild($locationContainer);
 
     const $rightContainer = $.create('div').addClass('header-container__right');
-    $rightContainer.appendChild(icons.user);
-    $rightContainer.appendChild(icons.menu);
-    $headerContainer.appendChild($rightContainer);
-    this.contents = $headerContainer;
+    $rightContainer.appendChild(icons.user());
+    $rightContainer.appendChild(icons.menu());
+    this.contents.appendChild($rightContainer);
+  }
+
+  render() {
+    super.render();
   }
 }

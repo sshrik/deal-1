@@ -1,6 +1,6 @@
 import $ from './util/domControll';
 
-const animateTime = 1000;
+const animateTime = 500;
 
 export default class Router {
   constructor(root) {
@@ -35,29 +35,23 @@ export default class Router {
     this.nowView = this.viewStack.pop();
 
     // 화면에 보여야 할 App을 등록( nowView 가 보여야 함)
-    this.nowView.render(true);
+    this.nowView.render({ clearAll: true });
 
     // 사라질 view에 Container 부착.
-    fadeOutView.addClassToContainer('dest-container');
-
     // FadeInMotion을 어디서 줄 것인지 결정 ( right 기본, right면 오른쪽 벽으로 들어감. )
+    const animationContainer = $.create('div').addClass('dest-container');
+    animationContainer.appendChild(fadeOutView.contents);
+    // 사라질 view 등록
+    this.root.appendChild(animationContainer);
+
     if (viewDisappearLocation === 'right') {
-      fadeOutView.addClassToContainer('fadeOutRight');
+      animationContainer.addClass('fadeOutRight');
     } else if (viewDisappearLocation === 'left') {
-      fadeOutView.addClassToContainer('fadeOutLeft');
+      animationContainer.addClass('fadeOutLeft');
     }
 
-    // 사라질 view 등록
-    fadeOutView.render();
-
     setTimeout(() => {
-      fadeOutView.removeClassToContainer('dest-container');
-      if (viewDisappearLocation === 'right') {
-        fadeOutView.removeClassToContainer('fadeOutRight');
-      } else if (viewDisappearLocation === 'left') {
-        fadeOutView.removeClassToContainer('fadeOutLeft');
-      }
-      this.nowView.render(true);
+      this.nowView.render({ clearAll: true });
     }, animateTime);
     return true;
   }
@@ -73,9 +67,8 @@ export default class Router {
       }#${destScreenName}`;
 
       if (!destObject.contents) {
-        destObject.init();
+        destObject.render();
       }
-      console.log(destObject);
 
       // 현재 화면을 nowView에 등록, stack에 넣어줌.
       this.setNowScreenToStack();
@@ -84,6 +77,7 @@ export default class Router {
       // App의 상태에 관계없이 불러오기 위해서 dest-container를 사용 ( position을 absolute로 만들어줌 )
       const animationContainer = $.create('div').addClass('dest-container');
       animationContainer.appendChild(destObject.contents);
+      this.root.appendChild(animationContainer);
 
       // FadeInMotion을 어디서 줄 것인지 결정 ( right 기본, right면 왼쪽에서 나와 오른쪽으로 감. )
       if (viewEmergeLocation === 'right') {
@@ -91,11 +85,8 @@ export default class Router {
       } else if (viewEmergeLocation === 'left') {
         animationContainer.addClass('fadeInLeft');
       }
-      this.root.appendChild(animationContainer);
-
       setTimeout(() => {
-        destObject.render(true);
-        console.log(destObject.contents);
+        destObject.render({ clearAll: true });
       }, animateTime);
     } else {
       console.log('Not Included');
