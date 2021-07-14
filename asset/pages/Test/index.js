@@ -1,9 +1,9 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import TestTextComponent from './TestTextComponent';
-import MainHeader from '../../component/MainHeader';
-import FabButton from '../../component/FaB';
+// import MainHeader from '../../component/MainHeader';
+// import FabButton from '../../component/FaB';
+import Input from '../../component/Input';
 import '../../css/test.css';
-import FaB from '../../component/FaB';
 
 export default class TestPage extends ElementBuilder {
   constructor(props) {
@@ -15,13 +15,20 @@ export default class TestPage extends ElementBuilder {
 
   init() {
     this.contents = document.createElement('div');
-    const mainHeader = new MainHeader({
+    const myInput1 = new Input({
       parent: this,
-      onClick: () => {},
+      type: 'text',
+      id: 'my-input1',
+      placeHolder: '이것은 Placeholder',
+      title: '이것은 Title',
     });
-    const fab = new FabButton({
+
+    console.log(myInput1);
+    const myInput2 = new Input({
       parent: this,
-      onClick: () => {},
+      type: 'password',
+      id: 'my-input1',
+      placeHolder: '이것은 두번째, Title은 없어요~',
     });
     const nextText = new TestTextComponent({
       parent: this,
