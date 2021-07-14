@@ -17,7 +17,8 @@ export default class ElementBuilder {
   }
 
   constructElement() {
-    throw 'Not Implemented Error : ElementBuilder를 위해선 constructElement를 구현해주세요!';
+    // Contents 를 만들어야합니다.
+    return this.contents;
   }
 
   setContents(elements) {

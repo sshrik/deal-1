@@ -14,8 +14,8 @@ export default class Category extends ElementBuilder {
     this.router = router;
   }
 
-  init() {
-    this.contents = $.create('div');
+  constructElement() {
+    const $element = $.create('div');
     new SubHeader({
       parent: this,
       title: '카테고리',
@@ -23,5 +23,7 @@ export default class Category extends ElementBuilder {
       moveHandler: () => this.router.route(this.routeTo),
     });
     new CategoryBody({ parent: this, categories: this.state.categories });
+
+    return $element;
   }
 }

@@ -15,11 +15,13 @@ export default class Main extends ElementBuilder {
     this.router.route(dest);
   };
 
-  init() {
-    this.contents = $.create('div').addClass('main-contianer');
+  constructElement() {
+    const $element = $.create('div').addClass('main-contianer');
     new MainHeader({
       parent: this,
       moveHandler: this.moveHandler,
     });
+
+    return $element;
   }
 }
