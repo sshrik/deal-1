@@ -61,11 +61,6 @@ export default class Router {
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
-      // Hash Routing 추가
-      window.location.href = `${
-        window.location.href.split('#')[0]
-      }#${destScreenName}`;
-
       if (!destObject.contents) {
         destObject.render();
       }
