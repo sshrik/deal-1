@@ -1,5 +1,6 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import TestTextComponent from './TestTextComponent';
+import MainHeader from '../../component/MainHeader';
 import '../../css/test.css';
 
 export default class TestPage extends ElementBuilder {
@@ -12,11 +13,15 @@ export default class TestPage extends ElementBuilder {
 
   init() {
     this.contents = document.createElement('div');
+    const header = new MainHeader({
+      parent: this,
+      onClick: () => {},
+    });
     const nextText = new TestTextComponent({
       parent: this,
       testText: this.testText,
       onClick: () => {
-        console.log('Routing');
+        console.log('Routing to ', this.dest);
         this.router.route(this.dest);
       },
     });

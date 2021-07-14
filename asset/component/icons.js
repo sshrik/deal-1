@@ -1,8 +1,7 @@
 import $ from '../util/domControll';
 
-const createSvgBtn = (name, svgTag) => {
-  return $.create('button').addClass('icon').addClass(name).setHTML(svgTag);
-};
+const createSvgBtn = (name, svgTag) =>
+  $.create('button').addClass('icon').addClass(name).setHTML(svgTag);
 
 const category = createSvgBtn(
   'category',

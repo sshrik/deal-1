@@ -1,12 +1,6 @@
 import '../css/normalize.css';
 import '../css/common.css';
-import '../globalInit.js';
-
-const $root = document.querySelector('.app-container');
-
 import '../globalInit';
-import '../css/normalize.css';
-import '../css/common.css';
 import TestPage from './Test/index';
 import Router from '../router';
 

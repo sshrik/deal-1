@@ -15,15 +15,15 @@ export default class ElementBuilder {
     this.contents = document.createElement();
   }
 
-  addClass(className) {
+  addClassToContainer(className) {
     this.contents.classList.add(className);
   }
 
-  removeClass(className) {
+  removeClassToContainer(className) {
     this.contents.classList.remove(className);
   }
 
-  toggleClass(className) {
+  toggleClassToContainer(className) {
     this.contents.classList.toggle(className);
   }
 

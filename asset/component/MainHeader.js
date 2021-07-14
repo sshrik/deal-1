@@ -1,14 +1,15 @@
 import $ from '../util/domControll';
-import icons from '../component/icons';
+import icons from './icons';
 import '../css/mainHeader.css';
+import ElementBuilder from './ElementBuilder';
 
-export default class MainHeader {
-  constructor($root) {
-    this.$root = $root;
-    this.render();
+export default class MainHeader extends ElementBuilder {
+  constructor(props) {
+    super(props.parent);
+    // console.log(props);
   }
 
-  render = () => {
+  init() {
     const $headerContainer = $.create('div').addClass('header-container');
     $headerContainer.appendChild(icons.category);
 
@@ -25,7 +26,6 @@ export default class MainHeader {
     $rightContainer.appendChild(icons.user);
     $rightContainer.appendChild(icons.menu);
     $headerContainer.appendChild($rightContainer);
-
-    this.$root.appendChild($headerContainer);
-  };
+    this.contents = $headerContainer;
+  }
 }
