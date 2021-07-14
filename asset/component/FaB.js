@@ -1,17 +1,21 @@
 import $ from '../util/domControll';
-import icons from '../component/icons';
+import icons from './icons';
+import ElementBuilder from './ElementBuilder';
 import '../css/fab.css';
 
-export default class FaB {
-  constructor($root, onClick) {
-    this.$root = $root;
-
-    this.render();
+export default class FaB extends ElementBuilder {
+  constructor(props) {
+    super(props.parent);
+    this.onClick = props.onClick;
   }
 
-  render = () => {
+  init() {
     const $fab = $.create('button').addClass('fab-btn');
-    $fab.appendChild(icons.plus);
-    this.$root.appendChild($fab);
-  };
+    $fab.appendChild(icons.plus());
+    this.contents = $fab;
+  }
+
+  render() {
+    super.render();
+  }
 }

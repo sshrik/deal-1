@@ -1,31 +1,34 @@
 import $ from '../util/domControll';
-import icons from '../component/icons';
+import icons from './icons';
 import '../css/mainHeader.css';
+import ElementBuilder from './ElementBuilder';
 
-export default class MainHeader {
-  constructor($root) {
-    this.$root = $root;
-    this.render();
+export default class MainHeader extends ElementBuilder {
+  constructor(props) {
+    super(props.parent);
+    // console.log(props);
   }
 
-  render = () => {
-    const $headerContainer = $.create('div').addClass('header-container');
-    $headerContainer.appendChild(icons.category);
+  init() {
+    this.contents = $.create('div').addClass('header-container');
+    this.contents.appendChild(icons.category());
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
     );
     const $curLocation = $.create('span');
     $curLocation.innerHTML = '양재동';
-    $locationContainer.appendChild(icons.mapPin);
+    $locationContainer.appendChild(icons.mapPin());
     $locationContainer.appendChild($curLocation);
-    $headerContainer.appendChild($locationContainer);
+    this.contents.appendChild($locationContainer);
 
     const $rightContainer = $.create('div').addClass('header-container__right');
-    $rightContainer.appendChild(icons.user);
-    $rightContainer.appendChild(icons.menu);
-    $headerContainer.appendChild($rightContainer);
+    $rightContainer.appendChild(icons.user());
+    $rightContainer.appendChild(icons.menu());
+    this.contents.appendChild($rightContainer);
+  }
 
-    this.$root.appendChild($headerContainer);
-  };
+  render() {
+    super.render();
+  }
 }
