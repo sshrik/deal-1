@@ -1,6 +1,7 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import Image from '../../component/Image';
 import $ from '../../util/domControll';
+import '../../css/categoryBody.css';
 
 export default class CategoryBody extends ElementBuilder {
   constructor(props) {
