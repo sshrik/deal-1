@@ -75,7 +75,7 @@ export default class ElementBuilder {
     // 만약 PageElement라면 실제 Element인 contents를 가지고 작업합니다.
     let DOMDestParent = null;
     if (this.parent.isPageElement) {
-      DOMDestParent = this.parent.contents;
+      DOMDestParent = this.parent.getContentsElement();
     } else {
       DOMDestParent = this.parent;
     }
@@ -85,6 +85,6 @@ export default class ElementBuilder {
       DOMDestParent.innerHTML = '';
     }
     // 루트 노드의 맨 마지막에 자신을 추가해줍니다.
-    DOMDestParent.appendChild(this.contents);
+    DOMDestParent.appendChild(this.getContentsElement());
   }
 }
