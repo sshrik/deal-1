@@ -51,6 +51,13 @@
   height: 106px;
 }
 
+.erase-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-color: var(--title-active)
+}
+
 .dest-container {
   position: absolute;
   width: 100%;
