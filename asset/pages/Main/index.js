@@ -1,5 +1,7 @@
 import ElementBuilder from '../../component/ElementBuilder';
+import icons from '../../component/icons';
 import MainHeader from '../../component/MainHeader';
+import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
 
 export default class Main extends ElementBuilder {
@@ -17,9 +19,10 @@ export default class Main extends ElementBuilder {
 
   init() {
     this.contents = $.create('div');
-    new MainHeader({
-      parent: this,
-      moveHandler: this.moveHandler,
-    });
+    // new MainHeader({
+    //   parent: this,
+    //   moveHandler: this.moveHandler,
+    // });
+    new SubHeader({ parent: this, title: '카테고리', action: null });
   }
 }

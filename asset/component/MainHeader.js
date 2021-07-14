@@ -12,6 +12,7 @@ export default class MainHeader extends ElementBuilder {
 
   init() {
     this.contents = $.create('div').addClass('header-container');
+    
     this.contents.appendChild(icons.category(this.onMove));
 
     const $locationContainer = $.create('div').addClass(
@@ -26,6 +27,7 @@ export default class MainHeader extends ElementBuilder {
     const $rightContainer = $.create('div').addClass('header-container__right');
     $rightContainer.appendChild(icons.user());
     $rightContainer.appendChild(icons.menu());
+
     this.contents.appendChild($rightContainer);
   }
 }
