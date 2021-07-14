@@ -11,6 +11,7 @@ export default class Input extends ElementBuilder {
     this.type = props.type; // default / text
     this.state = props.state; // default / disable
     this.fontColor = props.fontColor; // white / black / mint
+    this.onClick = props.onClick;
   }
 
   init() {
@@ -33,6 +34,9 @@ export default class Input extends ElementBuilder {
     } else {
       this.contents.addClass('button-active');
     }
+    this.contents.addEventListener('click', (ev) => {
+      this.onClick(ev);
+    });
     this.contents.appendChild($buttonText);
   }
 }

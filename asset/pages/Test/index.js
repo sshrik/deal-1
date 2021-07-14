@@ -16,6 +16,9 @@ export default class TestPage extends ElementBuilder {
 
   init() {
     this.contents = document.createElement('div');
+    function clickEvent(ev) {
+      console.log('Hello!');
+    }
     const myInput1 = new Input({
       parent: this,
       type: 'text',
@@ -38,6 +41,7 @@ export default class TestPage extends ElementBuilder {
       type: 'default',
       state: 'default',
       fontColor: 'white',
+      onClick: clickEvent,
     });
     const button2 = new Button({
       parent: this,
@@ -46,6 +50,7 @@ export default class TestPage extends ElementBuilder {
       type: 'default',
       state: 'disable',
       fontColor: 'white',
+      onClick: clickEvent,
     });
     const button3 = new Button({
       parent: this,
@@ -54,6 +59,7 @@ export default class TestPage extends ElementBuilder {
       type: 'text',
       state: 'default',
       fontColor: 'black',
+      onClick: clickEvent,
     });
     const button4 = new Button({
       parent: this,
@@ -62,6 +68,7 @@ export default class TestPage extends ElementBuilder {
       type: 'text',
       state: 'disable',
       fontColor: 'grey',
+      onClick: clickEvent,
     });
     const nextText = new TestTextComponent({
       parent: this,
