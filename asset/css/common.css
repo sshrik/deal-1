@@ -51,6 +51,24 @@
   height: 106px;
 }
 
+.img-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.img-btn > .img-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-counter > span {
+  margin-top: 7px;
+}
+
 .erase-btn {
   width: 24px;
   height: 24px;

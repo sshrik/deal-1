@@ -5,7 +5,8 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
   const $imgContainer = $.create('div').addClass('img').addClass('img-medium');
 
   if (type === 'add') {
-    const $pictureCount = $.create('div');
+    $imgContainer.addClass('img-btn');
+    const $pictureCount = $.create('div').addClass('img-counter');
     $pictureCount.appendChild(icons.picture());
     $pictureCount.appendChild($.create('span').setText(`10/${numOfFiles}`));
     $imgContainer.appendChild($pictureCount);
