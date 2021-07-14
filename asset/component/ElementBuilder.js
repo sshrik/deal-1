@@ -1,5 +1,10 @@
 export default class ElementBuilder {
   constructor(props) {
+    if (!props.parent) {
+      throw new Error(
+        '[ElementBuilder] : props key error - props need parent key for appendChild this.'
+      );
+    }
     this.isPageElement = true;
     this.parent = props.parent;
     this.child = [];
@@ -17,8 +22,7 @@ export default class ElementBuilder {
   }
 
   constructElement() {
-    // Contents 를 만들어야합니다.
-    return this.contents;
+    throw new Error('[ElementBuilder] : ConstructElement is not emplemented.');
   }
 
   setContents(elements) {
