@@ -18,6 +18,7 @@ export default class TestPage extends ElementBuilder {
     const myInput1 = new Input({
       parent: this,
       type: 'text',
+      size: 'large',
       id: 'my-input1',
       placeHolder: '이것은 Placeholder',
       title: '이것은 Title',
@@ -27,6 +28,7 @@ export default class TestPage extends ElementBuilder {
     const myInput2 = new Input({
       parent: this,
       type: 'password',
+      size: 'medium',
       id: 'my-input1',
       placeHolder: '이것은 두번째, Title은 없어요~',
     });
