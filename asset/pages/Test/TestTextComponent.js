@@ -8,9 +8,11 @@ export default class TestTextComponent extends ElementBuilder {
     this.onClick = props.onClick;
   }
 
-  init() {
-    this.contents = document.createElement('p');
-    this.contents.innerText = this.testText;
-    this.contents.addEventListener('click', this.onClick);
+  constructElement() {
+    const $element = document.createElement('p');
+    $element.innerText = this.testText;
+    $element.addEventListener('click', this.onClick);
+
+    return $element;
   }
 }

@@ -13,8 +13,8 @@ export default class TestPage extends ElementBuilder {
     this.dest = props.routeTo;
   }
 
-  init() {
-    this.contents = document.createElement('div');
+  constructElement() {
+    const $element = document.createElement('div');
     const myInput1 = new Input({
       parent: this,
       type: 'text',
@@ -47,6 +47,8 @@ export default class TestPage extends ElementBuilder {
       },
     });
 
-    this.contents.classList.add('test-container');
+    $element.classList.add('test-container');
+
+    return $element;
   }
 }
