@@ -1,7 +1,7 @@
 export default class ElementBuilder {
-  constructor(parent) {
+  constructor(props) {
     this.isPageElement = true;
-    this.parent = parent;
+    this.parent = props.parent;
     this.child = [];
 
     if (this.parent.isPageElement) {
