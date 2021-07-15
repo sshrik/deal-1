@@ -6,6 +6,7 @@ import Main from './Main';
 import Category from './Category';
 import Write from './Write';
 import Login from './Login';
+import Location from './Location';
 
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
@@ -34,10 +35,17 @@ const $loginPage = new Login({
   router,
 });
 
+const $locationPage = new Location({
+  parent: $root,
+  routeTo: 'main',
+  router,
+});
+
 router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
 router.addScreen('write', $writePage);
 router.addScreen('login', $loginPage);
+router.addScreen('location', $locationPage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 router.setNowView($mainPage);

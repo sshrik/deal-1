@@ -20,7 +20,7 @@ export default class MainHeader extends ElementBuilder {
     );
     const $curLocation = $.create('span');
     $curLocation.innerHTML = '양재동';
-    $locationContainer.appendChild(icons.mapPin());
+    $locationContainer.appendChild(icons.mapPin(this.onMove));
     $locationContainer.appendChild($curLocation);
     $headerContainer.appendChild($locationContainer);
 

@@ -23,7 +23,7 @@
   color: var(--white);
 }
 
-.header-container__location .map-pin {
+.header-container__location .location {
   margin-right: 10px;
 }
 
