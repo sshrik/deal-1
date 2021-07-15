@@ -1,6 +1,6 @@
-import $ from '../../util/domControll';
-import ElementBuilder from '../ElementBuilder';
-import '../../css/button.css';
+import $ from '../util/domControll';
+import ElementBuilder from './ElementBuilder';
+import '../css/button.css';
 
 export default class Input extends ElementBuilder {
   constructor(props) {
@@ -16,12 +16,14 @@ export default class Input extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('button').addClass('button-container');
+
     const buttonFontClass = `button-font-${this.size}`;
     const buttonSizeClass = `button-size-${this.size}`;
-    const $buttonText = $.create('p').setText(this.text);
+    const $buttonText = $.create('p')
+      .addClass(buttonFontClass)
+      .addClass(`button-font-color-${this.fontColor}`)
+      .setText(this.text);
 
-    $buttonText.addClass(buttonFontClass);
-    $buttonText.addClass(`button-font-color-${this.fontColor}`);
     $element.addClass(buttonSizeClass);
     if (this.type === 'text') {
       $element.addClass('text-button');

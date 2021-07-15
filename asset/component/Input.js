@@ -1,6 +1,6 @@
-import $ from '../../util/domControll';
-import ElementBuilder from '../ElementBuilder';
-import '../../css/input.css';
+import $ from '../util/domControll';
+import ElementBuilder from './ElementBuilder';
+import '../css/input.css';
 
 export default class Input extends ElementBuilder {
   constructor(props) {
@@ -19,14 +19,13 @@ export default class Input extends ElementBuilder {
       this.size === 'medium' ? 'input-medium' : 'input-large';
 
     if (this.title) {
-      const $title = $.create('p').setText(this.title);
-      $title.addClass(fontClass);
+      const $title = $.create('p').addClass(fontClass).setText(this.title);
       $element.appendChild($title);
     }
 
-    const $input = $.create('input');
-    $input.addClass(fontClass);
-    $input.addClass(inputSizeClass);
+    const $input = $.create('input')
+      .addClass(fontClass)
+      .addClass(inputSizeClass);
     $input.type = this.type;
     $input.placeholder = this.placeHolder;
 
