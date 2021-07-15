@@ -1,0 +1,17 @@
+import ElementBuilder from './ElementBuilder';
+import $ from '../util/domControll';
+import icons from './icons';
+import '../css/write.css';
+
+export default class WriteBottomFotter extends ElementBuilder {
+  constructElement() {
+    const $element = $.create('div').addClass('write-fotter--container');
+    const $mapPinIcon = $.create('img');
+    $mapPinIcon.src = 'mapPin.png';
+    const $locationText = $.create('p').setText(this.props.locationText);
+
+    $element.appendChild($mapPinIcon);
+    $element.appendChild($locationText);
+    return $element;
+  }
+}

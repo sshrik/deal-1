@@ -5,6 +5,7 @@ import TitleTextInput from '../../component/TitleTextInput';
 import TextInput from '../../component/TextInput';
 import TextAreaInput from '../../component/TextAreaInput';
 import DivLine from '../../component/DivLine';
+import WriteBottomFotter from '../../component/WriteBottomFotter';
 import '../../css/write.css';
 
 export default class WriteContainer extends ElementBuilder {
@@ -71,6 +72,11 @@ export default class WriteContainer extends ElementBuilder {
       parent: this,
       placeholder: '게시글 내용을 작성해주세요',
       id: 'write-content',
+    });
+
+    new WriteBottomFotter({
+      parent: this,
+      locationText: '역삼사오육동',
     });
     return $element;
   }
