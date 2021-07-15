@@ -7,3 +7,7 @@
 .login-content-container > .input-container {
   margin-bottom: 24px;
 }
+
+.login-content-container > .text-button {
+  margin-top: 24px;
+}

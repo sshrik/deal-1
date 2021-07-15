@@ -25,6 +25,16 @@ export default class LoginContainer extends ElementBuilder {
       type: 'default',
       fontColor: 'white',
     });
+    new Button({
+      parent: this,
+      text: '회원가입',
+      size: 'large',
+      type: 'text',
+      fontColor: 'black',
+    });
+
+    // const $span = $.create('span').setText('test');
+    // this.appendChild($span);
 
     return $element;
   }
