@@ -171,6 +171,25 @@ const tempData = [
   },
 ];
 
+const chattingList = [
+  {
+    sender: 'UserC',
+    lastMsg: '혹시 팔렸나요?',
+    isCheck: false,
+    timeStemp: '15',
+    unChecked: 13,
+    imgSrc: 'roller1.png',
+  },
+  {
+    sender: 'UserC',
+    lastMsg: '혹시 팔렸나요?',
+    isCheck: true,
+    timeStemp: '15',
+    unChecked: 0,
+    imgSrc: 'roller1.png',
+  },
+];
+
 /*
 const categories = [
   '디지털기기',
@@ -189,4 +208,5 @@ const categories = [
   '기타 중고물품',
 ];
  */
-export default tempData;
+// export default tempData;
+export { tempData, chattingList };

@@ -1,7 +1,7 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../component/ElementBuilder';
 import ListItem from '../../../component/ListItem';
-import tempData from '../../../component/TempMainList';
+import { tempData } from '../../../util/tempList';
 
 export default class SellingList extends ElementBuilder {
   constructor(props) {

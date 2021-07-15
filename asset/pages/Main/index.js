@@ -2,7 +2,7 @@ import ElementBuilder from '../../component/ElementBuilder';
 import MainHeader from '../../component/MainHeader';
 import ListItem from '../../component/ListItem';
 import FaB from '../../component/FaB';
-import tempData from '../../component/TempMainList';
+import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
 import $ from '../../util/domControll';
 import '../../css/main.css';
