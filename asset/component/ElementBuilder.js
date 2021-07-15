@@ -7,6 +7,7 @@ export default class ElementBuilder {
     }
     this.isPageElement = true;
     this.parent = props.parent;
+    this.props = props;
     this.child = [];
 
     if (this.parent.isPageElement) {
@@ -66,13 +67,61 @@ export default class ElementBuilder {
     const prevState = { ...this.state };
     this.state = { ...this.state, ...newState };
     if (this.compareState(prevState, this.state)) {
-      this.clear();
-      this.render({ clearAll: true });
+      this.update();
     }
   }
 
   compareState(prevState, newState) {
     return false;
+  }
+
+  regenerateContents() {
+    this.clear();
+    this.init();
+    this.child.forEach((element) => {
+      element.render();
+    });
+
+    return this.getContentsElement();
+  }
+
+  update() {
+    // 기존의 값을 가져옴 ( $contents )
+    const $contents = this.getContentsElement();
+
+    // 부모가 root인지 혹은 ElementBuilder인지 확인하여 HTMLElement를 가져옴.
+    let parentDOMElement;
+    if (this.parent.isPageElement) {
+      parentDOMElement = this.parent.getContentsElement();
+    } else {
+      parentDOMElement = this.parent;
+    }
+
+    // 현재 자신이 부모의 몇번째 자식인지 확인.
+    const $parentChild = parentDOMElement.childNodes;
+    const $childNodes = [];
+
+    [...$parentChild].forEach((element) => {
+      if (element === $contents) {
+        $childNodes.push(-1);
+      } else {
+        $childNodes.push(element);
+      }
+    });
+
+    // 부모 노드를 비워줌.
+    while (parentDOMElement.hasChildNodes()) {
+      parentDOMElement.removeChild(parentDOMElement.firstChild);
+    }
+
+    // 자신의 위치에 자기 자신을 넣어줌.
+    $childNodes.forEach((element) => {
+      if (element === -1) {
+        parentDOMElement.appendChild(this.regenerateContents());
+      } else {
+        parentDOMElement.appendChild(element);
+      }
+    });
   }
 
   render(option = {}) {
