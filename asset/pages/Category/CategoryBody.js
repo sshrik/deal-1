@@ -13,9 +13,9 @@ export default class CategoryBody extends ElementBuilder {
   constructElement() {
     const $element = $.create('div').addClass('categories-container');
 
-    this.categories.forEach((category) => {
+    this.categories.forEach((category, index) => {
       const $category = $.create('div').addClass('category');
-      $category.appendChild(Image('small', '#'));
+      $category.appendChild(Image('small', this.props.catImages[index]));
       $category.appendChild($.create('span').setText(category));
       $element.appendChild($category);
     });
