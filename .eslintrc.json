@@ -6,6 +6,10 @@
   "extends": ["eslint:recommended", "plugin:prettier/recommended", "airbnb-base"],
   "rules": {
     "no-console": "off",
+    "class-methods-use-this": "off",
+    "no-unused-vars": "off",
+    "no-new": "off",
+    "comma-dangle": "off",
     "prettier/prettier": [
       "error",
       {
