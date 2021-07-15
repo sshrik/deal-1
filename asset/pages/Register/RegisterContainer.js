@@ -2,37 +2,39 @@ import $ from '../../util/domControll';
 import ElementBuilder from '../../component/ElementBuilder';
 import Input from '../../component/Input';
 import Button from '../../component/Button';
+import '../../css/register.css';
 
-export default class LoginContainer extends ElementBuilder {
+export default class RegisterContainer extends ElementBuilder {
   constructor(props) {
     super(props);
   }
 
   constructElement() {
-    const { router } = this.props;
-    const $element = $.create('div').addClass('login-content-container');
+    const $element = $.create('div').addClass('register-content-container');
 
     new Input({
       parent: this,
       type: 'text',
       size: 'large',
       id: 'id',
-      placeHolder: '아이디를 입력하세요',
+      placeHolder: '영문, 숫자 조합 20자 이하',
+      title: '아이디',
     });
-    new Button({
+    new Input({
       parent: this,
-      text: '로그인',
+      type: 'text',
       size: 'large',
-      type: 'default',
-      fontColor: 'white',
+      id: 'location',
+      placeHolder: '시∙구 제외, 동만 입력',
+      title: '우리동네',
     });
     new Button({
       parent: this,
       text: '회원가입',
       size: 'large',
-      type: 'text',
-      fontColor: 'black',
-      onClick: () => router.route('register'),
+      type: 'default',
+      state: 'disable',
+      fontColor: 'white',
     });
 
     return $element;

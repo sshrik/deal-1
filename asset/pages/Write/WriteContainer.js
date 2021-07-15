@@ -9,7 +9,6 @@ export default class WriteContainer extends ElementBuilder {
     this.state = {
       files: [],
     };
-
     this.uploadImgHandler = this.uploadImgHandler.bind(this);
   }
 

@@ -6,6 +6,7 @@ import Main from './Main';
 import Category from './Category';
 import Write from './Write';
 import Login from './Login';
+import Register from './Register';
 import Location from './Location';
 import Menu from './Menu';
 
@@ -36,6 +37,11 @@ const $loginPage = new Login({
   router,
 });
 
+const $registerPage = new Register({
+  parent: $root,
+  router,
+});
+
 const $locationPage = new Location({
   parent: $root,
   routeTo: 'main',
@@ -52,6 +58,7 @@ router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
 router.addScreen('write', $writePage);
 router.addScreen('login', $loginPage);
+router.addScreen('register', $registerPage);
 router.addScreen('location', $locationPage);
 router.addScreen('menu', $menuPage);
 

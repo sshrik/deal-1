@@ -13,6 +13,7 @@ export default class Login extends ElementBuilder {
   }
 
   constructElement() {
+    console.log(this.props);
     const $element = $.create('div').addClass('login-container');
     new SubHeader({
       parent: this,
@@ -20,6 +21,7 @@ export default class Login extends ElementBuilder {
       moveHandler: () => this.router.route(this.routeTo),
     });
     new LoginContainer({
+      ...this.props,
       parent: this,
     });
 
