@@ -7,6 +7,7 @@ export default class ElementBuilder {
     }
     this.isPageElement = true;
     this.parent = props.parent;
+    this.props = props;
     this.child = [];
 
     if (this.parent.isPageElement) {
@@ -66,13 +67,23 @@ export default class ElementBuilder {
     const prevState = { ...this.state };
     this.state = { ...this.state, ...newState };
     if (this.compareState(prevState, this.state)) {
-      this.clear();
-      this.render({ clearAll: true });
+      this.update();
     }
   }
 
   compareState(prevState, newState) {
     return false;
+  }
+
+  update() {
+    // 기존의 값을 가져옴 ( $contents )
+    const $contents = this.getContentsElement();
+
+    this.parent.getContentsElement().removeChild($contents);
+    this.clear();
+    this.init();
+
+    this.parent.render({ clearAll: true });
   }
 
   render(option = {}) {

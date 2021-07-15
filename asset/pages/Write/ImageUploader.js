@@ -4,7 +4,7 @@ import $ from '../../util/domControll';
 
 export default class ImageUploader extends ElementBuilder {
   constructor(props) {
-    const { parent, files, addImgHandler } = props;
+    const { files, addImgHandler } = props;
     super(props);
     this.files = files;
     this.onAdd = addImgHandler;
