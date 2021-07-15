@@ -24,28 +24,30 @@ const category = (eventHandler) =>
     eventHandler
   );
 
-const mapPin = () =>
+const mapPin = (eventHandler) =>
   createSvgBtn(
-    'map-pin',
+    'location',
     `<svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M14.5 7.66663C14.5 12.3333 8.5 16.3333 8.5 16.3333C8.5 16.3333 2.5 12.3333 2.5 7.66663C2.5 6.07533 3.13214 4.5492 4.25736 3.42399C5.38258 2.29877 6.9087 1.66663 8.5 1.66663C10.0913 1.66663 11.6174 2.29877 12.7426 3.42399C13.8679 4.5492 14.5 6.07533 14.5 7.66663Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M8.5 9.66663C9.60457 9.66663 10.5 8.7712 10.5 7.66663C10.5 6.56206 9.60457 5.66663 8.5 5.66663C7.39543 5.66663 6.5 6.56206 6.5 7.66663C6.5 8.7712 7.39543 9.66663 8.5 9.66663Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  `
+  `,
+    eventHandler
   );
 
-const user = () =>
+const user = (eventHandler) =>
   createSvgBtn(
-    'user',
+    'login',
     `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M18 18.3333C18 17.4493 17.6839 17.6014 17.1213 16.9763C16.5587 16.3512 15.7956 16 15 16H9C8.20435 16 7.44129 16.3512 6.87868 16.9763C6.31607 17.6014 6 17.4493 6 18.3333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <circle cx="12" cy="12" r="9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-`
+`,
+    eventHandler
   );
 
-const menu = () =>
+const menu = (eventHandler) =>
   createSvgBtn(
     'menu',
     `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +55,8 @@ const menu = () =>
   <path d="M3 12H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M3 18H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg> 
-`
+`,
+    eventHandler
   );
 
 const like = () =>

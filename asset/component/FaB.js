@@ -6,11 +6,13 @@ import '../css/fab.css';
 export default class FaB extends ElementBuilder {
   constructor(props) {
     super(props);
-    this.onClick = props.onClick;
+    const { moveHandler } = props;
+    this.onClick = moveHandler;
   }
 
   constructElement() {
     const $fab = $.create('button').addClass('fab-btn');
+    $fab.addEventListener('click', this.onClick);
     $fab.appendChild(icons.plus());
     return $fab;
   }

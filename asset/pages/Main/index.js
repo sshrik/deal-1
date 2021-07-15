@@ -1,5 +1,6 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import MainHeader from '../../component/MainHeader';
+import FaB from '../../component/FaB';
 import '../../css/main.css';
 import $ from '../../util/domControll';
 
@@ -20,6 +21,10 @@ export default class Main extends ElementBuilder {
     new MainHeader({
       parent: this,
       moveHandler: this.moveHandler,
+    });
+    new FaB({
+      parent: this,
+      moveHandler: () => this.moveHandler('write'),
     });
 
     return $element;
