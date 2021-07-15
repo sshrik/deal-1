@@ -31,6 +31,13 @@
 
 .img {
   background-color: var(--off-white);
+  border: 1px solid #D7D7D7;
+  /* overflow: hidden; */
+}
+
+.img > img {
+  width: 100%;
+  height: 100%;
 }
 
 .img-small {
@@ -49,6 +56,42 @@
   border-radius: 10px;
   width: 106px;
   height: 106px;
+}
+
+.img-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.img-btn > .img-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-counter > span {
+  margin-top: 7px;
+}
+
+.img-erase {
+  position: relative;
+}
+
+.erase-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-color: var(--title-active);
+  top: 0;
+  right: 0;
+  transform: translate(35%, -35%);
 }
 
 .dest-container {

@@ -5,6 +5,7 @@ import TestPage from './Test/index';
 import Router from '../router';
 import Main from './Main';
 import Category from './Category';
+import Write from './Write';
 
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
@@ -24,6 +25,12 @@ const $mainPage = new Main({
 const $categoryPage = new Category({
   parent: $root,
   routeTo: 'main',
+  router,
+});
+
+const $writePage = new Write({
+  parent: $root,
+  routeTo: '',
   router,
 });
 
@@ -50,11 +57,14 @@ const $categoryPage = new Category({
 router.addScreen('testPage1', $testPage1);
 router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
+router.addScreen('write', $writePage);
 // router.addScreen('testPage2', $testPage2);
 // router.addScreen('testPage3', $testPage3);
 // router.addScreen('testPage4', $testPage4);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 // router.setNowView($testPage1);
-router.setNowView($categoryPage);
+router.setNowView($mainPage);
+// router.setNowView($writePage);
+// $writePage.render();
 $mainPage.render();
