@@ -10,6 +10,9 @@
     "no-unused-vars": "off",
     "no-new": "off",
     "comma-dangle": "off",
+    "no-useless-constructor": "off",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
     "prettier/prettier": [
       "error",
       {
