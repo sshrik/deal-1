@@ -1,6 +1,6 @@
 import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
-import '../../css/button.css';
+import '../css/button.css';
 
 export default class Input extends ElementBuilder {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class Input extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('button').addClass('button-container');
-    
+
     const buttonFontClass = `button-font-${this.size}`;
     const buttonSizeClass = `button-size-${this.size}`;
     const $buttonText = $.create('p')
