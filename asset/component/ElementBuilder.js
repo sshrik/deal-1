@@ -75,15 +75,53 @@ export default class ElementBuilder {
     return false;
   }
 
+  regenerateContents() {
+    this.clear();
+    this.init();
+    this.child.forEach((element) => {
+      element.render();
+    });
+
+    return this.getContentsElement();
+  }
+
   update() {
     // 기존의 값을 가져옴 ( $contents )
     const $contents = this.getContentsElement();
 
-    this.parent.getContentsElement().removeChild($contents);
-    this.clear();
-    this.init();
+    // 부모가 root인지 혹은 ElementBuilder인지 확인하여 HTMLElement를 가져옴.
+    let parentDOMElement;
+    if (this.parent.isPageElement) {
+      parentDOMElement = this.parent.getContentsElement();
+    } else {
+      parentDOMElement = this.parent;
+    }
 
-    this.parent.render({ clearAll: true });
+    // 현재 자신이 부모의 몇번째 자식인지 확인.
+    const $parentChild = parentDOMElement.childNodes;
+    const $childNodes = [];
+
+    for (let i = 0; i < $parentChild.length; i += 1) {
+      if ($parentChild[i] === $contents) {
+        $childNodes.push(-1);
+      } else {
+        $childNodes.push($parentChild[i]);
+      }
+    }
+
+    // 부모 노드를 비워줌.
+    while (parentDOMElement.hasChildNodes()) {
+      parentDOMElement.removeChild(parentDOMElement.firstChild);
+    }
+
+    // 자신의 위치에 자기 자신을 넣어줌.
+    for (let i = 0; i < $childNodes.length; i += 1) {
+      if ($childNodes[i] === -1) {
+        parentDOMElement.appendChild(this.regenerateContents());
+      } else {
+        parentDOMElement.appendChild($childNodes[i]);
+      }
+    }
   }
 
   render(option = {}) {
