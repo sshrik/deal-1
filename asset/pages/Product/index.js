@@ -14,9 +14,8 @@ export default class ProductPage extends ElementBuilder {
     });
     new SlidingWindowShower({
       parent: this,
+      specImage: this.props.element.specImage,
     });
-
-    console.log(this.props.element);
 
     return $element;
   }
