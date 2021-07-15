@@ -1,5 +1,6 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
+import MenuContainer from './MenuContainer';
 import $ from '../../util/domControll';
 
 export default class Menu extends ElementBuilder {
@@ -16,6 +17,9 @@ export default class Menu extends ElementBuilder {
       parent: this,
       title: '메뉴',
       moveHandler: () => this.router.route(this.routeTo),
+    });
+    new MenuContainer({
+      parent: this,
     });
 
     return $element;
