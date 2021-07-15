@@ -101,13 +101,13 @@ export default class ElementBuilder {
     const $parentChild = parentDOMElement.childNodes;
     const $childNodes = [];
 
-    for (let i = 0; i < $parentChild.length; i += 1) {
-      if ($parentChild[i] === $contents) {
+    [...$parentChild].forEach((element) => {
+      if (element === $contents) {
         $childNodes.push(-1);
       } else {
-        $childNodes.push($parentChild[i]);
+        $childNodes.push(element);
       }
-    }
+    });
 
     // 부모 노드를 비워줌.
     while (parentDOMElement.hasChildNodes()) {
@@ -115,13 +115,13 @@ export default class ElementBuilder {
     }
 
     // 자신의 위치에 자기 자신을 넣어줌.
-    for (let i = 0; i < $childNodes.length; i += 1) {
-      if ($childNodes[i] === -1) {
+    $childNodes.forEach((element) => {
+      if (element === -1) {
         parentDOMElement.appendChild(this.regenerateContents());
       } else {
-        parentDOMElement.appendChild($childNodes[i]);
+        parentDOMElement.appendChild(element);
       }
-    }
+    });
   }
 
   render(option = {}) {
