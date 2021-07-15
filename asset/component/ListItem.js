@@ -40,18 +40,29 @@ export default class ListItem extends ElementBuilder {
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
     $listItemActions.appendChild(icons.like());
+
+    const $bottomIconInfoContainer = $.create('div').addClass(
+      'list-item--bottom-info__container'
+    );
     if (comment > 0) {
       const $commentContainer = $.create('div').addClass('actions__comments');
       $commentContainer.appendChild(icons.chat());
       $commentContainer.appendChild($.create('span').setText(comment));
-      $listItemActions.appendChild($commentContainer);
+      $bottomIconInfoContainer.appendChild($commentContainer);
     }
     if (like > 0) {
-      console.log('Need to implement like components');
+      const $likeContainer = $.create('div').addClass('actions__comments');
+      const $likeButton = $.create('img');
+      $likeButton.src = 'like__small.png';
+      $likeContainer.appendChild($likeButton);
+      $likeContainer.appendChild($.create('span').setText(like));
+      $bottomIconInfoContainer.appendChild($likeContainer);
     }
+
     $listItem.appendChild(Image('large', imgSrc));
     $listItem.appendChild($listItemContent);
     $listItem.appendChild($listItemActions);
+    $listItem.appendChild($bottomIconInfoContainer);
 
     return $listItem;
   }
