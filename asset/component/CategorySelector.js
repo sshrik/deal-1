@@ -30,9 +30,9 @@ export default class CategorySelector extends ElementBuilder {
     new CategorySelectContainer({
       parent: this,
       state: [
-        'active',
         'deactive',
-        'active',
+        'deactive',
+        'deactive',
         'deactive',
         'deactive',
         'deactive',

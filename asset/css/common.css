@@ -23,6 +23,10 @@
   height: 100vh;
 }
 
+.invisible {
+  display: none;
+}
+
 .icon {
   display: flex;
   align-items: center;
