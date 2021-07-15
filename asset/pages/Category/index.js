@@ -5,8 +5,8 @@ import $ from '../../util/domControll';
 
 export default class Category extends ElementBuilder {
   constructor(props) {
-    const { parent, routeTo, router } = props;
-    super(parent);
+    const { routeTo, router } = props;
+    super(props);
     this.state = {
       categories: ['가전기기', '생활가전', '가구인테리어', '게임/취미'],
     };
@@ -14,8 +14,8 @@ export default class Category extends ElementBuilder {
     this.router = router;
   }
 
-  init() {
-    this.contents = $.create('div');
+  constructElement() {
+    const $element = $.create('div');
     new SubHeader({
       parent: this,
       title: '카테고리',
@@ -23,5 +23,7 @@ export default class Category extends ElementBuilder {
       moveHandler: () => this.router.route(this.routeTo),
     });
     new CategoryBody({ parent: this, categories: this.state.categories });
+
+    return $element;
   }
 }

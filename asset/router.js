@@ -40,7 +40,7 @@ export default class Router {
     // 사라질 view에 Container 부착.
     // FadeInMotion을 어디서 줄 것인지 결정 ( right 기본, right면 오른쪽 벽으로 들어감. )
     const animationContainer = $.create('div').addClass('dest-container');
-    animationContainer.appendChild(fadeOutView.contents);
+    animationContainer.appendChild(fadeOutView.getContentsElement());
     // 사라질 view 등록
     this.root.appendChild(animationContainer);
 
@@ -61,7 +61,7 @@ export default class Router {
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
-      if (!destObject.contents) {
+      if (!destObject.isInited()) {
         destObject.render();
       }
 
@@ -71,7 +71,7 @@ export default class Router {
 
       // App의 상태에 관계없이 불러오기 위해서 dest-container를 사용 ( position을 absolute로 만들어줌 )
       const animationContainer = $.create('div').addClass('dest-container');
-      animationContainer.appendChild(destObject.contents);
+      animationContainer.appendChild(destObject.getContentsElement());
       this.root.appendChild(animationContainer);
 
       // FadeInMotion을 어디서 줄 것인지 결정 ( right 기본, right면 왼쪽에서 나와 오른쪽으로 감. )

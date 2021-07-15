@@ -1,7 +1,12 @@
 export default class ElementBuilder {
-  constructor(parent) {
+  constructor(props) {
+    if (!props.parent) {
+      throw new Error(
+        '[ElementBuilder] : props key error - props need parent key for appendChild this.'
+      );
+    }
     this.isPageElement = true;
-    this.parent = parent;
+    this.parent = props.parent;
     this.child = [];
 
     if (this.parent.isPageElement) {
@@ -12,11 +17,20 @@ export default class ElementBuilder {
   }
 
   init() {
-    this.child.forEach((element) => {
-      element.init();
-    });
-    this.child = [];
-    this.contents = null;
+    const $element = this.constructElement();
+    this.setContents($element);
+  }
+
+  constructElement() {
+    throw new Error('[ElementBuilder] : ConstructElement is not emplemented.');
+  }
+
+  setContents(elements) {
+    this.contents = elements;
+  }
+
+  isInited() {
+    return this.contents === false;
   }
 
   addClassToContainer(className) {
@@ -53,7 +67,7 @@ export default class ElementBuilder {
       this.init();
     }
 
-    // 하위 element의 rendering 시작. 재귀적으로 호출하여 DFS의 형태로 Rendering 합니다.
+    // 하위 element의 rendering 시작. 재귀적으로 호출하여 BFS의 형태로 Rendering 합니다.
     this.child.forEach((element) => {
       element.render();
     });
@@ -61,7 +75,7 @@ export default class ElementBuilder {
     // 만약 PageElement라면 실제 Element인 contents를 가지고 작업합니다.
     let DOMDestParent = null;
     if (this.parent.isPageElement) {
-      DOMDestParent = this.parent.contents;
+      DOMDestParent = this.parent.getContentsElement();
     } else {
       DOMDestParent = this.parent;
     }
@@ -71,6 +85,6 @@ export default class ElementBuilder {
       DOMDestParent.innerHTML = '';
     }
     // 루트 노드의 맨 마지막에 자신을 추가해줍니다.
-    DOMDestParent.appendChild(this.contents);
+    DOMDestParent.appendChild(this.getContentsElement());
   }
 }

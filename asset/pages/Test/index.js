@@ -8,14 +8,14 @@ import '../../css/test.css';
 
 export default class TestPage extends ElementBuilder {
   constructor(props) {
-    super(props.parent);
+    super(props);
     this.testText = props.testText;
     this.router = props.router;
     this.dest = props.routeTo;
   }
 
-  init() {
-    this.contents = document.createElement('div');
+  constructElement() {
+    const $element = document.createElement('div');
     function clickEvent(ev) {
       console.log('Hello!');
     }
@@ -87,6 +87,8 @@ export default class TestPage extends ElementBuilder {
       },
     });
 
-    this.contents.classList.add('test-container');
+    $element.classList.add('test-container');
+
+    return $element;
   }
 }

@@ -5,19 +5,21 @@ import '../../css/categoryBody.css';
 
 export default class CategoryBody extends ElementBuilder {
   constructor(props) {
-    const { parent, categories } = props;
-    super(parent);
+    const { categories } = props;
+    super(props);
     this.categories = categories;
   }
 
-  init() {
-    this.contents = $.create('div').addClass('categories-container');
+  constructElement() {
+    const $element = $.create('div').addClass('categories-container');
 
     this.categories.forEach((category) => {
       const $category = $.create('div').addClass('category');
       $category.appendChild(Image('small', '#'));
       $category.appendChild($.create('span').setText(category));
-      this.contents.appendChild($category);
+      $element.appendChild($category);
     });
+
+    return $element;
   }
 }
