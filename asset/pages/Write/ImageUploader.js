@@ -5,13 +5,17 @@ import $ from '../../util/domControll';
 export default class ImageUploader extends ElementBuilder {
   constructor(props) {
     const { parent, files, addImgHandler } = props;
-    super(parent);
+    super(props);
     this.files = files;
     this.onAdd = addImgHandler;
   }
 
-  init() {
-    this.contents = $.create('div').addClass('img-upload__container');
+  compareState(prevState, newState) {
+    return false;
+  }
+
+  constructElement() {
+    const $element = $.create('div').addClass('img-upload__container');
     const $inputUnvisible = $.create('input');
     $inputUnvisible.type = 'file';
     $inputUnvisible.style.display = 'none';
@@ -27,8 +31,10 @@ export default class ImageUploader extends ElementBuilder {
       $temp.appendChild(ImageBtn('delete', this.files.length, file));
     });
 
-    this.contents.appendChild($inputUnvisible);
-    this.contents.appendChild($imgUploadBtn);
-    this.contents.appendChild($temp);
+    $element.appendChild($inputUnvisible);
+    $element.appendChild($imgUploadBtn);
+    $element.appendChild($temp);
+
+    return $element;
   }
 }
