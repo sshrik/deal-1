@@ -26,7 +26,7 @@ export default class MainHeader extends ElementBuilder {
 
     const $rightContainer = $.create('div').addClass('header-container__right');
     $rightContainer.appendChild(icons.user(this.onMove));
-    $rightContainer.appendChild(icons.menu());
+    $rightContainer.appendChild(icons.menu(this.onMove));
 
     $headerContainer.appendChild($rightContainer);
 
