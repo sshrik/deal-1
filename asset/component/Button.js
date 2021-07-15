@@ -2,7 +2,7 @@ import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
 import '../css/button.css';
 
-export default class Input extends ElementBuilder {
+export default class Button extends ElementBuilder {
   constructor(props) {
     super(props);
     this.placeHolder = props.placeHolder;

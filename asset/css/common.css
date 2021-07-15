@@ -23,6 +23,10 @@
   height: 100vh;
 }
 
+.invisible {
+  display: none;
+}
+
 .icon {
   display: flex;
   align-items: center;
@@ -52,10 +56,18 @@
   height: 76px;
 }
 
+.img-medium > img {
+  border-radius: 8px;
+}
+
 .img-large {
   border-radius: 10px;
   width: 106px;
   height: 106px;
+}
+
+.img-large > img {
+  border-radius: 10px;
 }
 
 .img-btn {
@@ -63,6 +75,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  margin-top: 24px;
 }
 
 .img-btn > .img-counter {
@@ -72,12 +85,23 @@
   justify-content: center;
 }
 
-.img-counter > span {
+.img-counter > p {
   margin-top: 7px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--grey1);
 }
 
 .img-erase {
   position: relative;
+}
+
+.line {
+  width: 100%;
+  height: 0px;
+  border: 0.1px solid var(--grey3);
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .erase-btn {

@@ -67,3 +67,36 @@
 .button-active {
   cursor: pointer;
 }
+
+.category-selector__container {
+  flex-direction: row;
+  white-space: nowrap;
+  overflow-y: scroll;
+}
+
+.category-button--container {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 2px 0px 2px;
+  height: 28px;
+  border-radius: 14px;
+  cursor: pointer;
+} 
+
+.category-button--container > p {
+  font-size: 14px;
+  line-height: 20px;
+  margin: auto 16px auto 16px;
+}
+
+.category-button__active {
+  background-color: var(--primary1);
+  color: var(--white);
+  columns: var(--grey1);
+}
+
+.category-button__deactive {
+  background-color: var(--white);
+  border: 1px solid var(--grey3);
+}

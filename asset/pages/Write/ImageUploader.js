@@ -10,10 +10,6 @@ export default class ImageUploader extends ElementBuilder {
     this.onAdd = addImgHandler;
   }
 
-  compareState(prevState, newState) {
-    return false;
-  }
-
   constructElement() {
     const $element = $.create('div').addClass('img-upload__container');
     const $inputUnvisible = $.create('input');
@@ -26,9 +22,13 @@ export default class ImageUploader extends ElementBuilder {
       $inputUnvisible.click();
     });
 
-    const $temp = $.create('div');
-    this.files.forEach((file) => {
-      $temp.appendChild(ImageBtn('delete', this.files.length, file));
+    const $temp = $.create('div').addClass('img-shower__container');
+    this.files.forEach((file, index) => {
+      $temp.appendChild(
+        ImageBtn('delete', this.files.length, file, () => {
+          this.props.deleteImage(index);
+        })
+      );
     });
 
     $element.appendChild($inputUnvisible);

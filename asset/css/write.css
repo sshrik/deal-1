@@ -5,11 +5,56 @@
 }
 
 .write-content-container {
-  padding: 24px 16px 16px 0;
+  padding: 0px 16px 0px 16px;
 }
 
 .img-upload__container {
   display: grid;
+  height: 100px;
+  grid-template-columns: repeat(11, 1fr);
+  column-gap: 15px;
+  overflow-x: scroll;
+}
+
+.img-shower__container {
+  margin-top: 24px;
+  grid-column: auto / span 10;
+  display: grid;
   grid-template-columns: repeat(10, 1fr);
   column-gap: 15px;
+}
+
+.category-selector--container > p {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--grey1);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.write-fotter--container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  border-top: 1px solid var(--grey3);
+}
+
+.write-fotter--container > img {
+  margin-left: 16px;
+  height: 14px;
+  object-fit: contain;
+  margin-right: 4px;
+}
+
+.write-fotter--container > p {
+  font-size: 14px;
+  line-height: 36px;
+  /* 글자 옆의 이미지가 위가 굵고 아래가 얇은 이미지라 이미지와 글자가 세로 높이가 달라보여서 -3 했습니다. */
+  margin-top: -3px;
+  color: var(--title-active);
 }
