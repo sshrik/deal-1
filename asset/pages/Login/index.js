@@ -1,6 +1,8 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
+import LoginContainer from './LoginContainer';
+import '../../css/login.css';
 
 export default class Login extends ElementBuilder {
   constructor(props) {
@@ -16,6 +18,9 @@ export default class Login extends ElementBuilder {
       parent: this,
       title: '로그인',
       moveHandler: () => this.router.route(this.routeTo),
+    });
+    new LoginContainer({
+      parent: this,
     });
 
     return $element;

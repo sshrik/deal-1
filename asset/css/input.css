@@ -6,7 +6,7 @@
   border-style: none; 
   border: 1px solid var(--grey3);
   border-radius: 8px;
-  padding-left: 8px;
+  padding: 10px 16px 8px 16px;
   width: 100%;
   color: var(--title-active);
 }
