@@ -12,7 +12,7 @@ const router = new Router($root);
 const $testPage1 = new TestPage({
   parent: $root,
   testText: 'INDEX_01',
-  routeTo: 'testPage2',
+  routeTo: 'write',
   router,
 });
 
@@ -64,7 +64,7 @@ router.addScreen('write', $writePage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 // router.setNowView($testPage1);
-router.setNowView($mainPage);
-router.setNowView($writePage);
-$writePage.render();
+// router.setNowView($mainPage);
+router.setNowView($testPage1);
+$testPage1.render();
 // $mainPage.render();
