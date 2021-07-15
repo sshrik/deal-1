@@ -28,13 +28,7 @@ export default class Main extends ElementBuilder {
     tempData.forEach((element) => {
       new ListItem({
         parent: this,
-        title: element.title,
-        location: element.location,
-        lastTime: element.lastTime,
-        price: element.price,
-        comment: element.comment,
-        like: element.like,
-        imgSrc: element.imgSrc,
+        ...element,
         onClick: () => {
           const $newPage = new ProductPage({
             parent: this.parent,
