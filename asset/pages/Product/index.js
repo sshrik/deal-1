@@ -1,7 +1,7 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
-import SlidingWindowShower from '../../component/SlidingImageShower';
 import ProductBar from '../../component/ProductBar';
+import ProductContainer from './ProductContainer';
 import $ from '../../util/domControll';
 import '../../css/product.css';
 
@@ -13,12 +13,9 @@ export default class ProductPage extends ElementBuilder {
       transparent: true,
       moveHandler: () => this.props.router.route(this.props.routeTo),
     });
-    new SlidingWindowShower({
+    new ProductContainer({
       parent: this,
-      specImage: this.props.element.specImage,
-    });
-    new ProductContent({
-      parent: this,
+      element: this.props.element,
     });
     new ProductBar({
       parent: this,
