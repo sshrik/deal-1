@@ -3,6 +3,7 @@ import MainHeader from '../../component/MainHeader';
 import ListItem from '../../component/ListItem';
 import FaB from '../../component/FaB';
 import tempData from '../../component/TempMainList';
+import ProductPage from '../Product';
 import $ from '../../util/domControll';
 import '../../css/main.css';
 
@@ -34,6 +35,16 @@ export default class Main extends ElementBuilder {
         comment: element.comment,
         like: element.like,
         imgSrc: element.imgSrc,
+        onClick: () => {
+          const $newPage = new ProductPage({
+            parent: this.parent,
+            element,
+            router: this.router,
+            routeTo: 'main',
+          });
+          this.router.addScreen('newPage', $newPage);
+          this.router.route('newPage');
+        },
       });
     });
     new FaB({

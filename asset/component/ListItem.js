@@ -63,6 +63,7 @@ export default class ListItem extends ElementBuilder {
     $listItem.appendChild($listItemContent);
     $listItem.appendChild($listItemActions);
     $listItem.appendChild($bottomIconInfoContainer);
+    $listItem.addEventListener('click', this.props.onClick);
 
     return $listItem;
   }

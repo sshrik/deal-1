@@ -9,6 +9,10 @@
   padding: 17px 16px;
 }
 
+.transparent-background {
+  background-color: transparent;
+}
+
 .sub-header-container.menu--white {
   background-color: var(--white);
 }
