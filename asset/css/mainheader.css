@@ -23,7 +23,7 @@
   color: var(--white);
 }
 
-.header-container__location .map-pin {
+.header-container__location .location {
   margin-right: 10px;
 }
 
@@ -34,6 +34,6 @@
   grid-column-end: 13;
 }
 
-.header-container__right .user {
+.header-container__right .login {
   margin-right: 22px;
 }

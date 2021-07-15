@@ -9,6 +9,7 @@ export default class Write extends ElementBuilder {
     const { parent, routeTo, router } = props;
     super(props);
     this.state = {};
+    this.router = router;
   }
 
   constructElement() {
@@ -16,6 +17,7 @@ export default class Write extends ElementBuilder {
     new SubHeader({
       parent: this,
       title: '글쓰기',
+      moveHandler: () => this.router.route('main'),
       action: null,
     });
     new WriteContainer({
