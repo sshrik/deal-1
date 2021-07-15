@@ -1,6 +1,7 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../component/ElementBuilder';
 import ListItem from '../../../component/ListItem';
+import tempData from '../../../component/TempMainList';
 
 export default class SellingList extends ElementBuilder {
   constructor(props) {
@@ -13,9 +14,11 @@ export default class SellingList extends ElementBuilder {
   constructElement() {
     const $element = $.create('div').addClass('selling-list');
 
-    new ListItem({
-      parent: this,
-      title: 'ts',
+    tempData.forEach((element) => {
+      new ListItem({
+        parent: this,
+        ...element,
+      });
     });
 
     return $element;
