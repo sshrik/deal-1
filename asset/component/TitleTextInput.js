@@ -20,17 +20,30 @@ export default class TitleTextInput extends ElementBuilder {
     const $input = $.create('input');
     $input.placeholder = '글 제목';
     $input.value = this.state.titleText;
+    const $categorySelector = new CategorySelector({
+      parent: this,
+      invisible: $input.value.length === 0,
+    });
+
+    $input.addEventListener('input', (event) => {
+      if ($input.value.length > 0) {
+        $categorySelector.removeClassToContainer('invisible');
+      } else {
+        $categorySelector.addClassToContainer('invisible');
+      }
+    });
+
     $input.addEventListener('change', (event) => {
+      if ($input.value.length > 0) {
+        $categorySelector.removeClassToContainer('invisible');
+      } else {
+        $categorySelector.addClassToContainer('invisible');
+      }
       this.setState({
         titleText: $input.value,
       });
     });
 
-    if (this.state.titleText.length > 0) {
-      new CategorySelector({
-        parent: this,
-      });
-    }
     $element.appendChild($input);
     return $element;
   }
