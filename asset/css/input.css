@@ -1,8 +1,5 @@
 .input-container { 
-  width: calc(100% - 40px);
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  width: 100%;
 }
 
 .input-container > input {
