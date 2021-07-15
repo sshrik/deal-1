@@ -1,0 +1,6 @@
+
+.sliding-window--container{
+  width: 100vw;
+  height: 100vw;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0) 16.52%, rgba(0, 0, 0, 0) 87.36%, rgba(0, 0, 0, 0.24) 100%);
+}
