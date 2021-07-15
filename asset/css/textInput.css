@@ -1,0 +1,42 @@
+.text-input--container {
+  width: 100%;
+}
+
+.text-input--container > input {
+  width: 100%;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--title-active);
+  border-style: none; 
+}
+
+.text-input--container > input::placeholder{
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--grey1);
+}
+
+.text-input--container > input:focus {
+  border-style: none; 
+  outline: none;
+}
+
+.text-input--container > textarea {
+  width: 100%;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--title-active);
+  resize: none;
+  border-style: none;
+}
+
+.text-input--container > textarea::placeholder{
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--grey1);
+}
+
+.text-input--container > textarea:focus {
+  border-style: none; 
+  outline: none;
+}
