@@ -23,10 +23,10 @@ export default class ImageUploader extends ElementBuilder {
     });
 
     const $temp = $.create('div').addClass('img-shower__container');
-    this.files.forEach((file) => {
+    this.files.forEach((file, index) => {
       $temp.appendChild(
         ImageBtn('delete', this.files.length, file, () => {
-          console.log('Delete Process');
+          this.props.deleteImage(index);
         })
       );
     });
