@@ -8,7 +8,7 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
     $imgContainer.addClass('img-btn');
     const $pictureCount = $.create('div').addClass('img-counter');
     $pictureCount.appendChild(icons.picture());
-    $pictureCount.appendChild($.create('span').setText(`10/${numOfFiles}`));
+    $pictureCount.appendChild($.create('p').setText(`${numOfFiles}/10`));
     $imgContainer.appendChild($pictureCount);
   } else if (type === 'delete') {
     $imgContainer.addClass('img-erase');
@@ -17,6 +17,7 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
 
     const $eraseBtn = $.create('div').addClass('erase-btn');
     $eraseBtn.appendChild(icons.erase());
+    $eraseBtn.addEventListener('click', deleteAction);
 
     $imgContainer.appendChild($img);
     $imgContainer.appendChild($eraseBtn);

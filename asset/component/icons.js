@@ -6,7 +6,9 @@ const createSvgBtn = (name, svgTag, eventHandler = null) => {
     .addClass(name)
     .setHTML(svgTag);
   $svgBtn.addEventListener('click', (e) => {
-    eventHandler(name);
+    if (eventHandler) {
+      eventHandler(name);
+    }
   });
   return $svgBtn;
 };

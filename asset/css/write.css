@@ -5,10 +5,20 @@
 }
 
 .write-content-container {
-  padding: 24px 16px 0px 16px;
+  padding: 0px 16px 0px 16px;
 }
 
 .img-upload__container {
+  display: grid;
+  height: 100px;
+  grid-template-columns: repeat(11, 1fr);
+  column-gap: 15px;
+  overflow-x: scroll;
+}
+
+.img-shower__container {
+  margin-top: 24px;
+  grid-column: auto / span 10;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   column-gap: 15px;
