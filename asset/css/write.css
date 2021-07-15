@@ -23,3 +23,11 @@
   grid-template-columns: repeat(10, 1fr);
   column-gap: 15px;
 }
+
+.category-selector--container > p {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--grey1);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}

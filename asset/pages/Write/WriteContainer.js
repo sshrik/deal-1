@@ -54,7 +54,6 @@ export default class WriteContainer extends ElementBuilder {
     });
     new TitleTextInput({
       parent: this,
-      placeholder: '글 제목',
       id: 'write-header',
     });
     new DivLine({
