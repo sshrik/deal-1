@@ -1,5 +1,7 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../component/ElementBuilder';
+import { tempData } from '../../../util/tempList';
+import ListItem from '../../../component/ListItem';
 
 export default class LikeList extends ElementBuilder {
   constructor(props) {
@@ -8,7 +10,13 @@ export default class LikeList extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('div').addClass('like-list');
-    $element.setHTML('<div>List List</div>');
+
+    tempData.forEach((item) => {
+      new ListItem({
+        parent: this,
+        ...item,
+      });
+    });
 
     return $element;
   }
