@@ -54,11 +54,25 @@ export default class ElementBuilder {
     this.child.forEach((element) => {
       element.clear();
     });
+    this.child = [];
   }
 
   getContentsElement() {
     if (!this.contents) this.init();
     return this.contents;
+  }
+
+  setState(newState) {
+    const prevState = { ...this.state };
+    this.state = { ...this.state, ...newState };
+    if (this.compareState(prevState, this.state)) {
+      this.clear();
+      this.render({ clearAll: true });
+    }
+  }
+
+  compareState(prevState, newState) {
+    return false;
   }
 
   render(option = {}) {
