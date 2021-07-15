@@ -16,3 +16,8 @@
 .tablink {
   width: 85%;
 }
+
+.tablink.active {
+  border-bottom: 1px solid var(--primary1);
+  color: var(--primary1);
+}

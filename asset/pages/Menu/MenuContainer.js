@@ -26,20 +26,30 @@ export default class MenuContainer extends ElementBuilder {
     return true;
   }
 
+  resetTabActivation = (target) => {
+    const $tabs = target.parentElement.children;
+    [...$tabs].forEach((tabBtn) => tabBtn.removeClass('active'));
+  };
+
   tabChangeHandler = (e) => {
     const { target } = e;
-    this.setState({ curTab: parseInt(target.id) });
+    if (target.tagName === 'BUTTON') {
+      this.resetTabActivation(target);
+      this.setState({ curTab: parseInt(target.id) });
+    }
   };
 
   constructElement() {
     const { curTab } = this.state;
-    console.log(curTab);
     const $element = $.create('div').addClass('menu-content-container');
     const $tab = $.create('div').addClass('menu-tab');
     $tab.setHTML(
       tabs
         .map(
-          (tab) => `<button class="tablink" id=${tab.id}>${tab.name}</button>`
+          (tab, idx) =>
+            `<button class="tablink ${idx + 1 === curTab ? 'active' : ''}" id=${
+              tab.id
+            }>${tab.name}</button>`
         )
         .join('')
     );
