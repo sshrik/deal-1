@@ -14,7 +14,7 @@ export default class Category extends ElementBuilder {
   }
 
   constructElement() {
-    const $element = $.create('div');
+    const $element = $.create('div').addClass('category-total--container');
     new SubHeader({
       parent: this,
       title: '카테고리',
