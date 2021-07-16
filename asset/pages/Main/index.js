@@ -4,6 +4,7 @@ import ListItem from '../../component/ListItem';
 import FaB from '../../component/FaB';
 import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
+import LoadingModal from '../../component/LoadingModal';
 import $ from '../../util/domControll';
 import '../../css/main.css';
 
@@ -21,6 +22,15 @@ export default class Main extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('div').addClass('main-contianer');
+    const $loadingModal = new LoadingModal({
+      parent: this,
+      needLoad: () => !this.router.globalState.firstLoading,
+      whenLoad: () => (this.router.globalState.firstLoading = true),
+    });
+    setTimeout(() => {
+      $loadingModal.removeClassToContainer('modal--top-fix');
+      $loadingModal.addClassToContainer('invisible');
+    }, 2000);
     new MainHeader({
       parent: this,
       moveHandler: this.moveHandler,

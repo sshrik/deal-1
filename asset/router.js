@@ -8,6 +8,7 @@ export default class Router {
     this.nowView = null;
     this.root = root;
     this.screens = {};
+    this.globalState = {};
   }
 
   // screenObject [ElementBuidler]

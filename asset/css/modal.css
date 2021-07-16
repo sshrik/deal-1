@@ -1,0 +1,80 @@
+.loading-modal--container {
+  width: 0px;
+  height: 0px;
+  background-color: var(--white);
+  top: 0px;
+  left: 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  animation-name: opacityOut;
+  animation-delay: 1.7s;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.modal--top-fix {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.loading-modal__logo--container {
+  position: relative;
+  width: 14%;
+  height: 14%;
+  margin-right: 15px;
+  margin-top: 4px;
+}
+
+.loading-modal__logo-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation-name: moveLeft;
+  animation-duration: 1.5s;
+}
+
+.loading-modal__title-image {
+  width: 50%;
+  object-fit: contain;
+}
+
+@keyframes moveLeft {
+  0% {
+    right: -400px;
+    transform: rotate(0);
+  }
+  60%{
+    right: 0px;
+    top: 0px;
+    transform: rotate(-1440deg);
+  }
+  70%{
+    top: -20px;
+  }
+  80%{
+    top: 0px;
+  }
+  90%{
+    top: -20px;
+  }
+  100%{
+    top: 0px;
+    transform: rotate(-1440deg);
+  }
+}
+
+@keyframes opacityOut {
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
