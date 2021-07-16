@@ -1,15 +1,14 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import CategoryBody from './CategoryBody';
+import categories from '../../component/CategoryList';
+import catImages from '../../component/CategoryImage';
 import $ from '../../util/domControll';
 
 export default class Category extends ElementBuilder {
   constructor(props) {
-    const { routeTo, router } = props;
     super(props);
-    this.state = {
-      categories: ['가전기기', '생활가전', '가구인테리어', '게임/취미'],
-    };
+    const { routeTo, router } = props;
     this.routeTo = routeTo;
     this.router = router;
   }
@@ -22,7 +21,7 @@ export default class Category extends ElementBuilder {
       action: null,
       moveHandler: () => this.router.route(this.routeTo),
     });
-    new CategoryBody({ parent: this, categories: this.state.categories });
+    new CategoryBody({ parent: this, catImages, categories });
 
     return $element;
   }
