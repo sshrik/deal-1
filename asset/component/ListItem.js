@@ -1,33 +1,47 @@
 import $ from '../util/domControll';
-import icons from '../component/icons';
-import Image from '../component/Image';
+import ElementBuilder from './ElementBuilder';
+import icons from './icons';
+import Image from './Image';
+import { stringEllipsis } from '../util/utlls';
 import '../css/listItem.css';
 
-export default class ListItem {
-  constructor($root, isDropdown) {
-    this.$root = $root;
+function Comment(comment) {
+  return $.create('div').addClass('actions__comments').setHTML(`
+    <div class="actions__comments">
+      ${icons.chat().innerHTML}
+      <span>${comment}</span>
+    </div>
+    `);
+}
 
-    this.render();
-  }
+function Like(like) {
+  return $.create('div').addClass('actions__comments').setHTML(`
+        <img src="like__small.png"/>
+        <span>${like}</span>
+      `);
+}
 
-  render = () => {
+export default class ListItem extends ElementBuilder {
+  constructElement() {
+    const { title, location, lastTime, price, comment, like, imgSrc } =
+      this.props;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
     const $listItemContent = $.create('div').addClass('list-item__content');
     const $contentTitle = $.create('span')
       .addClass('content__title')
-      .setText('파랑선풍기');
+      .setText(stringEllipsis(title));
 
     const $contentLocationTime = $.create('div').addClass('content__lo-time')
       .setHTML(`
-      <span>역삼동</span>
-      <span>두 시간전</span>
+      <span>${location}</span>
+      <span>${lastTime}시간 전</span>
     `);
 
     const $contentPrice = $.create('span')
       .addClass('content__price')
-      .setText('1,599,999');
+      .setText(price);
 
     $listItemContent.appendChild($contentTitle);
     $listItemContent.appendChild($contentLocationTime);
@@ -35,16 +49,20 @@ export default class ListItem {
 
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
-    $listItemActions.appendChild(icons.like);
-    const $commentContainer = $.create('div').addClass('actions__comments');
-    $commentContainer.appendChild(icons.chat);
-    $commentContainer.appendChild($.create('span').setText('1'));
-    $listItemActions.appendChild($commentContainer);
+    $listItemActions.appendChild(icons.like());
 
-    $listItem.appendChild(Image('large', '#'));
+    const $bottomIconInfoContainer = $.create('div').addClass(
+      'list-item--bottom-info__container'
+    );
+    comment > 0 && $bottomIconInfoContainer.appendChild(Comment(comment));
+    like > 0 && $bottomIconInfoContainer.appendChild(Like(like));
+
+    $listItem.appendChild(Image('large', imgSrc));
     $listItem.appendChild($listItemContent);
     $listItem.appendChild($listItemActions);
+    $listItem.appendChild($bottomIconInfoContainer);
+    $listItem.addEventListener('click', this.props.onClick);
 
-    this.$root.appendChild($listItem);
-  };
+    return $listItem;
+  }
 }
