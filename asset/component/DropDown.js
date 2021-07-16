@@ -1,5 +1,6 @@
 import ElementBuilder from './ElementBuilder';
 import $ from '../util/domControll';
+import '../css/dropDown.css';
 
 export default class DropDown extends ElementBuilder {
   constructor(props) {
@@ -9,7 +10,8 @@ export default class DropDown extends ElementBuilder {
   // dropDownInfo = [{name,color}]
 
   constructElement() {
-    const { dropDownInfo, action, isOpen } = this.props;
+    const { $attachedTarget, dropDownInfo, action, isOpen } = this.props;
+
     const $dropDownContainer = $.create('ul').addClass('drop-downs-items');
     $dropDownContainer.addEventListener('click', action);
 
@@ -19,10 +21,16 @@ export default class DropDown extends ElementBuilder {
       );
     });
 
-    isOpen
-      ? ($dropDownContainer.style.display = 'block')
-      : ($dropDownContainer.style.display = 'none');
+    if (isOpen) {
+      $attachedTarget.style.position = 'relative';
+      $dropDownContainer.style.display = 'block';
+    } else {
+      $attachedTarget.style.position = 'static';
+      $dropDownContainer.style.display = 'none';
+    }
 
-    return $dropDownContainer;
+    $attachedTarget.addElement($dropDownContainer);
+
+    return $attachedTarget;
   }
 }

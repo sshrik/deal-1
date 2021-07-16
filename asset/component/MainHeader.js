@@ -18,21 +18,24 @@ export default class MainHeader extends ElementBuilder {
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
-    ).setHTML(`
+    );
+    const $locationBtn = $.create('div').addClass('location-btn').setHTML(`
       ${IconBtns.mapPin().outerHTML}
       <span>양재동</span>
     `);
-
-    new DropDown({
-      parent: this,
-      dropDownInfo: [{ name: '양재동', color: 'black' }],
-      isOpen: true,
-    });
+    $locationContainer.addElement($locationBtn);
 
     const $rightContainer = $.create('div')
       .addClass('header-container__right')
       .addElement(IconBtns.user(this.onMove))
       .addElement(IconBtns.menu(this.onMove));
+
+    new DropDown({
+      parent: this,
+      $attachedTarget: $locationContainer.cloneNode(),
+      dropDownInfo: [{ name: '양재동', color: 'black' }],
+      isOpen: true,
+    });
 
     $headerContainer.addElement($locationContainer).addElement($rightContainer);
 
