@@ -8,11 +8,11 @@ const catImages = [
   'skirt.png',
   'clothe.png',
   'kids.png',
-  '#',
-  '#',
-  '#',
-  '#',
-  '#',
+  'veauti.png',
+  'pet.png',
+  'book.png',
+  'plant.png',
+  'etc.png',
 ];
 
 export default catImages;
