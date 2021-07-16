@@ -7,19 +7,19 @@ export default class DropDown extends ElementBuilder {
     super(props);
   }
 
-  // dropDownInfo = [{name,color}]
-
   constructElement() {
-    const { $attachedTarget, dropDownInfo, isOpen, onClose } = this.props;
+    const { $attachedTarget, dropDownInfo, isOpen, onClose, onSelect } =
+      this.props;
 
     const $dropDownContainer = $.create('ul').addClass('drop-downs-items');
-    $dropDownContainer.addEventListener('click', () => {
+    $dropDownContainer.addEventListener('click', (e) => {
       onClose();
+      onSelect(e);
     });
 
-    dropDownInfo.forEach(({ name, color }) => {
+    dropDownInfo.forEach(({ id, name, color }) => {
       $dropDownContainer.addElement(
-        $.create('li').addClass('drop-down-item', color).setText(name)
+        $.create('li').addClass('drop-down-item', color).addId(id).setText(name)
       );
     });
 

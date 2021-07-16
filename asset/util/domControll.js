@@ -31,6 +31,11 @@ Element.prototype.addElement = function (element) {
   throw new Error('Only node can be attached');
 };
 
+Element.prototype.addId = function (id) {
+  this.setAttribute('id', id);
+  return this;
+};
+
 export default {
   find: (selector) => document.querySelector(selector),
   create: (tagName) => document.createElement(tagName),

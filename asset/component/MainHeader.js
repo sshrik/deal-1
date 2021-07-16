@@ -10,6 +10,10 @@ export default class MainHeader extends ElementBuilder {
     const { moveHandler } = props;
     this.state = {
       isOpen: false,
+      locations: [
+        { id: 1, name: '역삼동', color: 'black' },
+        { id: 2, name: '내 동네 설정하기', color: 'black' },
+      ],
     };
   }
 
@@ -29,9 +33,17 @@ export default class MainHeader extends ElementBuilder {
     this.setState({ isOpen: false });
   };
 
+  handleDropDownSelect = ({ target }) => {
+    const { router } = this.props;
+    const id = parseInt(target.id);
+    if (id === 2) {
+      router.route('write');
+    }
+  };
+
   constructElement() {
     const { moveHandler } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, locations } = this.state;
 
     const $headerContainer = $.create('div').addClass('header-container');
 
@@ -44,9 +56,9 @@ export default class MainHeader extends ElementBuilder {
       ${IconBtns.mapPin().outerHTML}
       <span>양재동</span>
     `);
-    $locationContainer.addElement($locationBtn);
     $locationBtn.addEventListener('click', this.handleDropDownOpen);
     window.addEventListener('click', this.handleDropDownClose);
+    $locationContainer.addElement($locationBtn);
 
     const $rightContainer = $.create('div')
       .addClass('header-container__right')
@@ -56,8 +68,9 @@ export default class MainHeader extends ElementBuilder {
     new DropDown({
       parent: this,
       $attachedTarget: $locationContainer.cloneNode(),
-      dropDownInfo: [{ name: '양재동', color: 'black' }],
+      dropDownInfo: locations,
       onClose: this.handleDropDownClose,
+      onSelect: this.handleDropDownSelect,
       isOpen: isOpen,
     });
 

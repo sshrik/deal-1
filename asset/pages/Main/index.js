@@ -32,6 +32,7 @@ export default class Main extends ElementBuilder {
       $loadingModal.addClassToContainer('invisible');
     }, 2000);
     new MainHeader({
+      ...this.props,
       parent: this,
       moveHandler: this.moveHandler,
     });
