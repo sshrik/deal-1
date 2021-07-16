@@ -2,6 +2,7 @@ import $ from '../util/domControll';
 import IconBtns from './IconButtons';
 import '../css/mainHeader.css';
 import ElementBuilder from './ElementBuilder';
+import DropDown from './DropDown';
 
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
@@ -21,6 +22,12 @@ export default class MainHeader extends ElementBuilder {
       ${IconBtns.mapPin().outerHTML}
       <span>양재동</span>
     `);
+
+    new DropDown({
+      parent: this,
+      dropDownInfo: [{ name: '양재동', color: 'black' }],
+      isOpen: true,
+    });
 
     const $rightContainer = $.create('div')
       .addClass('header-container__right')
