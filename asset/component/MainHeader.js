@@ -17,18 +17,17 @@ export default class MainHeader extends ElementBuilder {
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
-    );
-    const $curLocation = $.create('span');
-    $curLocation.innerHTML = '양재동';
-    $locationContainer.appendChild(IconBtns.mapPin(this.onMove));
-    $locationContainer.appendChild($curLocation);
-    $headerContainer.appendChild($locationContainer);
+    ).setHTML(`
+      ${IconBtns.mapPin().outerHTML}
+      <span>양재동</span>
+    `);
 
-    const $rightContainer = $.create('div').addClass('header-container__right');
-    $rightContainer.appendChild(IconBtns.user(this.onMove));
-    $rightContainer.appendChild(IconBtns.menu(this.onMove));
+    const $rightContainer = $.create('div')
+      .addClass('header-container__right')
+      .addElement(IconBtns.user(this.onMove))
+      .addElement(IconBtns.menu(this.onMove));
 
-    $headerContainer.appendChild($rightContainer);
+    $headerContainer.addElement($locationContainer).addElement($rightContainer);
 
     return $headerContainer;
   }

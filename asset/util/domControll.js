@@ -23,6 +23,14 @@ Element.prototype.setHTML = function (html) {
   return this;
 };
 
+Element.prototype.addElement = function (element) {
+  if (element instanceof Element) {
+    this.appendChild(element);
+    return this;
+  }
+  throw new Error('Only node can be attached');
+};
+
 export default {
   find: (selector) => document.querySelector(selector),
   create: (tagName) => document.createElement(tagName),
