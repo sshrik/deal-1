@@ -1,3 +1,9 @@
+.category-total--container{
+  width: 100%;
+  height: 100vh;
+  background-color: var(--white);
+}
+
 .categories-container {
   border-top: 1px solid var(--grey3);
   padding: 24px 38.5px 8px;
