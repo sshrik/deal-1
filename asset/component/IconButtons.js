@@ -1,15 +1,14 @@
 import $ from '../util/domControll';
 
 const createSvgBtn = (name, svgTag, eventHandler = null) => {
-  const $svgBtn = $.create('button')
-    .addClass('icon')
-    .addClass(name)
-    .setHTML(svgTag);
-  $svgBtn.addEventListener('click', (e) => {
-    if (eventHandler) {
+  const $svgBtn = $.create('button').addClass('icon', name).setHTML(svgTag);
+
+  if (!!eventHandler) {
+    $svgBtn.addEventListener('click', () => {
       eventHandler(name);
-    }
-  });
+    });
+  }
+
   return $svgBtn;
 };
 

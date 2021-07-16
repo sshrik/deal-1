@@ -1,5 +1,5 @@
 import $ from '../util/domControll';
-import icons from './icons';
+import IconBtns from './IconButtons';
 import '../css/mainHeader.css';
 import ElementBuilder from './ElementBuilder';
 
@@ -13,20 +13,20 @@ export default class MainHeader extends ElementBuilder {
   constructElement() {
     const $headerContainer = $.create('div').addClass('header-container');
 
-    $headerContainer.appendChild(icons.category(this.onMove));
+    $headerContainer.appendChild(IconBtns.category(this.onMove));
 
     const $locationContainer = $.create('div').addClass(
       'header-container__location'
     );
     const $curLocation = $.create('span');
     $curLocation.innerHTML = '양재동';
-    $locationContainer.appendChild(icons.mapPin(this.onMove));
+    $locationContainer.appendChild(IconBtns.mapPin(this.onMove));
     $locationContainer.appendChild($curLocation);
     $headerContainer.appendChild($locationContainer);
 
     const $rightContainer = $.create('div').addClass('header-container__right');
-    $rightContainer.appendChild(icons.user(this.onMove));
-    $rightContainer.appendChild(icons.menu(this.onMove));
+    $rightContainer.appendChild(IconBtns.user(this.onMove));
+    $rightContainer.appendChild(IconBtns.menu(this.onMove));
 
     $headerContainer.appendChild($rightContainer);
 

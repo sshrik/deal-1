@@ -1,6 +1,6 @@
 import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
-import icons from './icons';
+import IconBtns from './IconButtons';
 import Image from './Image';
 import { stringEllipsis } from '../util/utlls';
 import '../css/listItem.css';
@@ -8,7 +8,7 @@ import '../css/listItem.css';
 function Comment(comment) {
   return $.create('div').addClass('actions__comments').setHTML(`
     <div class="actions__comments">
-      ${icons.chat().innerHTML}
+      ${IconBtns.chat().innerHTML}
       <span>${comment}</span>
     </div>
     `);
@@ -49,7 +49,7 @@ export default class ListItem extends ElementBuilder {
 
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
-    $listItemActions.appendChild(icons.like());
+    $listItemActions.appendChild(IconBtns.like());
 
     const $bottomIconInfoContainer = $.create('div').addClass(
       'list-item--bottom-info__container'

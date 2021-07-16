@@ -1,5 +1,5 @@
 import $ from '../util/domControll';
-import icons from './icons';
+import IconBtns from './IconButtons';
 
 export default (type, numOfFiles, src = null, deleteAction = null) => {
   const $imgContainer = $.create('div').addClass('img').addClass('img-medium');
@@ -7,7 +7,7 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
   if (type === 'add') {
     $imgContainer.addClass('img-btn');
     const $pictureCount = $.create('div').addClass('img-counter');
-    $pictureCount.appendChild(icons.picture());
+    $pictureCount.appendChild(IconBtns.picture());
     $pictureCount.appendChild($.create('p').setText(`${numOfFiles}/10`));
     $imgContainer.appendChild($pictureCount);
   } else if (type === 'delete') {
@@ -16,7 +16,7 @@ export default (type, numOfFiles, src = null, deleteAction = null) => {
     $img.src = src;
 
     const $eraseBtn = $.create('div').addClass('erase-btn');
-    $eraseBtn.appendChild(icons.erase());
+    $eraseBtn.appendChild(IconBtns.erase());
     $eraseBtn.addEventListener('click', deleteAction);
 
     $imgContainer.appendChild($img);
