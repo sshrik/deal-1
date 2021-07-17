@@ -15,6 +15,13 @@ const checkUser = async (userName) => {
   }
 };
 
+router.get('/check_access', async (req, res) => {
+  if (req.session?.userName) {
+    return res.status(200).json({ userName: req.session.userName });
+  }
+  res.status(401).json({ error: '접근할 수 없는 페이지 입니다.' });
+});
+
 router.post('/login', async (req, res) => {
   const { userName, password } = req.body;
   try {
