@@ -13,6 +13,8 @@ export default class Input extends ElementBuilder {
   }
 
   constructElement() {
+    const { onChange, onFocusOut } = this.props;
+
     const $element = $.create('div').addClass('input-container');
     const fontClass = this.size === 'medium' ? 'font-medium' : 'font-large';
     const inputSizeClass =
@@ -24,10 +26,12 @@ export default class Input extends ElementBuilder {
     }
 
     const $input = $.create('input')
-      .addClass(fontClass)
-      .addClass(inputSizeClass);
+      .addClass(fontClass, inputSizeClass)
+      .addId(this.id);
     $input.type = this.type;
     $input.placeholder = this.placeHolder;
+    $input.addEventListener('input', onChange);
+    onFocusOut && $input.addEventListener('change', onFocusOut);
 
     $element.appendChild($input);
     return $element;

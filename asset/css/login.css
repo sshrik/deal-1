@@ -1,6 +1,10 @@
+.login-container {
+  height: 100%;
+  background-color: var(--white);
+}
+
 .login-content-container {
   width: 100%;
-  background-color: var(--white);
   padding: 24px 15px 0px 15px;
 }
 

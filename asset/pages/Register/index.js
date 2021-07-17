@@ -18,6 +18,7 @@ export default class Register extends ElementBuilder {
       moveHandler: () => router.route('main'),
     });
     new RegisterContainer({
+      ...this.props,
       parent: this,
     });
 
