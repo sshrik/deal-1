@@ -1,6 +1,6 @@
 import ElementBuilder from './ElementBuilder';
 import $ from '../util/domControll';
-import icons from './icons';
+import IconBtns from './IconButtons';
 import '../css/subHeader.css';
 
 export default class SubHeader extends ElementBuilder {
@@ -15,7 +15,7 @@ export default class SubHeader extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('div').addClass('sub-header-container');
-    $element.appendChild(icons.back(this.onMove));
+    $element.appendChild(IconBtns.back(this.onMove));
     if (this.transparent) {
       $element.addClass('transparent-background');
     }

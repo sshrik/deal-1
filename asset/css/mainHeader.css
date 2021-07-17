@@ -23,6 +23,12 @@
   color: var(--white);
 }
 
+.location-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .header-container__location .location {
   margin-right: 10px;
 }

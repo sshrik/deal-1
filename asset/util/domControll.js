@@ -1,15 +1,15 @@
-Element.prototype.addClass = function (className) {
-  this.classList.add(className);
+Element.prototype.addClass = function (...className) {
+  className.forEach((name) => this.classList.add(name));
   return this;
 };
 
-Element.prototype.removeClass = function (className) {
-  this.classList.remove(className);
+Element.prototype.removeClass = function (...className) {
+  className.forEach((name) => this.classList.remove(name));
   return this;
 };
 
-Element.prototype.toggleClass = function (className) {
-  this.classList.toggle(className);
+Element.prototype.toggleClass = function (...className) {
+  className.forEach((name) => this.classList.toggle(name));
   return this;
 };
 
@@ -20,6 +20,19 @@ Element.prototype.setText = function (text) {
 
 Element.prototype.setHTML = function (html) {
   this.innerHTML = html;
+  return this;
+};
+
+Element.prototype.addElement = function (element) {
+  if (element instanceof Element) {
+    this.appendChild(element);
+    return this;
+  }
+  throw new Error('Only node can be attached');
+};
+
+Element.prototype.addId = function (id) {
+  this.setAttribute('id', id);
   return this;
 };
 

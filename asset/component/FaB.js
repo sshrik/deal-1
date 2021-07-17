@@ -1,5 +1,5 @@
 import $ from '../util/domControll';
-import icons from './icons';
+import IconBtns from './IconButtons';
 import ElementBuilder from './ElementBuilder';
 import '../css/fab.css';
 
@@ -13,7 +13,7 @@ export default class FaB extends ElementBuilder {
   constructElement() {
     const $fab = $.create('button').addClass('fab-btn');
     $fab.addEventListener('click', this.onClick);
-    $fab.appendChild(icons.plus());
+    $fab.appendChild(IconBtns.plus());
     return $fab;
   }
 
