@@ -9,6 +9,7 @@ import Login from './Login';
 import Register from './Register';
 import Location from './Location';
 import Menu from './Menu';
+import Logout from './Logout';
 
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
@@ -37,6 +38,11 @@ const $loginPage = new Login({
   router,
 });
 
+const $logoutPage = new Logout({
+  parent: $root,
+  router,
+});
+
 const $registerPage = new Register({
   parent: $root,
   router,
@@ -58,6 +64,7 @@ router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
 router.addScreen('write', $writePage);
 router.addScreen('login', $loginPage);
+router.addScreen('logout', $logoutPage);
 router.addScreen('register', $registerPage);
 router.addScreen('location', $locationPage);
 router.addScreen('menu', $menuPage);
