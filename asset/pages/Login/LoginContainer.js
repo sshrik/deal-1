@@ -24,9 +24,11 @@ export default class LoginContainer extends ElementBuilder {
   }
 
   handleLoginBtnClick = () => {
+    const { id, password } = this.state;
+    const { router } = this.props;
     api
-      .fetchPost('/login', { userName: 'ag502', password: '1234' })
-      .then((res) => console.log(res))
+      .fetchPost('/login', { userName: id, password: password })
+      .then((res) => router.route('main'))
       .catch((error) => console.log(error));
   };
 
