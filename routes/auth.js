@@ -19,14 +19,16 @@ router.post('/login', async (req, res) => {
   const { userName, password } = req.body;
   try {
     const results = await checkUser(userName);
-    console.log(results);
     if (results.length === 0) {
       return res.status(401).json({ error: '아이디를 확인해 주세요.' });
     }
     if (!bycrypt.compareSync(password, results[0].password)) {
       return res.status(401).json({ error: '비밀번호를 확인해 주세요.' });
     }
-    res.status(200).json({ userName });
+    req.session.userName = userName;
+    req.session.save(() => {
+      res.status(200).json({ userName });
+    });
   } catch (error) {
     res.status(500).json({ error: '회원 정보를 찾을 수 없습니다.' });
   }
@@ -34,7 +36,6 @@ router.post('/login', async (req, res) => {
 
 router.post('/user_check', async (req, res) => {
   const { userName } = req.body;
-  console.log(userName);
   try {
     const results = await checkUser(userName);
     if (results.length !== 0) {
