@@ -18,6 +18,7 @@ export default class Logout extends ElementBuilder {
       moveHandler: () => router.route('main'),
     });
     new LogoutContainer({
+      ...this.props,
       parent: this,
     });
 
