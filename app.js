@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const pool = require('./db');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
 
