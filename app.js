@@ -3,11 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const pool = require('./db');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
 
 var indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'public/resource')));
 
 app.use('/', indexRouter);
+app.use(authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
