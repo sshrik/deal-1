@@ -2,3 +2,34 @@
   height: 100%;
   background-color: var(--white);
 }
+
+.product-status {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  padding: 16px;
+  border-bottom: 1px solid var(--grey3);
+}
+
+.product-status .img {
+  margin-right: 8px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-info .price-info--name {
+  font: var(--text-small);
+}
+
+.product-info .price-info--price {
+  font: var(--text-x-small);
+  color: var(--grey3);
+}
+
+.product-status .button-container {
+  width: 78px;
+}
