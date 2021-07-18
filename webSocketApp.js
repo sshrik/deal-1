@@ -1,5 +1,6 @@
 const http = require('http');
 const WebSocketServer = require('ws').Server;
+const wsRouter = require('./routes/webSocket');
 
 function appendWebSocketServer(app) {
   // Express App을 받아서 같은 Port를 사용하는 WebSocektServer를 만듭니다.
@@ -13,20 +14,10 @@ function appendWebSocketServer(app) {
 
   wss.on('connection', (ws) => {
     ws.on('message', (message) => {
-      let sendData = { event: 'res', data: null };
-      message = JSON.parse(message);
-      switch (message.event) {
-        case 'open':
-          console.log('Received: %s', message.event);
-          ws.send('Hello, there?');
-          break;
-        case 'req':
-          sendData.data = message.data;
-          ws.send(JSON.stringify(sendData));
-          break;
-        default:
-          break;
-      }
+      // WebSocket 데이터를 주고 받을 때 JSON 형태를 사용한다.
+      let parseMessage = JSON.parse(message);
+      wsRouter.setApp(ws);
+      wsRouter.run(parseMessage);
     });
   });
 
