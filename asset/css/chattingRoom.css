@@ -34,8 +34,33 @@
   width: 78px;
 }
 
+.chat-contents {
+  height: calc(100vh - 56px - 72px);
+  display: flex;
+  flex-direction: column;
+}
+
 .chat-log-container {
+  flex-grow: 1;
+  overflow: auto;
   padding: 15px 16px 0px;
   border-top: 1px solid var(--grey3);
   border-bottom: 1px solid var(--grey3);
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 8px 16px 8px 8px;
+  height: 52px;
+  background-color: var(--off-white);
+}
+
+.send {
+  margin-left: 18px;
+}
+
+.send.active path {
+  stroke: var(--primary1);
 }
