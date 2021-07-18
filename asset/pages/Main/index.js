@@ -6,6 +6,8 @@ import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
 import LoadingModal from '../../component/LoadingModal';
 import $ from '../../util/domControll';
+import api from '../../util/api';
+import io from 'socket.io-client';
 import '../../css/main.css';
 
 export default class Main extends ElementBuilder {
@@ -19,6 +21,15 @@ export default class Main extends ElementBuilder {
   moveHandler = (dest) => {
     this.router.route(dest);
   };
+
+  beforeRender() {
+    api
+      .fetchPost('/check_access')
+      .then((res) => {
+        const socket = io('http://localhost:5000', { withCredentials: true });
+      })
+      .catch((error) => console.log(error));
+  }
 
   constructElement() {
     const $element = $.create('div').addClass('main-contianer');
