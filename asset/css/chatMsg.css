@@ -1,0 +1,35 @@
+.chat-log {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.chat-log.other {
+  justify-content: flex-start;
+}
+
+.chat-log.me {
+  justify-content: flex-end;
+}
+
+.chat-log span {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  max-width: 80%;
+  padding: 8px;
+  width: fit-content;
+  font: var(--link-small);
+}
+
+.chat-log.other span{
+  border-top-left-radius: 0px;
+  border: 1px solid var(--primary1);
+}
+
+.chat-log.me span{
+  margin-right: 0px;
+  border-top-right-radius: 0px;
+  background-color: var(--primary1);
+  color: var(--white);
+}

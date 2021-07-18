@@ -2,7 +2,7 @@ import $ from '../../util/domControll';
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import '../../css/chattingRoom.css';
-import ProductStatusHeader from './ProductStatusHeader';
+import ChattingRoomContainer from './ChattingRoomContainer';
 
 export default class ChattingRoom extends ElementBuilder {
   constructElement() {
@@ -16,7 +16,7 @@ export default class ChattingRoom extends ElementBuilder {
       title: 'USERE',
       moveHandler: () => router.route('menu'),
     });
-    new ProductStatusHeader({
+    new ChattingRoomContainer({
       parent: this,
     });
 
