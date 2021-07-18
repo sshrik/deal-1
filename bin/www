@@ -8,8 +8,6 @@ var app = require('../app');
 var debug = require('debug')('deal:server');
 var http = require('http');
 
-const chatServer = require('../chatApp');
-
 /**
  * Get port from environment and store in Express.
  */
@@ -28,7 +26,6 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
-chatServer.listen(5000);
 server.on('error', onError);
 server.on('listening', onListening);
 

@@ -15,7 +15,7 @@ const checkUser = async (userName) => {
   }
 };
 
-router.post('/check_access', async (req, res) => {
+router.get('/check_access', async (req, res) => {
   if (req.session?.userName) {
     return res.status(200).json({ userName: req.session.userName });
   }
