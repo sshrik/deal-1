@@ -6,13 +6,9 @@ import IconButtons from '../../../component/IconButtons';
 export default class ChatInput extends ElementBuilder {
   constructor(props) {
     super(props);
-    this.state = {
-      message: '',
-      isActivated: false,
-    };
   }
   constructElement() {
-    const { message, isActivated } = this.state;
+    const { message, isSendActivated, onChange, onSend } = this.props;
     const $chatInputContainer = $.create('div').addClass(
       'chat-input-container'
     );
@@ -22,13 +18,16 @@ export default class ChatInput extends ElementBuilder {
       placeHolder: '메세지를 입력하세요.',
       type: 'text',
       size: 'medium',
+      onChange,
+      value: message,
     });
 
-    $chatInputContainer.addElement(
-      $.create('button')
-        .addClass('send', isActivated ? 'active' : 'not-active')
-        .setHTML(IconButtons.send)
-    );
+    const $sendBtn = $.create('button')
+      .addClass('send', isSendActivated ? 'active' : 'not-active')
+      .setHTML(IconButtons.send);
+    $sendBtn.addEventListener('click', onSend);
+
+    $chatInputContainer.addElement($sendBtn);
 
     return $chatInputContainer;
   }

@@ -7,6 +7,8 @@ export default class ChattingRoomContainer extends ElementBuilder {
   constructor(props) {
     super(props);
     this.state = {
+      message: '',
+      isSendActivated: false,
       chatLogs: [
         { sender: 'other', content: '안녕하세요?' },
         {
@@ -18,8 +20,27 @@ export default class ChattingRoomContainer extends ElementBuilder {
     };
   }
 
+  compareState(prevState, newState) {
+    return true;
+  }
+
+  handleInputChange = ({ target }) => {
+    this.setState({
+      message: target.value,
+      isSendActivated: target.value === '' ? false : true,
+    });
+  };
+
+  handleSendBtnClick = () => {
+    this.setState({
+      chatLogs: [
+        ...this.state.chatLogs,
+        { sender: 'me', content: this.state.message },
+      ],
+    });
+  };
+
   constructElement() {
-    const { chatLogs } = this.state;
     const $chattingContentContainer = $.create('div').addClass(
       'chatting-room-content-container'
     );
@@ -28,7 +49,9 @@ export default class ChattingRoomContainer extends ElementBuilder {
     });
     new Chat({
       parent: this,
-      chatLogs,
+      ...this.state,
+      onChange: this.handleInputChange,
+      onSend: this.handleSendBtnClick,
     });
 
     return $chattingContentContainer;

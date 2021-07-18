@@ -30,10 +30,14 @@ export default class Input extends ElementBuilder {
       .addId(this.id);
     $input.type = this.type;
     $input.placeholder = this.placeHolder;
+
+    this.props?.value ? ($input.value = this.props.value) : '';
     $input.addEventListener('input', onChange);
+
     onFocusOut && $input.addEventListener('change', onFocusOut);
 
     $element.appendChild($input);
+
     return $element;
   }
 }

@@ -5,7 +5,7 @@ import ChatInput from './ChatInput';
 
 export default class Chat extends ElementBuilder {
   constructElement() {
-    const { chatLogs } = this.props;
+    const { chatLogs, ...rest } = this.props;
     const $chatContents = $.create('div').addClass('chat-contents');
 
     new ChatLog({
@@ -13,6 +13,7 @@ export default class Chat extends ElementBuilder {
       chatLogs,
     });
     new ChatInput({
+      ...rest,
       parent: this,
     });
 
