@@ -1,4 +1,9 @@
 import $ from '../../util/domControll';
+import {
+  priceCommaSeperator,
+  numberChecker,
+  commaSerateToPrice,
+} from '../../util/utils';
 import ElementBuilder from '../../component/ElementBuilder';
 import ImageUploader from './ImageUploader';
 import TitleTextInput from '../../component/TitleTextInput';
@@ -42,7 +47,6 @@ export default class WriteContainer extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
-    console.log(newState);
     if (prevState.files === newState.files) {
       return false;
     }
@@ -63,9 +67,9 @@ export default class WriteContainer extends ElementBuilder {
   }
 
   setPrice(newPrice) {
-    console.log(Number(newPrice.substring(1)));
+    let priceNumber = commaSerateToPrice(newPrice);
     this.setState({
-      price: newPrice,
+      price: priceNumber,
     });
   }
 
@@ -130,26 +134,9 @@ export default class WriteContainer extends ElementBuilder {
       placeholder: '₩ 가격(선택사항)',
       id: 'write-price',
       value: this.state.price,
-      valueSetter: (value) => {
-        let formatedText = '';
-        let remainText = value;
-        if (!value.startsWith('$')) {
-          formatedText = '$';
-        } else {
-          remainText = remainText.substring(1);
-        }
-        formatedText += Number(remainText).toLocaleString('en');
-        return formatedText;
-      },
-      valueChecker: (value) => {
-        let numberString = '';
-        for (let i = 0; i < value.length; i++) {
-          if (!value[i].match(/[^0-9]/)) {
-            numberString += value[i];
-          }
-        }
-        return numberString;
-      },
+      valueSetter: priceCommaSeperator,
+      valueChecker: numberChecker,
+      dismissValue: '$0',
       onInput: this.setPrice,
     });
     new DivLine({

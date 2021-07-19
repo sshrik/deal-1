@@ -4,9 +4,11 @@ import '../css/textInput.css';
 
 export default class TextInput extends ElementBuilder {
   valueSetter(value) {
-    let inputValue = this.props.valueChecker(value);
-    inputValue = this.props.valueSetter(inputValue);
-    if (inputValue === '$0') {
+    // 혹시 Login이나 다른 곳에서 사용 할 수 있도록 관련 Logic은 모두 props로 대체합니다.
+    const { valueChecker, valueSetter, dismissValue } = this.props;
+    let inputValue = valueChecker(value);
+    inputValue = valueSetter(inputValue);
+    if (inputValue === dismissValue) {
       return '';
     } else {
       return inputValue;
