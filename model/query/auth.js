@@ -1,6 +1,6 @@
-const getUser = 'SELECT * FROM Users WHERE userName = ?';
+const getUser = 'SELECT * FROM users WHERE userName = ?';
 const createUser =
-  'INSERT INTO Users(userName, password, area_1) VALUES(?, ?, ?)';
+  'INSERT INTO users(userName, password, area_1) VALUES(?, ?, ?)';
 
 module.exports = {
   getUser,
