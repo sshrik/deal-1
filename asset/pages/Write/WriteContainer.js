@@ -13,16 +13,42 @@ export default class WriteContainer extends ElementBuilder {
     super(props);
     this.state = {
       files: [],
+      title: '',
+      price: '',
+      detail: '',
     };
     this.uploadImgHandler = this.uploadImgHandler.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
+    this.setTitle = this.setTitle.bind(this);
+    this.setPrice = this.setPrice.bind(this);
+    this.setDetail = this.setDetail.bind(this);
   }
 
   compareState(prevState, newState) {
+    console.log(newState);
     if (prevState.files === newState.files) {
       return false;
     }
     return true;
+  }
+
+  setTitle(newTitle) {
+    this.setState({
+      title: newTitle,
+    });
+  }
+
+  setDetail(newDetail) {
+    this.setState({
+      detail: newDetail,
+    });
+  }
+
+  setPrice(newPrice) {
+    console.log(Number(newPrice.substring(1)));
+    this.setState({
+      price: newPrice,
+    });
   }
 
   readImageFile(imgFile) {
@@ -66,7 +92,9 @@ export default class WriteContainer extends ElementBuilder {
     });
     new TitleTextInput({
       parent: this,
+      value: this.state.title,
       id: 'write-header',
+      onInput: this.setTitle,
     });
     new DivLine({
       parent: this,
@@ -75,6 +103,7 @@ export default class WriteContainer extends ElementBuilder {
       parent: this,
       placeholder: '₩ 가격(선택사항)',
       id: 'write-price',
+      value: this.state.price,
       valueSetter: (value) => {
         let formatedText = '';
         let remainText = value;
@@ -95,14 +124,16 @@ export default class WriteContainer extends ElementBuilder {
         }
         return numberString;
       },
+      onInput: this.setPrice,
     });
     new DivLine({
       parent: this,
     });
     new TextAreaInput({
       parent: this,
+      value: this.state.detail,
       placeholder: '게시글 내용을 작성해주세요',
-      id: 'write-content',
+      onInput: this.setDetail,
     });
 
     new WriteBottomFotter({
