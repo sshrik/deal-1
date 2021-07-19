@@ -6,3 +6,11 @@
   background-color: var(--white);
   overflow: scroll;
 }
+
+.main-contianer .list-item{
+  margin-top: 56px;
+}
+
+.main-contianer .list-item ~ .list-item{
+  margin-top: 0px;
+}

@@ -1,8 +1,8 @@
 import $ from '../util/domControll';
 import IconBtns from './IconButtons';
-import '../css/mainHeader.css';
 import ElementBuilder from './ElementBuilder';
 import DropDown from './DropDown';
+import '../css/mainHeader.css';
 
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
