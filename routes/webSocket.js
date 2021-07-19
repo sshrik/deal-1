@@ -181,7 +181,7 @@ class WebSocketRouter {
         this.set('serverMsg', 'Invalid Type Error!');
         break;
     }
-    this.end(req.id);
+    this.end(this.sendData.sendTo);
   }
 
   end(id) {
@@ -218,12 +218,16 @@ wsRouter.open('/', (req, res, next) => {
   }
   res.serverMsg = 'good';
   res.userID = '23ADC-1230ADC-AS23GKIERT';
+  res.sendTo = req.id;
 });
 
 wsRouter.get('/', (req, res, next) => {
-  // console.log(req);
+  if (!req.sendTo) {
+    // console.log('message format need at least id / protocol / url / sendTo');
+  }
   res.serverMsg = 'good';
   res.data = 'DATA FOR 23ADC-1230ADC-AS23GKIERT';
+  res.sendTo = req.sendTo;
 });
 
 module.exports = wsRouter;

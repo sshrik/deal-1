@@ -19,6 +19,7 @@ socket.onmessage = function (e) {
         url: '/',
         id: 'chj878194',
         data: 'hello server!',
+        sendTo: 'chj878194',
       })
     );
     console.log('Sending!');
