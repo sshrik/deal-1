@@ -16,6 +16,8 @@ export default class TitleTextInput extends ElementBuilder {
     const $categorySelector = new CategorySelector({
       parent: this,
       invisible: $input.value.length === 0,
+      buttonState: this.props.buttonState,
+      setButtonState: this.props.setButtonState,
     });
 
     $input.addEventListener('input', (event) => {

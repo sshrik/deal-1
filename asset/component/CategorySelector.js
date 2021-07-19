@@ -16,22 +16,8 @@ export default class CategorySelector extends ElementBuilder {
 
     new CategorySelectContainer({
       parent: this,
-      state: [
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-      ],
+      buttonState: this.props.buttonState,
+      setButtonState: this.props.setButtonState,
     });
     return $element;
   }

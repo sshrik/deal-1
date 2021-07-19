@@ -16,12 +16,29 @@ export default class WriteContainer extends ElementBuilder {
       title: '',
       price: '',
       detail: '',
+      buttonState: [
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+      ],
     };
     this.uploadImgHandler = this.uploadImgHandler.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.setTitle = this.setTitle.bind(this);
     this.setPrice = this.setPrice.bind(this);
     this.setDetail = this.setDetail.bind(this);
+    this.setButtonState = this.setButtonState.bind(this);
   }
 
   compareState(prevState, newState) {
@@ -35,6 +52,7 @@ export default class WriteContainer extends ElementBuilder {
   setTitle(newTitle) {
     this.setState({
       title: newTitle,
+      buttonState: this.state.buttonState,
     });
   }
 
@@ -49,6 +67,12 @@ export default class WriteContainer extends ElementBuilder {
     this.setState({
       price: newPrice,
     });
+  }
+
+  setButtonState(index) {
+    let nowState = this.state.buttonState;
+    nowState[index] = nowState[index] === 'deactive' ? 'active' : 'deactive';
+    this.setState({ buttonState: nowState });
   }
 
   readImageFile(imgFile) {
@@ -95,6 +119,8 @@ export default class WriteContainer extends ElementBuilder {
       value: this.state.title,
       id: 'write-header',
       onInput: this.setTitle,
+      setButtonState: this.setButtonState,
+      buttonState: this.state.buttonState,
     });
     new DivLine({
       parent: this,
