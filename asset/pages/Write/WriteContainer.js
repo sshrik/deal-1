@@ -1,4 +1,9 @@
 import $ from '../../util/domControll';
+import {
+  priceCommaSeperator,
+  numberChecker,
+  commaSerateToPrice,
+} from '../../util/utils';
 import ElementBuilder from '../../component/ElementBuilder';
 import ImageUploader from './ImageUploader';
 import TitleTextInput from '../../component/TitleTextInput';
@@ -13,9 +18,32 @@ export default class WriteContainer extends ElementBuilder {
     super(props);
     this.state = {
       files: [],
+      title: '',
+      price: '',
+      detail: '',
+      buttonState: [
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+        'deactive',
+      ],
     };
     this.uploadImgHandler = this.uploadImgHandler.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
+    this.setTitle = this.setTitle.bind(this);
+    this.setPrice = this.setPrice.bind(this);
+    this.setDetail = this.setDetail.bind(this);
+    this.setButtonState = this.setButtonState.bind(this);
   }
 
   compareState(prevState, newState) {
@@ -23,6 +51,32 @@ export default class WriteContainer extends ElementBuilder {
       return false;
     }
     return true;
+  }
+
+  setTitle(newTitle) {
+    this.setState({
+      title: newTitle,
+      buttonState: this.state.buttonState,
+    });
+  }
+
+  setDetail(newDetail) {
+    this.setState({
+      detail: newDetail,
+    });
+  }
+
+  setPrice(newPrice) {
+    let priceNumber = commaSerateToPrice(newPrice);
+    this.setState({
+      price: priceNumber,
+    });
+  }
+
+  setButtonState(index) {
+    let nowState = this.state.buttonState;
+    nowState[index] = nowState[index] === 'deactive' ? 'active' : 'deactive';
+    this.setState({ buttonState: nowState });
   }
 
   readImageFile(imgFile) {
@@ -66,7 +120,11 @@ export default class WriteContainer extends ElementBuilder {
     });
     new TitleTextInput({
       parent: this,
+      value: this.state.title,
       id: 'write-header',
+      onInput: this.setTitle,
+      setButtonState: this.setButtonState,
+      buttonState: this.state.buttonState,
     });
     new DivLine({
       parent: this,
@@ -75,14 +133,20 @@ export default class WriteContainer extends ElementBuilder {
       parent: this,
       placeholder: '₩ 가격(선택사항)',
       id: 'write-price',
+      value: this.state.price,
+      valueSetter: priceCommaSeperator,
+      valueChecker: numberChecker,
+      dismissValue: '$0',
+      onInput: this.setPrice,
     });
     new DivLine({
       parent: this,
     });
     new TextAreaInput({
       parent: this,
+      value: this.state.detail,
       placeholder: '게시글 내용을 작성해주세요',
-      id: 'write-content',
+      onInput: this.setDetail,
     });
 
     new WriteBottomFotter({

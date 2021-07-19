@@ -5,6 +5,7 @@ import FaB from '../../component/FaB';
 import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
 import LoadingModal from '../../component/LoadingModal';
+import Write from '../Write';
 import $ from '../../util/domControll';
 import '../../css/main.css';
 
@@ -18,6 +19,16 @@ export default class Main extends ElementBuilder {
 
   moveHandler = (dest) => {
     this.router.route(dest);
+  };
+
+  toWritePage = () => {
+    const $writePage = new Write({
+      parent: this.parent,
+      routeTo: '',
+      router: this.router,
+    });
+    this.router.addScreen('write', $writePage);
+    this.router.route('write');
   };
 
   constructElement() {
@@ -54,7 +65,7 @@ export default class Main extends ElementBuilder {
     });
     new FaB({
       parent: this,
-      moveHandler: () => this.moveHandler('write'),
+      moveHandler: () => this.toWritePage(),
     });
 
     return $element;

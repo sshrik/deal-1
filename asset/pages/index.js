@@ -4,7 +4,6 @@ import '../globalInit';
 import Router from '../router';
 import Main from './Main';
 import Category from './Category';
-import Write from './Write';
 import Login from './Login';
 import Register from './Register';
 import Location from './Location';
@@ -23,12 +22,6 @@ const $mainPage = new Main({
 const $categoryPage = new Category({
   parent: $root,
   routeTo: 'main',
-  router,
-});
-
-const $writePage = new Write({
-  parent: $root,
-  routeTo: '',
   router,
 });
 
@@ -62,7 +55,6 @@ const $menuPage = new Menu({
 
 router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
-router.addScreen('write', $writePage);
 router.addScreen('login', $loginPage);
 router.addScreen('logout', $logoutPage);
 router.addScreen('register', $registerPage);
@@ -71,6 +63,5 @@ router.addScreen('menu', $menuPage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 router.setNowView($mainPage);
-// router.setNowView($writePage);
-// $writePage.render();
+
 $mainPage.render();
