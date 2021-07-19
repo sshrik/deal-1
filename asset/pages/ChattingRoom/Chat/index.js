@@ -33,6 +33,8 @@ export default class Chat extends ElementBuilder {
 
   handleSendBtnClick = () => {
     this.setState({
+      message: '',
+      isSendActivated: false,
       chatLogs: [
         ...this.state.chatLogs,
         { sender: 'me', content: this.state.message },
