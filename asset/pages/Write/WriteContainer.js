@@ -75,6 +75,26 @@ export default class WriteContainer extends ElementBuilder {
       parent: this,
       placeholder: '₩ 가격(선택사항)',
       id: 'write-price',
+      valueSetter: (value) => {
+        let formatedText = '';
+        let remainText = value;
+        if (!value.startsWith('$')) {
+          formatedText = '$';
+        } else {
+          remainText = remainText.substring(1);
+        }
+        formatedText += Number(remainText).toLocaleString('en');
+        return formatedText;
+      },
+      valueChecker: (value) => {
+        let numberString = '';
+        for (let i = 0; i < value.length; i++) {
+          if (!value[i].match(/[^0-9]/)) {
+            numberString += value[i];
+          }
+        }
+        return numberString;
+      },
     });
     new DivLine({
       parent: this,
