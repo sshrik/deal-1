@@ -1,3 +1,5 @@
+import api from './api';
+
 const stringEllipsis = (string) => {
   if (string.length > 8) {
     return `${string.substring(0, 8)}...`;

@@ -124,7 +124,10 @@ export default class ElementBuilder {
     });
   }
 
+  beforeRender() {}
+
   render(option = {}) {
+    this.beforeRender();
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();
