@@ -7,9 +7,11 @@ export default class TextAreaInput extends ElementBuilder {
     const $element = $.create('div').addClass('text-input--container');
     const $input = $.create('textarea');
     $input.placeholder = this.props.placeholder;
+    $input.value = this.props.value;
 
     $input.addEventListener('input', (event) => {
-      console.log(event.target);
+      console.log($input.value);
+      this.props.onInput($input.value);
     });
 
     $element.appendChild($input);
