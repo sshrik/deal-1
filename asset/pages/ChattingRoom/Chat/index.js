@@ -8,6 +8,7 @@ export default class Chat extends ElementBuilder {
     super(props);
     this.state = {
       message: '',
+      curScrollPos: 0,
       isSendActivated: false,
       chatLogs: [
         { sender: 'other', content: '안녕하세요?' },
@@ -16,11 +17,26 @@ export default class Chat extends ElementBuilder {
           content:
             "What is Lorem Ipsum?Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         },
+        { sender: 'other', content: 'a' },
+        { sender: 'other', content: 'b' },
+        { sender: 'me', content: 'c' },
+        { sender: 'me', content: 'd' },
+        { sender: 'me', content: 'e' },
+        { sender: 'me', content: 'f' },
+        { sender: 'me', content: 'g' },
+        { sender: 'me', content: 'h' },
+        { sender: 'me', content: 'i' },
+        { sender: 'me', content: 'j' },
+        { sender: 'me', content: 'k' },
+        { sender: 'me', content: 'l' },
       ],
     };
   }
 
   compareState(prevState, newState) {
+    if (prevState.curScrollPos !== newState.curScrollPos) {
+      return false;
+    }
     return true;
   }
 
@@ -42,13 +58,22 @@ export default class Chat extends ElementBuilder {
     });
   };
 
+  handleChatLogScroll = ({ target }) => {
+    this.setState({
+      curScrollPos: target.scrollTop,
+    });
+    console.log(this.state);
+  };
+
   constructElement() {
-    const { chatLogs, ...rest } = this.state;
+    const { chatLogs, curScrollPos, ...rest } = this.state;
     const $chatContents = $.create('div').addClass('chat-contents');
 
     new ChatLog({
       parent: this,
       chatLogs,
+      curScrollPos,
+      onScroll: this.handleChatLogScroll,
     });
     new ChatInput({
       ...rest,
