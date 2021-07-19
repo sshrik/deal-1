@@ -187,7 +187,6 @@ class WebSocketRouter {
   }
 
   end(id) {
-    console.log(this.sendData);
     const destWs = this.getWsWithId(id);
     destWs.send(JSON.stringify(this.sendData));
   }
@@ -213,13 +212,18 @@ wsRouter.use((req, res) => {
 });
 
 wsRouter.open('/', (req, res, next) => {
-  console.log(req);
+  // ws 는 사용자 개개인의 web socekt, 따라서 username과 ws 묶음이 있어야 채팅이나 알람을 보낼 수 있다.
+  if (!req.id) {
+    // console.log('message format need at least id / protocol / url');
+  } else {
+    wsRouter.addUser(req.id, req.socket);
+  }
   res.serverMsg = 'good';
   res.userID = '23ADC-1230ADC-AS23GKIERT';
 });
 
 wsRouter.get('/', (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   res.serverMsg = 'good';
   res.data = 'DATA FOR 23ADC-1230ADC-AS23GKIERT';
 });
