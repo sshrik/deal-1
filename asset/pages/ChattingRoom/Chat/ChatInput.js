@@ -4,9 +4,6 @@ import Input from '../../../component/Input';
 import IconButtons from '../../../component/IconButtons';
 
 export default class ChatInput extends ElementBuilder {
-  constructor(props) {
-    super(props);
-  }
   constructElement() {
     const { message, isSendActivated, onChange, onSend } = this.props;
     const $chatInputContainer = $.create('div').addClass(
@@ -18,8 +15,8 @@ export default class ChatInput extends ElementBuilder {
       placeHolder: '메세지를 입력하세요.',
       type: 'text',
       size: 'medium',
-      isFocus: true,
-      inputID: 'chatting-input-id',
+      focusRequire: true,
+      id: 'chatting-input',
       onChange,
       value: message,
     });
