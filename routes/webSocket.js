@@ -1,6 +1,5 @@
 class WebSocketRouter {
   constructor() {
-    this.ws = null;
     this.routeCallbackInfo = {
       open: {
         dest: [],
@@ -34,9 +33,45 @@ class WebSocketRouter {
       req_success: 'req_success',
       req_fail: 'req_fail',
     };
+    this.userList = {
+      id: [],
+      ws: [],
+    };
     this.set = this.set.bind(this);
     this.onNoDestForProtocol = this.set.bind(this);
     this.use = this.use.bind(this);
+  }
+
+  addUser(id, ws) {
+    // ID 가 없는 경우에만 추가.
+    if (!this.checkIdInList(id)) {
+      this.userList.id.push(id);
+      this.userList.ws.push(ws);
+    }
+  }
+
+  removeUser(id) {
+    for (let i = 0; i < this.userList.id.length; i++) {
+      if (this.userList.id[i] === id) {
+        this.userList.id.splice(i, 1);
+        this.userList.ws.splice(i, 1);
+        breeak;
+      }
+    }
+  }
+
+  checkIdInList(id) {
+    for (let i = 0; i < this.userList.id.length; i++) {
+      if (this.userList.id[i] === id) return true;
+    }
+    return false;
+  }
+
+  getWsWithId(id) {
+    for (let i = 0; i < this.userList.id.length; i++) {
+      if (this.userList.id[i] === id) return this.userList.ws[i];
+    }
+    throw new Error('ID Do not match with anyone in list.');
   }
 
   setApp(ws) {
@@ -77,7 +112,7 @@ class WebSocketRouter {
     this.connectToRouteCallback('update', parseURL, callback);
   }
 
-  connect(message, callback) {
+  connect(parseURL, message, callback) {
     const protocol = message.protocol;
     switch (protocol) {
       case 'open':
@@ -100,10 +135,9 @@ class WebSocketRouter {
     }
   }
 
-  onNoDestForProtocol(req, res, next) {
+  onDestNotFound(req, res, next) {
     this.set('type', this.constant.req_fail);
     this.set('serverMsg', 'Invalid URL for server.');
-    this.end();
   }
 
   runProtocol(protocol, dest) {
@@ -112,7 +146,7 @@ class WebSocketRouter {
         return this.routeCallbackInfo[protocol].callback[i];
       }
     }
-    return this.onNoDestForProtocol;
+    return this.onDestNotFound;
   }
 
   run(req, callback) {
@@ -149,12 +183,13 @@ class WebSocketRouter {
         this.set('serverMsg', 'Invalid Type Error!');
         break;
     }
-    this.end();
+    this.end(req.id);
   }
 
-  end() {
+  end(id) {
     console.log(this.sendData);
-    this.ws.send(JSON.stringify(this.sendData));
+    const destWs = this.getWsWithId(id);
+    destWs.send(JSON.stringify(this.sendData));
   }
 }
 

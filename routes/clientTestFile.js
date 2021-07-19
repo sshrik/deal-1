@@ -1,8 +1,11 @@
-// Client에선 이렇게 사용하면 됩니다.
 let socket = new WebSocket('ws://localhost:3000/');
 
 socket.onopen = function (e) {
-  let sendData = { protocol: 'open', url: '/' };
+  let sendData = {
+    protocol: 'open',
+    url: '/',
+    id: 'chj878194',
+  };
   socket.send(JSON.stringify(sendData));
 };
 
@@ -11,7 +14,12 @@ socket.onmessage = function (e) {
   console.log(e.data.toString());
   setTimeout((e) => {
     socket.send(
-      JSON.stringify({ protocol: 'get', url: '/', data: 'hello server!' })
+      JSON.stringify({
+        protocol: 'get',
+        url: '/',
+        id: 'chj878194',
+        data: 'hello server!',
+      })
     );
     console.log('Sending!');
   }, 200);
