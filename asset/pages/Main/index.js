@@ -15,6 +15,7 @@ export default class Main extends ElementBuilder {
     super(props);
     this.router = router;
     this.routeTo = routeTo;
+    this.useScroll();
   }
 
   moveHandler = (dest) => {

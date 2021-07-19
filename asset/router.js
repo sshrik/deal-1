@@ -62,6 +62,19 @@ export default class Router {
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
+      const $nowViewContainer = $.create('div').addClass('dest-container');
+      console.log(destObject.getScrollHeight());
+      const $emptyDiv = $.create('div');
+      $emptyDiv.setAttribute(
+        'style',
+        `display:box;width:100%;height:${destObject.getScrollHeight()}px`
+      );
+      $nowViewContainer.appendChild($emptyDiv);
+      console.log($emptyDiv);
+      console.log($nowViewContainer);
+      $nowViewContainer.appendChild(this.nowView.getContentsElement());
+      this.root.appendChild($nowViewContainer);
+
       if (!destObject.isInited()) {
         destObject.render();
       }
@@ -81,6 +94,9 @@ export default class Router {
       } else if (viewEmergeLocation === 'left') {
         animationContainer.addClass('fadeInLeft');
       }
+
+      // Page가 다시 돌아오면 Page를 Scroll 해 준다.
+      destObject.pageScroll();
       setTimeout(() => {
         destObject.render({ clearAll: true });
       }, animateTime);
