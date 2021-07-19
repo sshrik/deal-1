@@ -69,6 +69,11 @@ export default class ElementBuilder {
     if (this.compareState(prevState, this.state)) {
       this.update();
     }
+    this.componentDidUpdate();
+    this.child.forEach((element) => {
+      // container state = prev, new
+      element.setState();
+    });
   }
 
   compareState(prevState, newState) {
@@ -124,10 +129,11 @@ export default class ElementBuilder {
     });
   }
 
-  beforeRender() {}
+  componentDidUpdate() {
+    // Update가 호출된 경우 실행
+  }
 
   render(option = {}) {
-    this.beforeRender();
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();

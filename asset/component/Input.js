@@ -33,11 +33,21 @@ export default class Input extends ElementBuilder {
 
     this.props?.value ? ($input.value = this.props.value) : '';
     $input.addEventListener('input', onChange);
+    if (this.props.inputID) {
+      $input.id = this.props.inputID;
+    }
 
     onFocusOut && $input.addEventListener('change', onFocusOut);
 
     $element.appendChild($input);
 
     return $element;
+  }
+
+  componentDidUpdate(prevState, newState) {
+    if (this.props.isFocus) {
+      const $input = $.find(`#${this.props.inputID}`);
+      $input.focus();
+    }
   }
 }

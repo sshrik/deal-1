@@ -18,6 +18,8 @@ export default class ChatInput extends ElementBuilder {
       placeHolder: '메세지를 입력하세요.',
       type: 'text',
       size: 'medium',
+      isFocus: true,
+      inputID: 'chatting-input-id',
       onChange,
       value: message,
     });
