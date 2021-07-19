@@ -43,39 +43,37 @@ class WebSocketRouter {
   }
 
   addUser(id, ws) {
-    // ID 가 없는 경우에만 추가.
-    if (!this.checkIdInList(id)) {
+    const index = this.getIdIndex(id);
+    if (!index) {
       this.userList.id.push(id);
       this.userList.ws.push(ws);
+    } else {
+      this.userList.ws[index] = ws;
     }
   }
 
   removeUser(id) {
-    for (let i = 0; i < this.userList.id.length; i++) {
-      if (this.userList.id[i] === id) {
-        this.userList.id.splice(i, 1);
-        this.userList.ws.splice(i, 1);
-        breeak;
-      }
+    const index = this.getIdIndex(id);
+    if (index) {
+      this.userList.id.splice(index, 1);
+      this.userList.ws.splice(index, 1);
     }
   }
 
-  checkIdInList(id) {
+  getIdIndex(id) {
     for (let i = 0; i < this.userList.id.length; i++) {
-      if (this.userList.id[i] === id) return true;
+      if (this.userList.id[i] === id) return i;
     }
     return false;
   }
 
   getWsWithId(id) {
-    for (let i = 0; i < this.userList.id.length; i++) {
-      if (this.userList.id[i] === id) return this.userList.ws[i];
+    const index = this.getIdIndex(id);
+    if (!index) {
+      return this.userList.ws[index];
+    } else {
+      throw new Error('ID Do not match with anyone in list.');
     }
-    throw new Error('ID Do not match with anyone in list.');
-  }
-
-  setApp(ws) {
-    this.ws = ws;
   }
 
   set(key, value) {
