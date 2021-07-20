@@ -1,6 +1,6 @@
-import $ from '../util/domControll';
-import ElementBuilder from '../lib/ElementBuilder';
-import '../css/input.css';
+import $ from '../../util/domControll';
+import ElementBuilder from '../../lib/ElementBuilder';
+import './input.css';
 
 export default class Input extends ElementBuilder {
   constructor(props) {
