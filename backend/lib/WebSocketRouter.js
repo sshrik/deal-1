@@ -24,11 +24,6 @@ class WebSocketRouter {
     };
     this.middlewareStack = [];
 
-    this.sendData = {
-      type: 'req_success',
-      serverMsg: '',
-      data: '',
-    };
     this.constant = {
       req_success: 'req_success',
       req_fail: 'req_fail',
@@ -74,10 +69,6 @@ class WebSocketRouter {
     } else {
       throw new Error('ID Do not match with anyone in list.');
     }
-  }
-
-  set(key, value) {
-    this.sendData[key] = value;
   }
 
   use(middleware) {
@@ -133,9 +124,9 @@ class WebSocketRouter {
     }
   }
 
-  onDestNotFound(req, res, next) {
-    this.set('type', this.constant.req_fail);
-    this.set('serverMsg', 'Invalid URL for server.');
+  onDestNotFound(req, res) {
+    res.type = this.constant.req_fail;
+    res.serverMsg = 'Invalid URL for server.';
   }
 
   runProtocol(protocol, dest) {
@@ -149,44 +140,54 @@ class WebSocketRouter {
 
   run(req, callback) {
     // MiddleWare를 모두 수행하여 sendData의 데이터 가공
+    const res = {
+      type: 'req_success',
+      serverMsg: '',
+      data: '',
+    };
     this.middlewareStack.forEach((middleware) => {
       // req, res 의 middleware 형태.
-      middleware(req, this.sendData);
+      if (!res.sendFlag) {
+        middleware(req, res);
+      }
     });
+
+    if (res.sendFlag) return;
 
     let registeredFunction = this.onNoDestForProtocol;
     switch (req.protocol) {
       case 'open':
         registeredFunction = this.runProtocol('open', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'get':
         registeredFunction = this.runProtocol('get', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'post':
         registeredFunction = this.runProtocol('post', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'delete':
         registeredFunction = this.runProtocol('delete', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'update':
         registeredFunction = this.runProtocol('update', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       default:
         this.set('type', this.constant.req_fail);
         this.set('serverMsg', 'Invalid Type Error!');
         break;
     }
-    this.end(this.sendData.sendTo);
+    this.end(res);
   }
 
-  end(id) {
-    const destWs = this.getWsWithId(id);
-    destWs.send(JSON.stringify(this.sendData));
+  end(res) {
+    const destWs = this.getWsWithId(res.sendTo);
+    destWs.send(JSON.stringify(res));
+    res.sendFlag = true;
   }
 }
 
