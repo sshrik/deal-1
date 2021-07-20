@@ -1,0 +1,14 @@
+.logout-container {
+  height: 100%;
+  background-color: var(--white);
+}
+
+.logout-content-container {
+  padding: 34px 15px 0px 15px;
+}
+
+.user-name {
+  text-align: center;
+  font: var(--link-small);
+  margin-bottom: 34px;
+}
