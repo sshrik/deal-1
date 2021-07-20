@@ -15,10 +15,7 @@ export default class ElementBuilder {
     } else {
       // 부모가 pageElement가 아닌 경우는 수행하지 않습니다.
     }
-    // this.fetchData();
   }
-
-  // fetchData() {}
 
   init() {
     const $element = this.constructElement();
