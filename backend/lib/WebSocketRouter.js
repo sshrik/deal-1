@@ -32,8 +32,8 @@ class WebSocketRouter {
       id: [],
       ws: [],
     };
-    this.set = this.set.bind(this);
-    this.onNoDestForProtocol = this.set.bind(this);
+
+    this.onDestNotFound = this.onDestNotFound.bind(this);
     this.use = this.use.bind(this);
   }
 
@@ -184,11 +184,15 @@ class WebSocketRouter {
     this.end(res);
   }
 
-  end(res) {
-    const destWs = this.getWsWithId(res.sendTo);
-    destWs.send(JSON.stringify(res));
+  end(res, ws = null) {
+    if (ws) {
+      ws.send(JSON.stringify(res));
+    } else {
+      const destWs = this.getWsWithId(res.sendTo);
+      destWs.send(JSON.stringify(res));
+    }
     res.sendFlag = true;
   }
 }
 
-module.exports = { WebSocketRouter };
+module.exports = WebSocketRouter;
