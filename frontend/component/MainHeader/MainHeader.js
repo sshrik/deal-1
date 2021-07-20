@@ -54,7 +54,7 @@ export default class MainHeader extends ElementBuilder {
     );
     const $locationBtn = $.create('div').addClass('location-btn').setHTML(`
       ${IconBtns.mapPin().outerHTML}
-      <span>양재동</span>
+      <span>${this.props.location}</span>
     `);
     $locationBtn.addEventListener('click', this.handleDropDownOpen);
     window.addEventListener('click', this.handleDropDownClose);

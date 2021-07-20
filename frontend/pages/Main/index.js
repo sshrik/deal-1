@@ -64,6 +64,7 @@ export default class Main extends ElementBuilder {
     new MainHeader({
       ...this.props,
       parent: this,
+      location: '양재동',
       moveHandler: this.moveHandler,
     });
 
