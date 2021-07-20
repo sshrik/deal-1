@@ -10,10 +10,12 @@ export default class ChattingList extends ElementBuilder {
 
   constructElement() {
     const $element = $.create('div').addClass('chatting-list');
+    console.log(this.props);
 
     chattingList.forEach((chat) => {
       new ChatListItem({
         ...chat,
+        ...this.props,
         parent: this,
       });
     });

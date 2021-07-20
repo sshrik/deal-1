@@ -4,9 +4,12 @@ import Image from '../../../../component/Image';
 
 export default class ChatListItem extends ElementBuilder {
   constructElement() {
-    const { sender, lastMsg, isCheck, timeStemp, imgSrc, unChecked } =
+    const { sender, lastMsg, isCheck, timeStemp, imgSrc, unChecked, router } =
       this.props;
     const $chatItemContainer = $.create('div').addClass('chat-item');
+    $chatItemContainer.addEventListener('click', () =>
+      router.route('chattingRoom')
+    );
 
     const $chatLeftSide = $.create('div').addClass('chat-item--left').setHTML(`
       <span class="sender">${sender}</span>

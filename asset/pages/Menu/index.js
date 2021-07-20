@@ -19,6 +19,7 @@ export default class Menu extends ElementBuilder {
       moveHandler: () => this.router.route(this.routeTo),
     });
     new MenuContainer({
+      ...this.props,
       parent: this,
     });
 

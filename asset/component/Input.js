@@ -8,12 +8,19 @@ export default class Input extends ElementBuilder {
     this.placeHolder = props.placeHolder;
     this.title = props.title;
     this.type = props.type;
-    this.id = props.id;
     this.size = props.size;
   }
 
+  componentDidUpdate(prevState, newState) {
+    const { id, focusRequire } = this.props;
+    if (focusRequire) {
+      const $input = $.find(`#${id}`);
+      $input.focus();
+    }
+  }
+
   constructElement() {
-    const { onChange, onFocusOut } = this.props;
+    const { onChange, onFocusOut, id } = this.props;
 
     const $element = $.create('div').addClass('input-container');
     const fontClass = this.size === 'medium' ? 'font-medium' : 'font-large';
@@ -27,13 +34,17 @@ export default class Input extends ElementBuilder {
 
     const $input = $.create('input')
       .addClass(fontClass, inputSizeClass)
-      .addId(this.id);
+      .addId(id);
     $input.type = this.type;
     $input.placeholder = this.placeHolder;
+
+    this.props?.value ? ($input.value = this.props.value) : '';
     $input.addEventListener('input', onChange);
+
     onFocusOut && $input.addEventListener('change', onFocusOut);
 
     $element.appendChild($input);
+
     return $element;
   }
 }

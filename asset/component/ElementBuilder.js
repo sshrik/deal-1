@@ -93,6 +93,11 @@ export default class ElementBuilder {
     if (this.compareState(prevState, this.state)) {
       this.update();
     }
+    this.componentDidUpdate();
+    this.child.forEach((element) => {
+      // container state = prev, new
+      element.setState();
+    });
   }
 
   compareState(prevState, newState) {
@@ -146,6 +151,10 @@ export default class ElementBuilder {
         parentDOMElement.appendChild(element);
       }
     });
+  }
+
+  componentDidUpdate() {
+    // Update가 호출된 경우 실행
   }
 
   render(option = {}) {

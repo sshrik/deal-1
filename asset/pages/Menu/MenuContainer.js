@@ -62,6 +62,7 @@ export default class MenuContainer extends ElementBuilder {
       });
     } else if (curTab === 2) {
       new ChattingList({
+        ...this.props,
         parent: this,
       });
     } else if (curTab === 3) {
