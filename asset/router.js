@@ -81,6 +81,9 @@ export default class Router {
       } else if (viewEmergeLocation === 'left') {
         animationContainer.addClass('fadeInLeft');
       }
+
+      // Page가 다시 돌아오면 Page를 Scroll 해 준다.
+      destObject.pageScroll();
       setTimeout(() => {
         destObject.render({ clearAll: true });
       }, animateTime);

@@ -1,4 +1,6 @@
 .header-container {
+  position: fixed;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 100%;

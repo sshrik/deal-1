@@ -20,6 +20,7 @@ export default class Main extends ElementBuilder {
       products: [],
     };
     this.fecthData();
+    this.useScroll();
   }
 
   compareState(prevState, newState) {
