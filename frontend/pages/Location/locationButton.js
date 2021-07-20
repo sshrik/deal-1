@@ -20,7 +20,7 @@ export default class LocationButton extends ElementBuilder {
       $element.appendChild($buttonText);
       $element.appendChild($deleteButton);
       $element.addEventListener('click', (e) => {
-        this.props.deleteEvent();
+        this.props.deleteEvent(this.props.location);
       });
     } else {
       const $addImage = $.create('img');
