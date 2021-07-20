@@ -1,7 +1,6 @@
 import ElementBuilder from '../../lib/ElementBuilder';
 import $ from '../../util/domControll';
 import Button from '../../component/Button';
-import '../../css/Logout.css';
 import api from '../../util/api';
 
 export default class LogoutContainer extends ElementBuilder {

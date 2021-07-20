@@ -1,8 +1,8 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
-import '../../css/Logout.css';
-import LogoutContainer from './LoginContainer';
+import './Logout.css';
+import LogoutContainer from './LogoutContainer';
 
 export default class Logout extends ElementBuilder {
   constructor(props) {
