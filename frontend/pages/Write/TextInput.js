@@ -25,7 +25,7 @@ export default class TextInput extends ElementBuilder {
 
     $input.addEventListener('input', (e) => {
       $input.value = this.valueSetter($input.value);
-      this.props.onInput($input.value);
+      this.props.onInput(e);
     });
     $element.appendChild($input);
     return $element;

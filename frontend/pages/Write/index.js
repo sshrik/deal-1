@@ -41,25 +41,43 @@ export default class Write extends ElementBuilder {
     return true;
   }
 
-  setTitle = (newTitle) => {
-    this.setState({
-      title: newTitle,
-      buttonState: this.state.buttonState,
-    });
+  handleInputChange = ({ target }) => {
+    const { buttonState } = this.state;
+    if (target.id === 'title') {
+      this.setState({
+        title: target.value,
+        buttonState,
+      });
+    } else if (target.id === 'detail') {
+      this.setState({
+        detail: target.value,
+      });
+    } else if (target.id === 'price') {
+      this.setState({
+        price: commaSerateToPrice(target.value),
+      });
+    }
   };
 
-  setDetail = (newDetail) => {
-    this.setState({
-      detail: newDetail,
-    });
-  };
+  // setTitle = (newTitle) => {
+  //   this.setState({
+  //     title: newTitle,
+  //     buttonState: this.state.buttonState,
+  //   });
+  // };
 
-  setPrice = (newPrice) => {
-    let priceNumber = commaSerateToPrice(newPrice);
-    this.setState({
-      price: priceNumber,
-    });
-  };
+  // setDetail = (newDetail) => {
+  //   this.setState({
+  //     detail: newDetail,
+  //   });
+  // };
+
+  // setPrice = (newPrice) => {
+  //   let priceNumber = commaSerateToPrice(newPrice);
+  //   this.setState({
+  //     price: priceNumber,
+  //   });
+  // };
 
   setButtonState = (index) => {
     let nowState = this.state.buttonState;
@@ -107,12 +125,13 @@ export default class Write extends ElementBuilder {
       ...this.state,
       categories,
       parent: this,
-      setTitle: this.setTitle,
+      // setTitle: this.setTitle,
       setButtonState: this.setButtonState,
       uploadImgHandler: this.uploadImgHandler,
       deleteImage: this.deleteImage,
-      setPrice: this.setPrice,
-      setDetail: this.setDetail,
+      // setPrice: this.setPrice,
+      // setDetail: this.setDetail,
+      onChange: this.handleInputChange,
     });
     return $element;
   }

@@ -23,11 +23,12 @@ export default class WriteContainer extends ElementBuilder {
       detail,
       uploadImgHandler,
       deleteImage,
-      setTitle,
+      // setTitle,
       setButtonState,
       buttonState,
-      setPrice,
-      setDetail,
+      // setPrice,
+      // setDetail,
+      onChange,
     } = this.props;
     const $element = $.create('div').addClass('write-content-container');
 
@@ -43,9 +44,9 @@ export default class WriteContainer extends ElementBuilder {
     new TitleTextInput({
       parent: this,
       value: title,
-      id: 'write-header',
+      id: 'title',
       categories,
-      onInput: setTitle,
+      onInput: onChange,
       setButtonState: setButtonState,
       buttonState: buttonState,
     });
@@ -55,12 +56,12 @@ export default class WriteContainer extends ElementBuilder {
     new TextInput({
       parent: this,
       placeholder: '₩ 가격(선택사항)',
-      id: 'write-price',
+      id: 'price',
       value: price,
       valueSetter: priceCommaSeperator,
       valueChecker: numberChecker,
       dismissValue: '$0',
-      onInput: setPrice,
+      onInput: onChange,
     });
     new DivLine({
       parent: this,
@@ -68,9 +69,9 @@ export default class WriteContainer extends ElementBuilder {
     new TextAreaInput({
       parent: this,
       value: detail,
-      id: 'write-content',
+      id: 'detail',
       placeholder: '게시글 내용을 작성해주세요',
-      onInput: setDetail,
+      onInput: onChange,
     });
 
     new WriteBottomFotter({

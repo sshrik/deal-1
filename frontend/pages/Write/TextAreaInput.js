@@ -12,7 +12,7 @@ export default class TextAreaInput extends ElementBuilder {
 
     $input.addEventListener('input', (event) => {
       console.log($input.value);
-      this.props.onInput($input.value);
+      this.props.onInput(event);
     });
 
     $element.appendChild($input);

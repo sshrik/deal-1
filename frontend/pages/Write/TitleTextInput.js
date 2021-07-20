@@ -28,7 +28,7 @@ export default class TitleTextInput extends ElementBuilder {
       } else {
         $categorySelector.addClassToContainer('invisible');
       }
-      this.props.onInput($input.value);
+      this.props.onInput(event);
     });
 
     $input.addEventListener('change', (event) => {
