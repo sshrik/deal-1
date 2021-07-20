@@ -25,10 +25,22 @@ export default class Alert extends ElementBuilder {
       .setText('취소')
       .addClass('error-modal--plain-text')
       .addClass('error-modal--answer-text');
+    $cancel.addEventListener('click', (e) => {
+      $alertContainer.addClass('slide-out-animation');
+      if (this.props.onCancel) {
+        setTimeout(() => this.props.onCancel(e), 500);
+      }
+    });
     const $proceed = $.create('p')
       .setText('나가기')
       .addClass('error-modal--answer-text')
       .addClass('error-modal--error-text');
+    $proceed.addEventListener('click', (e) => {
+      $alertContainer.addClass('slide-out-animation');
+      if (this.props.onProceed) {
+        setTimeout(() => this.props.onProceed(e), 500);
+      }
+    });
 
     $answerContainer.appendChild($cancel);
     $answerContainer.appendChild($proceed);
@@ -37,6 +49,7 @@ export default class Alert extends ElementBuilder {
     $alertContainer.appendChild($answerContainer);
 
     $modalContainer.appendChild($alertContainer);
+    $alertContainer.addClass('slide-in-animation');
     return $modalContainer;
   }
 }

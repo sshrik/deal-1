@@ -21,12 +21,15 @@
   z-index: 1;
   top: 0px;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  animation-name: opcityIn;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
 }
 
 .modal-alert--container {
@@ -42,6 +45,22 @@
   
   box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
   background-color: var(--off-white);
+}
+
+.slide-in-animation {
+  margin-top: -200%;
+  animation-name: slideDown;
+  animation-delay: 0.2s;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.slide-out-animation {
+  margin-top: 0;
+  animation-name: slideUp;
+  animation-delay: 0.2s;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
 }
 
 .modal-alert--answer-container {
@@ -142,4 +161,37 @@
 
 .error-modal--answer-text {
   font-weight: 500;
+}
+
+@keyframes opcityIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes slideDown {
+  from{
+    margin-top: -200%;
+  }
+  75% {
+    margin-top: 20%
+  }
+  to{
+    margin-top: 0;
+  }
+}
+
+@keyframes slideUp {
+  from{
+    margin-top: 0;
+  }
+  25% {
+    margin-top: 20%
+  }
+  to{
+    margin-top: -200%;
+  }
 }
