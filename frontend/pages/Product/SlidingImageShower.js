@@ -1,6 +1,7 @@
-import $ from '../util/domControll';
-import '../css/slidingWindowShower.css';
-import ElementBuilder from '../lib/ElementBuilder';
+import $ from '../../util/domControll';
+import './slidingWindowShower.css';
+import ElementBuilder from '../../lib/ElementBuilder';
+
 export default class SlidingWindowShower extends ElementBuilder {
   constructor(props) {
     super(props);

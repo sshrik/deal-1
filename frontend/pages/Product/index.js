@@ -1,9 +1,9 @@
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
-import ProductBar from '../../component/ProductBar';
+import ProductBar from './ProductBar';
 import ProductContainer from './ProductContainer';
 import $ from '../../util/domControll';
-import '../../css/product.css';
+import './product.css';
 
 export default class ProductPage extends ElementBuilder {
   constructElement() {

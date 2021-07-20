@@ -1,8 +1,8 @@
 import ElementBuilder from '../../lib/ElementBuilder';
-import SlidingWindowShower from '../../component/SlidingImageShower';
-import ProductContent from '../../component/ProductContent';
+import SlidingWindowShower from './SlidingImageShower';
+import ProductContent from './ProductContent';
 import $ from '../../util/domControll';
-import '../../css/product.css';
+import './product.css';
 
 export default class ProductPage extends ElementBuilder {
   constructElement() {

@@ -1,5 +1,5 @@
-import $ from '../util/domControll';
-import ElementBuilder from '../lib/ElementBuilder';
+import $ from '../../util/domControll';
+import ElementBuilder from '../../lib/ElementBuilder';
 
 export default class ProductContent extends ElementBuilder {
   constructElement() {
