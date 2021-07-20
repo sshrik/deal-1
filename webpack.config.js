@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
@@ -62,6 +63,7 @@ const config = {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx', '.css'],
+    plugins: [new DirectoryNamedWebpackPlugin()],
   },
   devtool: 'eval-cheap-source-map',
 };
