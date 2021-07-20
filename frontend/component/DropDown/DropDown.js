@@ -20,7 +20,6 @@ export default class DropDown extends ElementBuilder {
         .addClass('drop-down-item', color)
         .addId(id)
         .setText(name);
-      console.log(name, onClick);
       $addLi.addEventListener('click', (e) => {
         onClick(e);
       });
