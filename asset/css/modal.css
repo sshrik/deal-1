@@ -16,6 +16,54 @@
   animation-fill-mode: forwards;
 }
 
+.transparent-modal--container {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-alert--container {
+  width: 288px;
+  height: 88px;
+  border-radius: 10px;
+  padding: 0 20px 0 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  
+  box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+  background-color: var(--off-white);
+}
+
+.modal-alert--answer-container {
+  width: 100%;
+  height: calc(50% - 8px);
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-alret--title-container {
+  width: 100%;
+  height: calc(50% - 8px);
+  margin-top: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .modal--top-fix {
   width: 100%;
   height: 100%;
@@ -77,4 +125,21 @@
   to{
     opacity: 0;
   }
+}
+
+.error-modal--error-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--error);
+  cursor: pointer;
+}
+.error-modal--plain-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--title-active);
+  cursor: pointer;
+}
+
+.error-modal--answer-text {
+  font-weight: 500;
 }
