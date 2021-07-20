@@ -48,22 +48,13 @@ export default class Chat extends ElementBuilder {
   };
 
   handleSendBtnClick = () => {
-    const { message, chatLogs } = this.state;
+    const { message, chatLogs, scrollTarget } = this.state;
     this.setState({
       message: '',
+      curScrollPos: scrollTarget.clientHeight,
       isSendActivated: false,
       chatLogs: [...chatLogs, { sender: 'me', content: message }],
     });
-  };
-
-  handleChatLogScroll = ({ target }) => {
-    if (target.scrollTop === 0) {
-      return;
-    }
-    this.setState({
-      curScrollPos: target.scrollTop,
-    });
-    console.log(this.state);
   };
 
   setScrollTarget = (target) => {
@@ -79,7 +70,6 @@ export default class Chat extends ElementBuilder {
       chatLogs,
       curScrollPos,
       onTarget: this.setScrollTarget,
-      onScroll: this.handleChatLogScroll,
     });
     new ChatInput({
       ...rest,

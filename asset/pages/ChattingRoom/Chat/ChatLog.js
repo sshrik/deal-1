@@ -14,7 +14,7 @@ export default class ChatLog extends ElementBuilder {
   }
 
   constructElement() {
-    const { chatLogs, onScroll, curScrollPos, onTarget } = this.props;
+    const { chatLogs, onTarget } = this.props;
     this.$chatLogContainer = $.create('div').addClass('chat-log-container');
 
     chatLogs.forEach(({ sender, content }) => {
@@ -26,7 +26,7 @@ export default class ChatLog extends ElementBuilder {
     });
 
     onTarget(this.$chatLogContainer);
-    
+
     return this.$chatLogContainer;
   }
 }
