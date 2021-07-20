@@ -24,7 +24,7 @@ function Like(like) {
 export default class ListItem extends ElementBuilder {
   constructElement() {
     console.log(this.props);
-    const { title, location, lastTime, price, comment, like, area_1, imgSrc } =
+    const { title, lastTime, price, comment, like, area_1, imgSrc } =
       this.props;
     const $listItem = $.create('div').addClass('list-item');
 
