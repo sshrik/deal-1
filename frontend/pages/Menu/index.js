@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import MenuContainer from './MenuContainer';
 import $ from '../../util/domControll';

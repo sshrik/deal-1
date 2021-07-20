@@ -1,5 +1,5 @@
 import $ from '../../util/domControll';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import '../../css/chattingRoom.css';
 import ChattingRoomContainer from './ChattingRoomContainer';

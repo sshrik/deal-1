@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import ImageButton from '../../component/Button/ImageButton';
 import $ from '../../util/domControll';
 

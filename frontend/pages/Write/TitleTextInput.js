@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import CategorySelector from './CategorySelector';
 import $ from '../../util/domControll';
 import './textInput.css';

@@ -1,5 +1,5 @@
 import $ from '../../util/domControll';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import CategoryButton from '../../component/Button/CategoryButton';
 import categories from './CategoryList';
 

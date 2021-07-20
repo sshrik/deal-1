@@ -1,4 +1,4 @@
-import ElementBuilder from './ElementBuilder';
+import ElementBuilder from '../lib/ElementBuilder';
 import $ from '../util/domControll';
 import '../css/common.css';
 

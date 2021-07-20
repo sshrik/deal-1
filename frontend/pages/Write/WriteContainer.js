@@ -4,7 +4,7 @@ import {
   numberChecker,
   commaSerateToPrice,
 } from '../../util/utils';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import ImageUploader from './ImageUploader';
 import TitleTextInput from './TitleTextInput';
 import TextInput from './TextInput';

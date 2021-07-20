@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import SlidingWindowShower from '../../component/SlidingImageShower';
 import ProductContent from '../../component/ProductContent';
 import $ from '../../util/domControll';

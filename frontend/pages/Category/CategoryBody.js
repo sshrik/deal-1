@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import Image from '../../component/Image';
 import $ from '../../util/domControll';
 import '../../css/categoryBody.css';

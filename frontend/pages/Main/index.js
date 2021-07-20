@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import MainHeader from '../../component/MainHeader';
 import ListItem from '../../component/ListItem';
 import FaB from '../../component/Button/FaB';

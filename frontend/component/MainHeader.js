@@ -1,6 +1,6 @@
 import $ from '../util/domControll';
 import IconBtns from './Button/IconButtons';
-import ElementBuilder from './ElementBuilder';
+import ElementBuilder from '../lib/ElementBuilder';
 import DropDown from './DropDown';
 import '../css/mainHeader.css';
 

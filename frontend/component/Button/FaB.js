@@ -1,6 +1,6 @@
 import $ from '../../util/domControll';
 import IconBtns from './IconButtons';
-import ElementBuilder from '../ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import './fab.css';
 
 export default class FaB extends ElementBuilder {

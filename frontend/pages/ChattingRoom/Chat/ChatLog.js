@@ -1,5 +1,5 @@
 import $ from '../../../util/domControll';
-import ElementBuilder from '../../../component/ElementBuilder';
+import ElementBuilder from '../../../lib/ElementBuilder';
 import ChatMsg from '../../../component/ChatMsg';
 
 export default class ChatLog extends ElementBuilder {

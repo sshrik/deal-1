@@ -1,4 +1,4 @@
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import $ from '../../util/domControll';
 import Button from '../../component/Button';
 import '../../css/Logout.css';

@@ -1,5 +1,5 @@
 import $ from '../../util/domControll';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import Image from '../../component/Image';
 import Button from '../../component/Button/Button';
 import '../../css/chattingRoom.css';

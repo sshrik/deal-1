@@ -1,5 +1,5 @@
 import $ from '../../util/domControll';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import '../../css/menu.css';
 import SellingList from './Tabs/SellingList';
 import ChattingList from './Tabs/ChattingList';

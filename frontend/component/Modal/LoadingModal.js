@@ -1,6 +1,6 @@
 import $ from '../../util/domControll';
 import './modal.css';
-import ElementBuilder from '../ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 
 export default class LoadingModal extends ElementBuilder {
   constructElement() {

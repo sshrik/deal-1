@@ -1,6 +1,6 @@
 import $ from '../../util/domControll';
 import Button from '../../component/Button/Button';
-import ElementBuilder from '../../component/ElementBuilder';
+import ElementBuilder from '../../lib/ElementBuilder';
 import Input from '../../component/Input';
 import api from '../../util/api';
 

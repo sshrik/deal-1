@@ -1,5 +1,5 @@
 import $ from '../../../../util/domControll';
-import ElementBuilder from '../../../../component/ElementBuilder';
+import ElementBuilder from '../../../../lib/ElementBuilder';
 import ChatListItem from './ChatListItem';
 import { chattingList } from '../../../../util/tempList';
 

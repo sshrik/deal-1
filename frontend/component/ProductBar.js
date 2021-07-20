@@ -1,5 +1,5 @@
 import $ from '../util/domControll';
-import ElementBuilder from './ElementBuilder';
+import ElementBuilder from '../lib/ElementBuilder';
 import '../css/product.css';
 
 export default class ProductBar extends ElementBuilder {
