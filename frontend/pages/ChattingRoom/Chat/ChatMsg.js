@@ -1,6 +1,6 @@
-import $ from '../util/domControll';
-import ElementBuilder from '../lib/ElementBuilder';
-import '../css/chatMsg.css';
+import $ from '../../../util/domControll';
+import ElementBuilder from '../../../lib/ElementBuilder';
+import './chatMsg.css';
 
 export default class ChatMsg extends ElementBuilder {
   constructElement() {

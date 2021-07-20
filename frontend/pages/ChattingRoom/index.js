@@ -1,7 +1,7 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
-import '../../css/chattingRoom.css';
+import './chattingRoom.css';
 import ChattingRoomContainer from './ChattingRoomContainer';
 
 export default class ChattingRoom extends ElementBuilder {

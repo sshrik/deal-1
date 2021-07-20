@@ -8,7 +8,7 @@ import Login from './Login';
 import Register from './Register';
 import Location from './Location';
 import Menu from './Menu';
-import ChattingRoom from './ChattingRoom';
+import ChattingRoom from './ChattingRoom/index';
 import Logout from './Logout';
 
 const $root = document.querySelector('.app-container');

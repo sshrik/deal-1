@@ -2,7 +2,7 @@ import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import Image from '../../component/Image';
 import Button from '../../component/Button/Button';
-import '../../css/chattingRoom.css';
+import './chattingRoom.css';
 
 export default class ProductStatusHeader extends ElementBuilder {
   constructElement() {

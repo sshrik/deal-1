@@ -1,6 +1,6 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../lib/ElementBuilder';
-import ChatMsg from '../../../component/ChatMsg';
+import ChatMsg from './ChatMsg';
 
 export default class ChatLog extends ElementBuilder {
   constructor(props) {
