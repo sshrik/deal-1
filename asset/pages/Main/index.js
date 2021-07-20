@@ -5,17 +5,26 @@ import FaB from '../../component/FaB';
 import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
 import LoadingModal from '../../component/LoadingModal';
+import api from '../../util/api';
 import Write from '../Write';
 import $ from '../../util/domControll';
 import '../../css/main.css';
 
 export default class Main extends ElementBuilder {
   constructor(props) {
-    const { routeTo, router } = props;
     super(props);
+    const { routeTo, router } = props;
     this.router = router;
     this.routeTo = routeTo;
+    this.state = {
+      products: [],
+    };
+    this.fecthData();
     this.useScroll();
+  }
+
+  compareState(prevState, newState) {
+    return true;
   }
 
   moveHandler = (dest) => {
@@ -32,7 +41,17 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
+  fecthData() {
+    api
+      .fetchGet('/products')
+      .then((res) => {
+        this.setState({ products: [...res] });
+      })
+      .catch((error) => console.log(error));
+  }
+
   constructElement() {
+    const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
     const $loadingModal = new LoadingModal({
       parent: this,
@@ -48,7 +67,8 @@ export default class Main extends ElementBuilder {
       parent: this,
       moveHandler: this.moveHandler,
     });
-    tempData.forEach((element) => {
+
+    products.forEach((element) => {
       new ListItem({
         parent: this,
         ...element,
