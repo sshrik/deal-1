@@ -3,10 +3,23 @@ import '../css/modal.css';
 import ElementBuilder from './ElementBuilder';
 
 export default class InputPopUp extends ElementBuilder {
+  addOutAnimation = ($container, $totalContainer) => {
+    if (this.props.animation === 'slide') {
+      $container.addClass('slide-out-animation');
+    } else {
+      $container.addClass('pop-down-animation');
+    }
+    $totalContainer.addClass('transparent-modal--container__out');
+  };
+  addInAnimation = ($container, $totalContainer) => {
+    if (this.props.animation === 'slide') {
+      $container.addClass('slide-in-animation');
+    } else {
+      $container.addClass('pop-up-animation');
+    }
+    $totalContainer.addClass('transparent-modal--container__in');
+  };
   constructElement() {
-    const slideOutAnimation = () => {
-      $alertContainer.addClass('slide-out-animation');
-    };
     const $modalContainer = $.create('div').addClass(
       'transparent-modal--container'
     );
@@ -48,14 +61,14 @@ export default class InputPopUp extends ElementBuilder {
       .setText('확인');
 
     $cancel.addEventListener('click', (e) => {
-      $alertContainer.addClass('slide-out-animation');
+      this.addOutAnimation($alertContainer, $modalContainer);
       if (this.props.onCancel) {
         setTimeout(() => this.props.onCancel(e), 500);
       }
     });
 
     $proceed.addEventListener('click', (e) => {
-      $alertContainer.addClass('slide-out-animation');
+      this.addOutAnimation($alertContainer, $modalContainer);
       if (this.props.onProceed) {
         setTimeout(() => this.props.onProceed(e), 500);
       }
@@ -69,7 +82,7 @@ export default class InputPopUp extends ElementBuilder {
     $alertContainer.appendChild($answerContainer);
 
     $modalContainer.appendChild($alertContainer);
-    $alertContainer.addClass('slide-in-animation');
+    this.addInAnimation($alertContainer, $modalContainer);
     return $modalContainer;
   }
 }

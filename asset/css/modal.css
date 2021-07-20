@@ -26,9 +26,17 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
 
-  animation-name: opcityIn;
+.transparent-modal--container__in {
+  animation-name: alphaIn;
   animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.transparent-modal--container__out {
+  animation-name: alphaOut;
+  animation-duration: .7s;
   animation-fill-mode: forwards;
 }
 
@@ -69,6 +77,21 @@
   animation-name: slideUp;
   animation-delay: 0.2s;
   animation-duration: .5s;
+  animation-fill-mode: forwards;
+}
+
+.pop-up-animation {
+  transform: scale(0);
+  animation-name: popUp;
+  animation-delay: 0.2s;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+}
+
+.pop-down-animation {
+  transform: scale(1);
+  animation-name: popDown;
+  animation-duration: .3s;
   animation-fill-mode: forwards;
 }
 
@@ -225,12 +248,24 @@
   color: var(--primary1);
 }
 
-@keyframes opcityIn {
+@keyframes alphaIn {
   from {
     background-color: rgba(0, 0, 0, 0);
   }
   to {
     background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes alphaOut {
+  from {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  20%{ 
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 
@@ -246,6 +281,20 @@
   }
 }
 
+@keyframes popUp {
+  from{
+    transform: scale(0);
+    opacity: 0;
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  to{
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes slideUp {
   from{
     margin-top: 0;
@@ -255,5 +304,19 @@
   }
   to{
     margin-top: -400%;
+  }
+}
+
+@keyframes popDown {
+  from{
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  to{
+    transform: scale(0);
+    opacity: 0;
   }
 }
