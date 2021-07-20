@@ -17,6 +17,7 @@ export default class Main extends ElementBuilder {
     this.routeTo = routeTo;
     this.state = {
       products: [],
+      categories: [],
     };
     this.fecthData();
     this.useScroll();
@@ -45,6 +46,15 @@ export default class Main extends ElementBuilder {
       .fetchGet('/products')
       .then((res) => {
         this.setState({ products: [...res] });
+      })
+      .catch((error) => console.log(error));
+
+    Promise.all([api.fetchGet('/products'), api.fetchGet('/api/categories')])
+      .then(([products, categories]) => {
+        this.setState({
+          products: [...products],
+          categories: [...categories.data],
+        });
       })
       .catch((error) => console.log(error));
   }
