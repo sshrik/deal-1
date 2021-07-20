@@ -2,6 +2,7 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import MenuContainer from './MenuContainer';
 import $ from '../../util/domControll';
+import './menu.css';
 
 export default class Menu extends ElementBuilder {
   constructor(props) {

@@ -7,7 +7,7 @@ import LoadingModal from '../../component/Modal/LoadingModal';
 import api from '../../util/api';
 import Write from '../Write';
 import $ from '../../util/domControll';
-import '../../css/main.css';
+import './main.css';
 
 export default class Main extends ElementBuilder {
   constructor(props) {

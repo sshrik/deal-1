@@ -3,7 +3,6 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import Input from '../../component/Input';
 import Button from '../../component/Button/Button';
 import api from '../../util/api';
-import '../../css/register.css';
 
 export default class RegisterContainer extends ElementBuilder {
   constructor(props) {

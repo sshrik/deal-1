@@ -2,7 +2,7 @@ import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import RegisterContainer from './RegisterContainer';
-import '../../css/register.css';
+import './register.css';
 
 export default class Register extends ElementBuilder {
   constructor(props) {
