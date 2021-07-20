@@ -8,43 +8,47 @@ import './write.css';
 
 export default class Write extends ElementBuilder {
   constructor(props) {
-    const { parent, routeTo, router } = props;
+    const { parent, routeTo, router, categories } = props;
     super(props);
     this.router = router;
     this.state = {
       files: [],
+      curFocus: '',
       title: '',
       price: '',
       detail: '',
       sendActive: false,
-      buttonState: [
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-        'deactive',
-      ],
+      buttonState: new Array(categories.length).fill('deactive'),
     };
   }
 
   compareState(prevState, newState) {
-    if (prevState.files === newState.files) {
-      return false;
-    }
     return true;
   }
 
+  canSubmit = () => {
+    let isSubmit = true;
+    const { files, title, price, detail, buttonState } = this.state;
+    if (title === '' || price === '' || detail === '') {
+      isSubmit = false;
+    }
+    if (files.length === 0) {
+      isSubmit = false;
+    }
+    if (!buttonState.some((status) => status === 'active')) {
+      isSubmit = false;
+    }
+
+    if (isSubmit) {
+      this.setState({ sendActive: true });
+    } else {
+      this.setState({ sendActive: false });
+    }
+  };
+
   handleInputChange = ({ target }) => {
     const { buttonState } = this.state;
+
     if (target.id === 'title') {
       this.setState({
         title: target.value,
@@ -59,12 +63,20 @@ export default class Write extends ElementBuilder {
         price: commaSerateToPrice(target.value),
       });
     }
+
+    this.canSubmit();
+  };
+
+  handleFocusChange = ({ target }) => {
+    this.setState({ curFocus: target.id });
+    console.log(this.state);
   };
 
   setButtonState = (index) => {
     let nowState = this.state.buttonState;
     nowState[index] = nowState[index] === 'deactive' ? 'active' : 'deactive';
     this.setState({ buttonState: nowState });
+    this.canSubmit();
   };
 
   readImageFile = (imgFile) => {
@@ -79,8 +91,8 @@ export default class Write extends ElementBuilder {
 
   deleteImage = (index) => {
     this.state.files.splice(index, 1);
-    const newFiles = { files: [...this.state.files] };
-    this.setState(newFiles);
+    this.setState({ files: [...this.state.files] });
+    this.canSubmit();
   };
 
   uploadImgHandler = ({ target }) => {
@@ -118,6 +130,7 @@ export default class Write extends ElementBuilder {
       uploadImgHandler: this.uploadImgHandler,
       deleteImage: this.deleteImage,
       onChange: this.handleInputChange,
+      onFocus: this.handleFocusChange,
     });
     return $element;
   }

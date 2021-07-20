@@ -26,6 +26,8 @@ export default class WriteContainer extends ElementBuilder {
       setButtonState,
       buttonState,
       onChange,
+      onFocus,
+      curFocus,
     } = this.props;
     const $element = $.create('div').addClass('write-content-container');
 
@@ -44,6 +46,8 @@ export default class WriteContainer extends ElementBuilder {
       id: 'title',
       categories,
       onInput: onChange,
+      curFocus,
+      onFocus,
       setButtonState: setButtonState,
       buttonState: buttonState,
     });
@@ -59,6 +63,8 @@ export default class WriteContainer extends ElementBuilder {
       valueChecker: numberChecker,
       dismissValue: '$0',
       onInput: onChange,
+      onFocus,
+      curFocus,
     });
     new DivLine({
       parent: this,
@@ -69,6 +75,8 @@ export default class WriteContainer extends ElementBuilder {
       id: 'detail',
       placeholder: '게시글 내용을 작성해주세요',
       onInput: onChange,
+      onFocus,
+      curFocus,
     });
 
     new WriteBottomFotter({

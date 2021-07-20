@@ -8,8 +8,15 @@ export default class TitleTextInput extends ElementBuilder {
     super(props);
   }
 
+  componentDidUpdate(prev, next) {
+    const { id, curFocus } = this.props;
+    if (curFocus === id) {
+      $.find(`#${id}`).focus();
+    }
+  }
+
   constructElement() {
-    const { categories, id } = this.props;
+    const { categories, id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
     const $input = $.create('input').addId(id);
     $input.placeholder = '글 제목';
@@ -38,6 +45,8 @@ export default class TitleTextInput extends ElementBuilder {
         $categorySelector.addClassToContainer('invisible');
       }
     });
+
+    $input.addEventListener('click', onFocus);
 
     $element.appendChild($input);
     return $element;

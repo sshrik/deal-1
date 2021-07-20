@@ -15,8 +15,15 @@ export default class TextInput extends ElementBuilder {
     }
   }
 
+  componentDidUpdate(prev, next) {
+    const { id, curFocus } = this.props;
+    if (id === curFocus) {
+      $.find(`#${id}`).focus();
+    }
+  }
+
   constructElement() {
-    const { id } = this.props;
+    const { id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
     const $input = $.create('input').addId(id);
     $input.placeholder = this.props.placeholder;
@@ -27,6 +34,9 @@ export default class TextInput extends ElementBuilder {
       $input.value = this.valueSetter($input.value);
       this.props.onInput(e);
     });
+
+    $input.addEventListener('click', onFocus);
+
     $element.appendChild($input);
     return $element;
   }
