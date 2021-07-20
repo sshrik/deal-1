@@ -27,6 +27,7 @@ class WebSocketRouter {
     this.constant = {
       req_success: 'req_success',
       req_fail: 'req_fail',
+      msg_arrive: 'msg_arrive',
     };
     this.userList = {
       id: [],

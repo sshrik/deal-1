@@ -29,6 +29,12 @@ wsRouter.use((req, res) => {
         'Invalid Format for request - POST에는 보낼 대상이 있어야 합니다.';
       wsRouter.end(res);
     }
+    if (!req.productId) {
+      res.type = wsRouter.constant.req_fail;
+      res.serverMsg =
+        'Invalid Format for request - POST에는 물품 ID가 있어야 합니다.';
+      wsRouter.end(res);
+    }
   }
 });
 
@@ -40,8 +46,10 @@ wsRouter.open('/', (req, res, next) => {
 
 wsRouter.post('/', (req, res, next) => {
   res.serverMsg = 'Chat message arrive.';
+  res.type = wsRouter.constant.msg_arrive; // TODO : Client 는 msgType에 따라서 알람이나 DB로부터 갱신 기능을 구현해야함.
   res.data = req.data;
   res.sendTo = req.sendTo;
+  // TODO : DB에 Chatting Message 등록해야함.
 });
 
 module.exports = wsRouter;
