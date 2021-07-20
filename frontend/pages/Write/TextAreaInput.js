@@ -4,8 +4,9 @@ import './textInput.css';
 
 export default class TextAreaInput extends ElementBuilder {
   constructElement() {
+    const { id } = this.props;
     const $element = $.create('div').addClass('text-input--container');
-    const $input = $.create('textarea');
+    const $input = $.create('textarea').addId(id);
     $input.placeholder = this.props.placeholder;
     $input.value = this.props.value;
 

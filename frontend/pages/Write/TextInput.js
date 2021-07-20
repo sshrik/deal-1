@@ -16,8 +16,9 @@ export default class TextInput extends ElementBuilder {
   }
 
   constructElement() {
+    const { id } = this.props;
     const $element = $.create('div').addClass('text-input--container');
-    const $input = $.create('input');
+    const $input = $.create('input').addId(id);
     $input.placeholder = this.props.placeholder;
 
     $input.value = this.valueSetter(this.props.value);

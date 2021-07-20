@@ -9,9 +9,9 @@ export default class TitleTextInput extends ElementBuilder {
   }
 
   constructElement() {
-    const { categories } = this.props;
+    const { categories, id } = this.props;
     const $element = $.create('div').addClass('text-input--container');
-    const $input = $.create('input');
+    const $input = $.create('input').addId(id);
     $input.placeholder = '글 제목';
     $input.value = this.props.value;
     const $categorySelector = new CategorySelector({

@@ -17,7 +17,6 @@ export default class CategorySelectContainer extends ElementBuilder {
     const { categories } = this.props;
     const $element = $.create('div').addClass('category-selector__container');
     categories.forEach(({ name, imgSrc }, index) => {
-      console.log(imgSrc);
       new CategoryButton({
         parent: this,
         state: this.props.buttonState[index],
