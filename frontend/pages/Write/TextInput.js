@@ -1,6 +1,6 @@
-import ElementBuilder from './ElementBuilder';
-import $ from '../util/domControll';
-import '../css/textInput.css';
+import ElementBuilder from '../../component/ElementBuilder';
+import $ from '../../util/domControll';
+import './textInput.css';
 
 export default class TextInput extends ElementBuilder {
   valueSetter(value) {

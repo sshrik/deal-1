@@ -6,12 +6,12 @@ import {
 } from '../../util/utils';
 import ElementBuilder from '../../component/ElementBuilder';
 import ImageUploader from './ImageUploader';
-import TitleTextInput from '../../component/TitleTextInput';
-import TextInput from '../../component/TextInput';
-import TextAreaInput from '../../component/TextAreaInput';
+import TitleTextInput from './TitleTextInput';
+import TextInput from './TextInput';
+import TextAreaInput from './TextAreaInput';
 import DivLine from '../../component/DivLine';
-import WriteBottomFotter from '../../component/WriteBottomFotter';
-import '../../css/write.css';
+import WriteBottomFotter from './WriteBottomFotter';
+import './write.css';
 
 export default class WriteContainer extends ElementBuilder {
   constructor(props) {

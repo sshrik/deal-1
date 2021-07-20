@@ -1,8 +1,8 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import CategoryBody from './CategoryBody';
-import categories from '../../component/CategoryList';
-import catImages from '../../component/CategoryImage';
+import categories from './CategoryList';
+import catImages from './CategoryImage';
 import $ from '../../util/domControll';
 
 export default class Category extends ElementBuilder {

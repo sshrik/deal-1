@@ -2,7 +2,7 @@ import ElementBuilder from '../../component/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
 import WriteContainer from './WriteContainer';
-import '../../css/write.css';
+import './write.css';
 
 export default class Write extends ElementBuilder {
   constructor(props) {

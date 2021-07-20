@@ -1,6 +1,6 @@
-import ElementBuilder from './ElementBuilder';
-import $ from '../util/domControll';
-import '../css/write.css';
+import ElementBuilder from '../../component/ElementBuilder';
+import $ from '../../util/domControll';
+import './write.css';
 
 export default class WriteBottomFotter extends ElementBuilder {
   constructElement() {

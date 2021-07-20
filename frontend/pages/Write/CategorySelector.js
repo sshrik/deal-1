@@ -1,7 +1,6 @@
-import $ from '../util/domControll';
-import ElementBuilder from './ElementBuilder';
+import $ from '../../util/domControll';
+import ElementBuilder from '../../component/ElementBuilder';
 import CategorySelectContainer from './CategorySelectorContainer';
-import categories from './CategoryList';
 
 export default class CategorySelector extends ElementBuilder {
   constructElement() {

@@ -1,7 +1,7 @@
-import ElementBuilder from './ElementBuilder';
+import ElementBuilder from '../../component/ElementBuilder';
 import CategorySelector from './CategorySelector';
-import $ from '../util/domControll';
-import '../css/textInput.css';
+import $ from '../../util/domControll';
+import './textInput.css';
 
 export default class TitleTextInput extends ElementBuilder {
   constructor(props) {
