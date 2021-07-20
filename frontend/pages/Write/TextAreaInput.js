@@ -17,7 +17,6 @@ export default class TextAreaInput extends ElementBuilder {
     $input.value = this.props.value;
 
     $input.addEventListener('input', (event) => {
-      console.log($input.value);
       this.props.onInput(event);
     });
 

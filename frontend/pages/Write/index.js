@@ -5,6 +5,7 @@ import WriteContainer from './WriteContainer';
 import IconButtons from '../../component/Button/IconButtons';
 import { commaSerateToPrice } from '../../util/utils';
 import './write.css';
+import api from '../../util/api';
 
 export default class Write extends ElementBuilder {
   constructor(props) {
@@ -69,7 +70,6 @@ export default class Write extends ElementBuilder {
 
   handleFocusChange = ({ target }) => {
     this.setState({ curFocus: target.id });
-    console.log(this.state);
   };
 
   setButtonState = (index) => {
@@ -106,6 +106,23 @@ export default class Write extends ElementBuilder {
     });
   };
 
+  handleSubmitBtnClick = () => {
+    const { sendActive, title, price, detail, files, buttonState } = this.state;
+    if (sendActive) {
+      const activeBtn = buttonState.indexOf('active') + 1;
+      api
+        .fetchPost('/api/add_product', {
+          title,
+          price,
+          detail,
+          files,
+          category: activeBtn,
+        })
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+    }
+  };
+
   constructElement() {
     const { categories } = this.props;
     const { sendActive } = this.state;
@@ -114,7 +131,7 @@ export default class Write extends ElementBuilder {
     const $checkBtn = $.create('button')
       .addClass('check-button', sendActive ? 'active' : 'deactive')
       .setHTML(IconButtons.check);
-    $checkBtn.addEventListener('click', (e) => console.log('a'));
+    $checkBtn.addEventListener('click', this.handleSubmitBtnClick);
 
     new SubHeader({
       parent: this,
