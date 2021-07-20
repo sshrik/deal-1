@@ -4,6 +4,10 @@
   background-color: var(--white);
 }
 
+.check-button.active path {
+  stroke: var(--primary1);
+}
+
 .write-content-container {
   padding: 0px 16px 0px 16px;
 }

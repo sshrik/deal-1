@@ -23,11 +23,8 @@ export default class WriteContainer extends ElementBuilder {
       detail,
       uploadImgHandler,
       deleteImage,
-      // setTitle,
       setButtonState,
       buttonState,
-      // setPrice,
-      // setDetail,
       onChange,
     } = this.props;
     const $element = $.create('div').addClass('write-content-container');

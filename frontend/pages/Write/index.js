@@ -2,6 +2,7 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
 import WriteContainer from './WriteContainer';
+import IconButtons from '../../component/Button/IconButtons';
 import { commaSerateToPrice } from '../../util/utils';
 import './write.css';
 
@@ -15,6 +16,7 @@ export default class Write extends ElementBuilder {
       title: '',
       price: '',
       detail: '',
+      sendActive: false,
       buttonState: [
         'deactive',
         'deactive',
@@ -59,26 +61,6 @@ export default class Write extends ElementBuilder {
     }
   };
 
-  // setTitle = (newTitle) => {
-  //   this.setState({
-  //     title: newTitle,
-  //     buttonState: this.state.buttonState,
-  //   });
-  // };
-
-  // setDetail = (newDetail) => {
-  //   this.setState({
-  //     detail: newDetail,
-  //   });
-  // };
-
-  // setPrice = (newPrice) => {
-  //   let priceNumber = commaSerateToPrice(newPrice);
-  //   this.setState({
-  //     price: priceNumber,
-  //   });
-  // };
-
   setButtonState = (index) => {
     let nowState = this.state.buttonState;
     nowState[index] = nowState[index] === 'deactive' ? 'active' : 'deactive';
@@ -114,23 +96,27 @@ export default class Write extends ElementBuilder {
 
   constructElement() {
     const { categories } = this.props;
+    const { sendActive } = this.state;
     const $element = $.create('div').addClass('write-container');
+
+    const $checkBtn = $.create('button')
+      .addClass('check-button', sendActive ? 'active' : 'deactive')
+      .setHTML(IconButtons.check);
+    $checkBtn.addEventListener('click', (e) => console.log('a'));
+
     new SubHeader({
       parent: this,
       title: '글쓰기',
       moveHandler: () => this.router.route('main'),
-      action: null,
+      action: $checkBtn,
     });
     new WriteContainer({
       ...this.state,
       categories,
       parent: this,
-      // setTitle: this.setTitle,
       setButtonState: this.setButtonState,
       uploadImgHandler: this.uploadImgHandler,
       deleteImage: this.deleteImage,
-      // setPrice: this.setPrice,
-      // setDetail: this.setDetail,
       onChange: this.handleInputChange,
     });
     return $element;
