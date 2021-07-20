@@ -4,6 +4,11 @@ const WebSocketRouter = require('../lib/WebSocketRouter');
 const wsRouter = new WebSocketRouter();
 
 wsRouter.use((req, res) => {
+  // Error가 생길 시 보낼 곳 지정.
+  res.sendTo = req.id;
+});
+
+wsRouter.use((req, res) => {
   // Format에 ID가 있는지 검사.
   if (!req.id) {
     res.type = wsRouter.constant.req_fail;
@@ -22,7 +27,6 @@ wsRouter.use((req, res) => {
       res.type = wsRouter.constant.req_fail;
       res.serverMsg =
         'Invalid Format for request - POST에는 보낼 대상이 있어야 합니다.';
-      res.sendTo = req.id;
       wsRouter.end(res);
     }
   }

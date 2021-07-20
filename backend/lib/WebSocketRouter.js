@@ -177,15 +177,14 @@ class WebSocketRouter {
         registeredFunction(req, res, callback);
         break;
       default:
-        this.set('type', this.constant.req_fail);
-        this.set('serverMsg', 'Invalid Type Error!');
+        res.type = this.constant.req_fail;
+        res.serverMsg = 'Invalid Type Error!';
         break;
     }
     this.end(res);
   }
 
   end(res, ws = null) {
-    console.log(res.sendTo);
     if (ws) {
       ws.send(JSON.stringify(res));
     } else {
