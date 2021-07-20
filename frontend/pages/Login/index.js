@@ -2,7 +2,7 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
 import LoginContainer from './LoginContainer';
-import '../../css/login.css';
+import './login.css';
 import api from '../../util/api';
 
 export default class Login extends ElementBuilder {
