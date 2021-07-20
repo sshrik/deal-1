@@ -1,4 +1,4 @@
-import $ from '../util/domControll';
+import $ from '../../util/domControll';
 
 export default (type, src) => {
   const $imgContainer = $.create('div');
