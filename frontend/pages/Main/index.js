@@ -3,7 +3,6 @@ import MainHeader from '../../component/MainHeader';
 import ListItem from '../../component/ListItem';
 import FaB from '../../component/Button/FaB';
 import ProductPage from '../Product/index';
-import LoadingModal from '../../component/Modal/LoadingModal';
 import api from '../../util/api';
 import Write from '../Write/index';
 import $ from '../../util/domControll';
@@ -18,12 +17,14 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
     };
-    this.fecthData();
     this.useScroll();
   }
 
   compareState(prevState, newState) {
-    return true;
+    prevState.products.forEach((element, index) => {
+      if (element !== newState[index]) return true;
+    });
+    return false;
   }
 
   moveHandler = (dest) => {
@@ -52,15 +53,6 @@ export default class Main extends ElementBuilder {
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
-    const $loadingModal = new LoadingModal({
-      parent: this,
-      needLoad: () => !this.router.globalState.firstLoading,
-      whenLoad: () => (this.router.globalState.firstLoading = true),
-    });
-    setTimeout(() => {
-      $loadingModal.removeClassToContainer('modal--top-fix');
-      $loadingModal.addClassToContainer('invisible');
-    }, 2000);
     new MainHeader({
       ...this.props,
       parent: this,
