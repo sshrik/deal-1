@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
-const entries = fs.readdirSync('./asset/pages');
+const entries = fs.readdirSync('./frontend/pages');
 const filenames = entries.map((f) => f.split('.'));
 
 /*
@@ -15,7 +16,7 @@ const config = {
   mode: 'development',
   entry: filenames.reduce((acc, val) => {
     const [filename] = val;
-    acc[filename] = path.resolve(__dirname, `asset/pages/${filename}.js`);
+    acc[filename] = path.resolve(__dirname, `frontend/pages/${filename}.js`);
     return acc;
   }, {}),
   output: {
@@ -62,6 +63,7 @@ const config = {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.json', '.jsx', '.css'],
+    plugins: [new DirectoryNamedWebpackPlugin()],
   },
   devtool: 'eval-cheap-source-map',
 };

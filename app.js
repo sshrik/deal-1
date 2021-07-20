@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
-const appendWebSocketServer = require('./webSocketApp');
+const appendWebSocketServer = require('./backend/lib/webSocketApp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -8,9 +8,9 @@ const session = require('express-session');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
 
-const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
-const productRouter = require('./routes/products');
+const indexRouter = require('./backend/routes/index');
+const authRouter = require('./backend/routes/auth');
+const productRouter = require('./backend/routes/products');
 
 const app = express();
 
