@@ -1,7 +1,7 @@
-import ElementBuilder from '../lib/ElementBuilder';
-import $ from '../util/domControll';
-import IconBtns from './Button/IconButtons';
-import '../css/subHeader.css';
+import ElementBuilder from '../../lib/ElementBuilder';
+import $ from '../../util/domControll';
+import IconBtns from '../Button/IconButtons';
+import './subHeader.css';
 
 export default class SubHeader extends ElementBuilder {
   constructor(props) {
