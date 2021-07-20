@@ -56,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'public/resource')));
 
 app.use('/', indexRouter);
 app.use(authRouter);
-app.use(productRouter);
+app.use('/api', productRouter);
 app.use('/api', categoryRouter);
 
 // catch 404 and forward to error handler

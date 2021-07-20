@@ -42,17 +42,13 @@ export default class Main extends ElementBuilder {
   };
 
   fecthData() {
-    api
-      .fetchGet('/products')
-      .then((res) => {
-        this.setState({ products: [...res] });
-      })
-      .catch((error) => console.log(error));
-
-    Promise.all([api.fetchGet('/products'), api.fetchGet('/api/categories')])
+    Promise.all([
+      api.fetchGet('/api/products'),
+      api.fetchGet('/api/categories'),
+    ])
       .then(([products, categories]) => {
         this.setState({
-          products: [...products],
+          products: [...products.data],
           categories: [...categories.data],
         });
       })
@@ -62,15 +58,15 @@ export default class Main extends ElementBuilder {
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
-    const $loadingModal = new LoadingModal({
-      parent: this,
-      needLoad: () => !this.router.globalState.firstLoading,
-      whenLoad: () => (this.router.globalState.firstLoading = true),
-    });
-    setTimeout(() => {
-      $loadingModal.removeClassToContainer('modal--top-fix');
-      $loadingModal.addClassToContainer('invisible');
-    }, 2000);
+    // const $loadingModal = new LoadingModal({
+    //   parent: this,
+    //   needLoad: () => !this.router.globalState.firstLoading,
+    //   whenLoad: () => (this.router.globalState.firstLoading = true),
+    // });
+    // setTimeout(() => {
+    //   $loadingModal.removeClassToContainer('modal--top-fix');
+    //   $loadingModal.addClassToContainer('invisible');
+    // }, 2000);
     new MainHeader({
       ...this.props,
       parent: this,
