@@ -1,7 +1,7 @@
-import '../css/normalize.css';
-import '../css/common.css';
-import '../globalInit';
-import Router from '../router';
+import '../lib/commonCSS/normalize.css';
+import '../lib/commonCSS/common.css';
+import '../util/globalInit';
+import Router from '../lib/router';
 import Main from './Main/index';
 import Category from './Category/index';
 import Login from './Login/index';

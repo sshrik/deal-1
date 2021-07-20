@@ -1,4 +1,4 @@
-import $ from './util/domControll';
+import $ from '../util/domControll';
 
 const animateTime = 500;
 

@@ -1,5 +1,3 @@
-import './css/normalize.css';
-
 export function addLiveReloadScript() {
   // Tag 에 liveReload Script를 붙여주어 자동으로 reload하게 해 줍니다.
   if (document.location.host.split(':')[0] == 'localhost') {
