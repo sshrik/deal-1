@@ -1,6 +1,6 @@
-import ElementBuilder from '../lib/ElementBuilder';
-import $ from '../util/domControll';
-import '../css/dropDown.css';
+import ElementBuilder from '../../lib/ElementBuilder';
+import $ from '../../util/domControll';
+import './dropdown.css';
 
 export default class DropDown extends ElementBuilder {
   constructor(props) {
