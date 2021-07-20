@@ -39,7 +39,8 @@ class WebSocketRouter {
 
   addUser(id, ws) {
     const index = this.getIdIndex(id);
-    if (!index) {
+    console.log(index);
+    if (index !== null) {
       this.userList.id.push(id);
       this.userList.ws.push(ws);
     } else {
@@ -59,7 +60,7 @@ class WebSocketRouter {
     for (let i = 0; i < this.userList.id.length; i++) {
       if (this.userList.id[i] === id) return i;
     }
-    return false;
+    return null;
   }
 
   getWsWithId(id) {
@@ -188,8 +189,14 @@ class WebSocketRouter {
     if (ws) {
       ws.send(JSON.stringify(res));
     } else {
-      const destWs = this.getWsWithId(res.sendTo);
-      destWs.send(JSON.stringify(res));
+      try {
+        const destWs = this.getWsWithId(res.sendTo);
+        destWs.send(JSON.stringify(res));
+      } catch (e) {
+        if (this.userList.id.includes(res.sendTo)) {
+          // Real error occured
+        }
+      }
     }
     res.sendFlag = true;
   }
