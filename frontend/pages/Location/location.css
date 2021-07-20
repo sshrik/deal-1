@@ -49,7 +49,7 @@
   margin-right: 8px;
 }
 
-.location--button__primary > img {
+.location--button__delete-image {
   position: absolute;
   right: 16px;
   top: 6px;
@@ -64,15 +64,23 @@
 }
 
 .location--button__secondary {
-  border: 1px solid var(--primary1);
-  margin-right: 16px;
-  margin-left: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  
+  border: 1px solid var(--primary1);
+  margin-right: 16px;
+  margin-left: 8px;
 }
 
 .location--button__secondary > img {
   width: 24px;
   height: 24px;
+}
+
+.location--button__secondary > p{
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--primary1);
 }

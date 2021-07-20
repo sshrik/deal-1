@@ -12,16 +12,24 @@ export default class LocationButton extends ElementBuilder {
     $element.addClass(`location--button__${this.props.type}`);
     if (this.props.location) {
       const $buttonText = $.create('p').setText(this.props.location);
-      const $addImage = $.create('img');
-      $addImage.src = CANCLE_IMAGE_SRC;
+      const $deleteButton = $.create('img').addClass(
+        'location--button__delete-image'
+      );
+      $deleteButton.src = CANCLE_IMAGE_SRC;
 
       $element.appendChild($buttonText);
-      $element.appendChild($addImage);
+      $element.appendChild($deleteButton);
+      $element.addEventListener('click', (e) => {
+        this.props.deleteEvent();
+      });
     } else {
       const $addImage = $.create('img');
       $addImage.src = ADD_IMAGE_SRC;
 
       $element.appendChild($addImage);
+      $element.addEventListener('click', (e) => {
+        this.props.addEvent();
+      });
     }
 
     return $element;
