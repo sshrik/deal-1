@@ -8,11 +8,11 @@ export default class Write extends ElementBuilder {
   constructor(props) {
     const { parent, routeTo, router } = props;
     super(props);
-    this.state = {};
     this.router = router;
   }
 
   constructElement() {
+    const { categories } = this.props;
     const $element = $.create('div').addClass('write-container');
     new SubHeader({
       parent: this,
@@ -22,6 +22,7 @@ export default class Write extends ElementBuilder {
     });
     new WriteContainer({
       parent: this,
+      categories,
     });
     return $element;
   }

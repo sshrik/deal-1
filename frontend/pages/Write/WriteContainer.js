@@ -107,6 +107,7 @@ export default class WriteContainer extends ElementBuilder {
   }
 
   constructElement() {
+    const { categories } = this.props;
     const $element = $.create('div').addClass('write-content-container');
 
     new ImageUploader({
@@ -122,6 +123,7 @@ export default class WriteContainer extends ElementBuilder {
       parent: this,
       value: this.state.title,
       id: 'write-header',
+      categories,
       onInput: this.setTitle,
       setButtonState: this.setButtonState,
       buttonState: this.state.buttonState,

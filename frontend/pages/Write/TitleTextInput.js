@@ -9,6 +9,7 @@ export default class TitleTextInput extends ElementBuilder {
   }
 
   constructElement() {
+    const { categories } = this.props;
     const $element = $.create('div').addClass('text-input--container');
     const $input = $.create('input');
     $input.placeholder = '글 제목';
@@ -18,6 +19,7 @@ export default class TitleTextInput extends ElementBuilder {
       invisible: $input.value.length === 0,
       buttonState: this.props.buttonState,
       setButtonState: this.props.setButtonState,
+      categories,
     });
 
     $input.addEventListener('input', (event) => {

@@ -32,6 +32,12 @@
   margin-bottom: 8px;
 }
 
+.category-selector__container {
+  flex-direction: row;
+  white-space: nowrap;
+  overflow-y: scroll;
+}
+
 .write-fotter--container {
   position: absolute;
   display: flex;

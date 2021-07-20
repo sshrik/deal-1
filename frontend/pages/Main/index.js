@@ -32,8 +32,10 @@ export default class Main extends ElementBuilder {
   };
 
   toWritePage = () => {
+    const { categories } = this.state;
     const $writePage = new Write({
       parent: this.parent,
+      categories,
       routeTo: '',
       router: this.router,
     });
