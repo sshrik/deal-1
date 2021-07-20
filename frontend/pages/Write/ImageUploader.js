@@ -1,5 +1,5 @@
 import ElementBuilder from '../../component/ElementBuilder';
-import ImageBtn from '../../component/ImageBtn';
+import ImageButton from '../../component/Button/ImageButton';
 import $ from '../../util/domControll';
 
 export default class ImageUploader extends ElementBuilder {
@@ -17,7 +17,7 @@ export default class ImageUploader extends ElementBuilder {
     $inputUnvisible.style.display = 'none';
     $inputUnvisible.addEventListener('change', this.onAdd);
 
-    const $imgUploadBtn = ImageBtn('add', this.files.length);
+    const $imgUploadBtn = ImageButton('add', this.files.length);
     $imgUploadBtn.addEventListener('click', () => {
       $inputUnvisible.click();
     });
@@ -25,7 +25,7 @@ export default class ImageUploader extends ElementBuilder {
     const $temp = $.create('div').addClass('img-shower__container');
     this.files.forEach((file, index) => {
       $temp.appendChild(
-        ImageBtn('delete', this.files.length, file, () => {
+        ImageButton('delete', this.files.length, file, () => {
           this.props.deleteImage(index);
         })
       );

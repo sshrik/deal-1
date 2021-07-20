@@ -1,7 +1,7 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../component/ElementBuilder';
 import Input from '../../component/Input';
-import Button from '../../component/Button';
+import Button from '../../component/Button/Button';
 import api from '../../util/api';
 import '../../css/register.css';
 

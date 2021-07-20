@@ -1,6 +1,6 @@
 import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
-import IconBtns from './IconButtons';
+import IconBtns from './Button/IconButtons';
 import Image from './Image';
 import { stringEllipsis } from '../util/utils';
 import '../css/listItem.css';

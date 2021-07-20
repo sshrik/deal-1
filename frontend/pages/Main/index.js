@@ -1,7 +1,7 @@
 import ElementBuilder from '../../component/ElementBuilder';
 import MainHeader from '../../component/MainHeader';
 import ListItem from '../../component/ListItem';
-import FaB from '../../component/FaB';
+import FaB from '../../component/Button/FaB';
 import { tempData } from '../../util/tempList';
 import ProductPage from '../Product';
 import LoadingModal from '../../component/Modal/LoadingModal';

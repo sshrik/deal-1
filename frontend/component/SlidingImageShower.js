@@ -1,25 +1,6 @@
 import $ from '../util/domControll';
 import '../css/slidingWindowShower.css';
 import ElementBuilder from './ElementBuilder';
-/*
-{
-  title: '파랑 선풍기',
-  location: '역삼동',
-  lastTime: '2',
-  price: '24,500원',
-  comment: 1,
-  like: 0,
-  imgSrc: 'blueFan.png',
-  specImage: ['roller1.png', 'roller2.png', 'roller3.png'],
-  chat: 0,
-  view: 1,
-  seller: 'USERNAME_chj',
-  nowSelling: true,
-  category: '디지털기기',
-  specDetail:
-    'ASDF'
-  }
-  */
 export default class SlidingWindowShower extends ElementBuilder {
   constructor(props) {
     super(props);

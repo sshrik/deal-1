@@ -1,7 +1,7 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../component/ElementBuilder';
 import Image from '../../component/Image';
-import Button from '../../component/Button';
+import Button from '../../component/Button/Button';
 import '../../css/chattingRoom.css';
 
 export default class ProductStatusHeader extends ElementBuilder {

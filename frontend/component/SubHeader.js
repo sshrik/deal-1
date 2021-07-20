@@ -1,6 +1,6 @@
 import ElementBuilder from './ElementBuilder';
 import $ from '../util/domControll';
-import IconBtns from './IconButtons';
+import IconBtns from './Button/IconButtons';
 import '../css/subHeader.css';
 
 export default class SubHeader extends ElementBuilder {

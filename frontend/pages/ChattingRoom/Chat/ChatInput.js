@@ -1,7 +1,7 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../component/ElementBuilder';
 import Input from '../../../component/Input';
-import IconButtons from '../../../component/IconButtons';
+import IconButtons from '../../../component/Button/IconButtons';
 
 export default class ChatInput extends ElementBuilder {
   constructElement() {

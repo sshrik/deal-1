@@ -1,6 +1,6 @@
-import $ from '../util/domControll';
-import ElementBuilder from './ElementBuilder';
-import '../css/button.css';
+import $ from '../../util/domControll';
+import ElementBuilder from '../ElementBuilder';
+import './button.css';
 
 export default class CategoryButton extends ElementBuilder {
   constructElement() {

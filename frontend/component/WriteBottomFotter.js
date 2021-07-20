@@ -1,6 +1,5 @@
 import ElementBuilder from './ElementBuilder';
 import $ from '../util/domControll';
-import IconBtns from './IconButtons';
 import '../css/write.css';
 
 export default class WriteBottomFotter extends ElementBuilder {

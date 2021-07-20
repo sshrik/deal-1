@@ -1,4 +1,4 @@
-import $ from '../util/domControll';
+import $ from '../../util/domControll';
 import IconBtns from './IconButtons';
 
 export default (type, numOfFiles, src = null, deleteAction = null) => {

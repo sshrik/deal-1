@@ -1,4 +1,4 @@
-import $ from '../util/domControll';
+import $ from '../../util/domControll';
 
 const createSvgBtn = (name, svgTag, eventHandler = null) => {
   const $svgBtn = $.create('button').addClass('icon', name).setHTML(svgTag);

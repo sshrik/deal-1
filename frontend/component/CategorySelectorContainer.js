@@ -1,6 +1,6 @@
 import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
-import CategoryButton from './CategoryButton';
+import CategoryButton from './Button/CategoryButton';
 import categories from './CategoryList';
 
 export default class CategorySelectContainer extends ElementBuilder {
