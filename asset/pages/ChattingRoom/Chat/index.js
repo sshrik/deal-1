@@ -9,6 +9,7 @@ export default class Chat extends ElementBuilder {
     this.state = {
       message: '',
       curScrollPos: 0,
+      scrollTarget: null,
       isSendActivated: false,
       chatLogs: [
         { sender: 'other', content: '안녕하세요?' },
@@ -34,35 +35,39 @@ export default class Chat extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
-    if (prevState.curScrollPos !== newState.curScrollPos) {
-      return false;
-    }
     return true;
   }
 
   handleInputChange = ({ target }) => {
+    const { scrollTarget } = this.state;
     this.setState({
+      curScrollPos: scrollTarget.scrollTop,
       message: target.value,
       isSendActivated: target.value === '' ? false : true,
     });
   };
 
   handleSendBtnClick = () => {
+    const { message, chatLogs } = this.state;
     this.setState({
       message: '',
       isSendActivated: false,
-      chatLogs: [
-        ...this.state.chatLogs,
-        { sender: 'me', content: this.state.message },
-      ],
+      chatLogs: [...chatLogs, { sender: 'me', content: message }],
     });
   };
 
   handleChatLogScroll = ({ target }) => {
+    if (target.scrollTop === 0) {
+      return;
+    }
     this.setState({
       curScrollPos: target.scrollTop,
     });
     console.log(this.state);
+  };
+
+  setScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
   };
 
   constructElement() {
@@ -73,6 +78,7 @@ export default class Chat extends ElementBuilder {
       parent: this,
       chatLogs,
       curScrollPos,
+      onTarget: this.setScrollTarget,
       onScroll: this.handleChatLogScroll,
     });
     new ChatInput({

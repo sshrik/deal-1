@@ -10,21 +10,11 @@ export default class ChatLog extends ElementBuilder {
 
   componentDidUpdate(prevState, newState) {
     const { curScrollPos } = this.props;
-
-    if (
-      curScrollPos !== 0 &&
-      this.$chatLogContainer.scrollTop != curScrollPos
-    ) {
-      this.ignoreScrollEvents = true;
-      this.$chatLogContainer.scrollTo({
-        top: curScrollPos,
-        behavior: 'smooth',
-      });
-    }
+    this.$chatLogContainer.scrollTop = curScrollPos;
   }
 
   constructElement() {
-    const { chatLogs, onScroll, curScrollPos } = this.props;
+    const { chatLogs, onScroll, curScrollPos, onTarget } = this.props;
     this.$chatLogContainer = $.create('div').addClass('chat-log-container');
 
     chatLogs.forEach(({ sender, content }) => {
@@ -35,17 +25,8 @@ export default class ChatLog extends ElementBuilder {
       });
     });
 
-    let timer = null;
-    this.$chatLogContainer.addEventListener('scroll', (e) => {
-      const ignore = this.ignoreScrollEvents;
-      this.ignoreScrollEvents = false;
-      if (ignore) return false;
-      timer = setTimeout(() => {
-        timer = null;
-        onScroll(e);
-      }, 200);
-    });
-
+    onTarget(this.$chatLogContainer);
+    
     return this.$chatLogContainer;
   }
 }
