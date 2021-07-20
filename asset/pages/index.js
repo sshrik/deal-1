@@ -4,12 +4,12 @@ import '../globalInit';
 import Router from '../router';
 import Main from './Main';
 import Category from './Category';
-import Write from './Write';
 import Login from './Login';
 import Register from './Register';
 import Location from './Location';
 import Menu from './Menu';
 import ChattingRoom from './ChattingRoom';
+import Logout from './Logout';
 
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
@@ -26,15 +26,14 @@ const $categoryPage = new Category({
   router,
 });
 
-const $writePage = new Write({
-  parent: $root,
-  routeTo: '',
-  router,
-});
-
 const $loginPage = new Login({
   parent: $root,
   routeTo: 'main',
+  router,
+});
+
+const $logoutPage = new Logout({
+  parent: $root,
   router,
 });
 
@@ -62,8 +61,8 @@ const $chattingRoom = new ChattingRoom({
 
 router.addScreen('main', $mainPage);
 router.addScreen('category', $categoryPage);
-router.addScreen('write', $writePage);
 router.addScreen('login', $loginPage);
+router.addScreen('logout', $logoutPage);
 router.addScreen('register', $registerPage);
 router.addScreen('location', $locationPage);
 router.addScreen('menu', $menuPage);
@@ -71,6 +70,5 @@ router.addScreen('chattingRoom', $chattingRoom);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 router.setNowView($mainPage);
-// router.setNowView($writePage);
-// $writePage.render();
+
 $mainPage.render();

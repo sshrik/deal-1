@@ -65,4 +65,14 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/logout', async (req, res) => {
+  try {
+    req.session.destroy(() => {
+      res.status(200).json({ message: '로그아웃 성공' });
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

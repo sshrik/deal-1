@@ -23,4 +23,22 @@ export default {
         });
     });
   },
+  fetchGet: (path) => {
+    return new Promise((resolve, reject) =>
+      fetch(`http://localhost:3000${path}`)
+        .then((res) => {
+          const result = res.json();
+          if (res.status === 200) {
+            resolve(result);
+          }
+          return result;
+        })
+        .then((error) => {
+          reject(error?.error);
+        })
+        .catch((error) => {
+          reject(error.message);
+        })
+    );
+  },
 };

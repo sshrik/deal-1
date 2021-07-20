@@ -8,13 +8,37 @@ export default class ElementBuilder {
     this.isPageElement = true;
     this.parent = props.parent;
     this.props = props;
+    this.scrolled = 0;
     this.child = [];
+    this.usingScroll = false;
 
     if (this.parent.isPageElement) {
       this.parent.appendChild(this);
     } else {
       // 부모가 pageElement가 아닌 경우는 수행하지 않습니다.
     }
+  }
+
+  useScroll() {
+    this.usingScroll = true;
+  }
+
+  setScrolledEvent() {
+    const $container = this.getContentsElement();
+    $container.addEventListener('scroll', (e) => {
+      if (e.target.scrollTop !== 0) {
+        // ScrollTop 설정시 일어나는 scroll
+        this.scrolled = e.target.scrollTop;
+      }
+    });
+  }
+
+  pageScroll() {
+    if (this.usingScroll) this.getContentsElement().scrollTop = this.scrolled;
+  }
+
+  getScrollHeight() {
+    return this.scrolled;
   }
 
   init() {
@@ -31,7 +55,7 @@ export default class ElementBuilder {
   }
 
   isInited() {
-    return this.contents === false;
+    return this.contents !== undefined;
   }
 
   addClassToContainer(className) {
@@ -137,13 +161,12 @@ export default class ElementBuilder {
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();
+      // this.beforeRender();
     }
-
     // 하위 element의 rendering 시작. 재귀적으로 호출하여 BFS의 형태로 Rendering 합니다.
     this.child.forEach((element) => {
       element.render();
     });
-
     // 만약 PageElement라면 실제 Element인 contents를 가지고 작업합니다.
     let DOMDestParent = null;
     if (this.parent.isPageElement) {
@@ -151,12 +174,17 @@ export default class ElementBuilder {
     } else {
       DOMDestParent = this.parent;
     }
-
     // 만약 App 하나만 달고 싶다면 clearAll 을 설정해줍니다. 다만 맨 윗 node에서 호출할 때만 사용됩니다. ( Page 단위로만.. )
     if (option.clearAll) {
-      DOMDestParent.innerHTML = '';
+      while (this.parent.hasChildNodes()) {
+        this.parent.removeChild(this.parent.firstChild);
+      }
     }
     // 루트 노드의 맨 마지막에 자신을 추가해줍니다.
     DOMDestParent.appendChild(this.getContentsElement());
+    if (this.usingScroll) {
+      this.pageScroll();
+      this.setScrolledEvent();
+    }
   }
 }

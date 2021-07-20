@@ -1,21 +1,42 @@
-# deal-1
+# 우아마켓 ( 배달의 민족 중고 거래 Appliction )
+![APP LOGO](https://github.com/woowa-techcamp-2021/deal-1/blob/fix/projectInfor/PROJ_INFO/우아마켓%20로고와%20글자.png?raw=true)
 
-## 팀원 소개
+## To Run
+먼저 Project를 Clone합니다. 이후 module을 설치합니다.
 
-### 최현준 ( 26 )
-개발도 중요하지만 디자인적 디테일을 살리는것이 중요하다.
-대학교 이제 막 졸업함. 모바일 프론트엔드로 작년 5월에해서 웹 프론트엔드는 올해 초에 했음
-Node + HTML, CSS, 이후에 React Native를 썼음.
-#### 아쉬웠던 점
-Session 쓰는게 좀 어려웠음. 시간이 좀 부족했던거가 아쉬웠다.
-Lint, Prettier 를 써보고싶다.
-Readme ( 실행 어떻게 하는지, 팀원은 누구고 ), wiki - 공부한 내용을 공유하고싶다.
-#### 하고싶은거
-간단한 애니메이션 넣어보고싶음.
+```
+npm i
+```
 
-### 이재윤
-다른사람이 혹은 내가 읽었을 때 이해가 잘 되는게 중요하다.
-이번학기 막학기, 프론트엔드 시작한진 2년 쯤 됐다.
-#### 아쉬웠던 점
-함수를 찾을 때 컴포넌트 + 함수 하나의 책임을 하고싶었는데, 인자가 많이 늘어나서...
-커밋메시지가 안맞았음.
+dev server를 돌리는 방법
+```
+npm run dev 
+```
+이후 http://localhost:3000 으로 접속하면 됩니다.
+
+## Project Architecture
+### asset
+실질적인 코드들이 들어가는 부분입니다.
+#### component
+Page에서 사용될 Page보다는 작은 단위의 Component입니다.
+* ElementBuilder.js : 저희가 사용한 Component 구성 기본 Class입니다. 자세한 설명은 [링크](https://github.com/woowa-techcamp-2021/deal-1/wiki/React-같은-Component를-위하여)를 참고하세요!
+#### css
+css 파일들을 모아둔 곳입니다.
+
+#### util
+각종 utility 함수들, wrapper 함수들을 모아둔 곳입니다.
+
+#### js 파일
+* globalInit.js : liveReload 를 위한 전처리 코드를 실행합니다.
+* router.js : Application Routing ( SPA Routing ) 을 구현 한 곳입니다. 자세한 설명은 [링크](https://github.com/woowa-techcamp-2021/deal-1/wiki/ElementBuilder용-Router-사용하기)를 참고하세요!
+### public
+배포할 때 들어갈 이미지 등의 자원이 들어가는 곳입니다.
+bundling 된 js들도 여기로 들어가게 됩니다.
+
+### PROJ_INFO
+프로젝트 설명과 wiki 작성을 위한 이미지들이 들어가는 곳입니다.
+
+
+## Backend 구조
+### DB 구조
+![DB 구조](https://github.com/woowa-techcamp-2021/deal-1/blob/fix/projectInfor/PROJ_INFO/deal1%20ERD.png?raw=true)

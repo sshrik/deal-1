@@ -2,7 +2,7 @@ import $ from '../util/domControll';
 import ElementBuilder from './ElementBuilder';
 import IconBtns from './IconButtons';
 import Image from './Image';
-import { stringEllipsis } from '../util/utlls';
+import { stringEllipsis } from '../util/utils';
 import '../css/listItem.css';
 
 function Comment(comment) {
@@ -23,7 +23,8 @@ function Like(like) {
 
 export default class ListItem extends ElementBuilder {
   constructElement() {
-    const { title, location, lastTime, price, comment, like, imgSrc } =
+    console.log(this.props);
+    const { title, lastTime, price, comment, like, area_1, imgSrc } =
       this.props;
     const $listItem = $.create('div').addClass('list-item');
 
@@ -35,7 +36,7 @@ export default class ListItem extends ElementBuilder {
 
     const $contentLocationTime = $.create('div').addClass('content__lo-time')
       .setHTML(`
-      <span>${location}</span>
+      <span>${area_1}</span>
       <span>${lastTime}시간 전</span>
     `);
 
@@ -43,9 +44,10 @@ export default class ListItem extends ElementBuilder {
       .addClass('content__price')
       .setText(price);
 
-    $listItemContent.appendChild($contentTitle);
-    $listItemContent.appendChild($contentLocationTime);
-    $listItemContent.append($contentPrice);
+    $listItemContent
+      .addElement($contentTitle)
+      .addElement($contentLocationTime)
+      .addElement($contentPrice);
 
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
@@ -57,10 +59,11 @@ export default class ListItem extends ElementBuilder {
     comment > 0 && $bottomIconInfoContainer.appendChild(Comment(comment));
     like > 0 && $bottomIconInfoContainer.appendChild(Like(like));
 
-    $listItem.appendChild(Image('large', imgSrc));
-    $listItem.appendChild($listItemContent);
-    $listItem.appendChild($listItemActions);
-    $listItem.appendChild($bottomIconInfoContainer);
+    $listItem
+      .addElement(Image('large', `http://localhost:3000/${imgSrc}`))
+      .addElement($listItemContent)
+      .addElement($listItemActions)
+      .addElement($bottomIconInfoContainer);
     $listItem.addEventListener('click', this.props.onClick);
 
     return $listItem;

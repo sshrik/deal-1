@@ -9,14 +9,13 @@ export default class CategorySelectContainer extends ElementBuilder {
     categories.forEach((element, index) => {
       new CategoryButton({
         parent: this,
-        state: this.props.state[index],
+        state: this.props.buttonState[index],
         buttonText: element,
         onClick: (e) => {
           const $target = e.target.closest('.category-button--container');
           $target.toggleClass('category-button__deactive');
           $target.toggleClass('category-button__active');
-          this.props.state[index] =
-            this.props.state[index] === 'active' ? 'deactive' : 'active';
+          this.props.setButtonState(index); // Toggle State
           return true;
         },
       });
