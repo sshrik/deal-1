@@ -10,7 +10,21 @@ wsRouter.use((req, res) => {
     res.serverMsg = 'Invalid Format for request - ID가 없습니다.';
     wsRouter.end(res, req.socket);
   } else {
+    // 항상 ID와 Socket쌍을 Update
     wsRouter.addUser(req.id, req.socket);
+  }
+});
+
+wsRouter.use((req, res) => {
+  // post message 에 sendTo 검사
+  if (req.protocol === 'post') {
+    if (!req.sendTo) {
+      res.type = wsRouter.constant.req_fail;
+      res.serverMsg =
+        'Invalid Format for request - POST에는 보낼 대상이 있어야 합니다.';
+      res.sendTo = req.id;
+      wsRouter.end(res);
+    }
   }
 });
 
@@ -20,12 +34,9 @@ wsRouter.open('/', (req, res, next) => {
   res.sendTo = req.id;
 });
 
-wsRouter.get('/', (req, res, next) => {
-  if (!req.sendTo) {
-    // console.log('message format need at least id / protocol / url / sendTo');
-  }
-  res.serverMsg = 'good';
-  res.data = 'DATA FOR 23ADC-1230ADC-AS23GKIERT';
+wsRouter.post('/', (req, res, next) => {
+  res.serverMsg = 'Chat message arrive.';
+  res.data = req.data;
   res.sendTo = req.sendTo;
 });
 

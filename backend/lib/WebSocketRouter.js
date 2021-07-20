@@ -185,6 +185,7 @@ class WebSocketRouter {
   }
 
   end(res, ws = null) {
+    console.log(res.sendTo);
     if (ws) {
       ws.send(JSON.stringify(res));
     } else {
