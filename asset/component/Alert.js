@@ -8,12 +8,14 @@ export default class Alert extends ElementBuilder {
       'transparent-modal--container'
     );
 
-    const $alertContainer = $.create('div').addClass('modal-alert--container');
+    const $alertContainer = $.create('div')
+      .addClass('modal-alert--container')
+      .addClass('modal--container__common ');
     const $errorTextContainer = $.create('div').addClass(
       'modal-alret--title-container'
     );
     const $errorText = $.create('p')
-      .setText(this.props.errorText)
+      .setText(this.props.titleText)
       .addClass('error-modal--plain-text')
       .addClass('modal--main-text');
     $errorTextContainer.appendChild($errorText);
