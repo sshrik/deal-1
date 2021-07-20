@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const pool = require('../model/db');
 const router = express.Router();
 const {
@@ -17,12 +18,32 @@ router.get('/products', async (req, res) => {
   }
 });
 
+const saveFile = async (imageBlob, title) => {
+  const blob = imageBlob.split(',')[1];
+  fs.writeFileSync(
+    `public/resource/productImg/ag502_${title}.jpg`,
+    blob,
+    'base64',
+    (error) => {
+      if (error) {
+        throw new Error({ error: error.message });
+      }
+      pool.execute(addNewProdcutSpec, [
+        title,
+        `public/resource/productImg/ag502_${title}.jpg`,
+        1,
+      ]);
+    }
+  );
+};
+
 router.post('/add_product', async (req, res) => {
   try {
     const { title, price, detail, category, files } = req.body;
+    const curTime = new Date().getTime();
     await pool.execute(addNewProduct, [
       title,
-      new Date().getTime(),
+      curTime,
       parseInt(price),
       detail,
       'ag502',
@@ -30,6 +51,24 @@ router.post('/add_product', async (req, res) => {
       0,
       1,
     ]);
+    files.forEach(async (file, idx) => {
+      const imageBlob = file.split(',')[1];
+      fs.writeFileSync(
+        `public/resource/productImg/ag502_${title}.jpg`,
+        imageBlob,
+        'base64'
+      );
+      try {
+        console.log('aaa');
+        await pool.execute(addNewProdcutSpec, [
+          curTime,
+          `productImg/ag502_${title}.jpg`,
+          idx === 0 ? 1 : 0,
+        ]);
+      } catch (error) {
+        throw new Error(error);
+      }
+    });
     res.status(200).json({ message: '추가 성공' });
   } catch (error) {
     res.status(500).json({ error: error.message });
