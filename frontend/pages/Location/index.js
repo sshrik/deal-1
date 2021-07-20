@@ -1,12 +1,9 @@
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import $ from '../../util/domControll';
+import LocationButtonContainer from './locationButtonContainer';
+import LocationTitleContainer from './LocationTitleContainer';
 import './location.css';
-import {
-  SELECT_LOCATION_STRING1,
-  SELECT_LOCATION_STRING2,
-} from '../../constant/strings';
-
 export default class Location extends ElementBuilder {
   constructor(props) {
     super(props);
@@ -23,14 +20,14 @@ export default class Location extends ElementBuilder {
       moveHandler: () => this.router.route(this.routeTo),
     });
 
-    const $titleContainer = $.create('div').addClass(
-      'location--title-container'
-    );
+    new LocationTitleContainer({
+      parent: this,
+    });
 
-    const $titleText1 = $.create('p').setText(SELECT_LOCATION_STRING1);
-    const $titleText2 = $.create('p').setText(SELECT_LOCATION_STRING2);
-    $titleContainer.appendChild($titleText1);
-    $titleContainer.appendChild($titleText2);
+    new LocationButtonContainer({
+      parent: this,
+      locations: ['역삼동'],
+    });
 
     return $element;
   }
