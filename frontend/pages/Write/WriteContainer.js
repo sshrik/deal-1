@@ -9,7 +9,7 @@ import ImageUploader from './ImageUploader';
 import TitleTextInput from './TitleTextInput';
 import TextInput from './TextInput';
 import TextAreaInput from './TextAreaInput';
-import DivLine from '../../component/DivLine';
+import DivLine from './DivLine';
 import WriteBottomFotter from './WriteBottomFotter';
 import './write.css';
 

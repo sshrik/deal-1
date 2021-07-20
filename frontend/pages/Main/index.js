@@ -5,7 +5,7 @@ import FaB from '../../component/Button/FaB';
 import ProductPage from '../Product/index';
 import LoadingModal from '../../component/Modal/LoadingModal';
 import api from '../../util/api';
-import Write from '../Write';
+import Write from '../Write/index';
 import $ from '../../util/domControll';
 import './main.css';
 
