@@ -17,7 +17,6 @@ wsRouter.use((req, res) => {
 wsRouter.open('/', (req, res, next) => {
   // ws 는 사용자 개개인의 web socekt, 따라서 username과 ws 묶음이 있어야 채팅이나 알람을 보낼 수 있다.
   res.serverMsg = 'Chatting Server connect success.';
-  res.userID = '23ADC-1230ADC-AS23GKIERT';
   res.sendTo = req.id;
 });
 
