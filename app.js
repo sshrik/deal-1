@@ -10,6 +10,7 @@ const { bundle } = require('./webpack.config');
 
 const indexRouter = require('./backend/routes/index');
 const authRouter = require('./backend/routes/auth');
+const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
 
 const app = express();
@@ -56,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public/resource')));
 app.use('/', indexRouter);
 app.use(authRouter);
 app.use(productRouter);
+app.use('/api', categoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
