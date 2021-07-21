@@ -31,8 +31,12 @@ export default class Main extends ElementBuilder {
     return false;
   }
 
-  moveHandler = (dest) => {
-    this.router.route(dest);
+  moveHandler = () => {
+    if (this.router.globalState.isLogin) {
+      this.router.route('logout');
+    } else {
+      this.router.route('login');
+    }
   };
 
   moveToSetLocation(e) {

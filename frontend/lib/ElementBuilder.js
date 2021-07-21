@@ -161,7 +161,6 @@ export default class ElementBuilder {
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();
-      // this.beforeRender();
     }
     // 하위 element의 rendering 시작. 재귀적으로 호출하여 BFS의 형태로 Rendering 합니다.
     this.child.forEach((element) => {

@@ -15,6 +15,9 @@ import Loading from './Loading/index';
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
 
+// 전역변수로 로그인 여부를 관리
+router.globalState.isLogin = false;
+
 const $mainPage = new Main({
   parent: $root,
   routeTo: 'category',
@@ -74,7 +77,7 @@ router.addScreen('register', $registerPage);
 router.addScreen('location', $locationPage);
 router.addScreen('menu', $menuPage);
 router.addScreen('chattingRoom', $chattingRoom);
-router.addScreen('chattingRoom', $loadingPage);
+router.addScreen('loadingPage', $loadingPage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
 router.setNowView($loadingPage);

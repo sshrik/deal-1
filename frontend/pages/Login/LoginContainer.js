@@ -28,7 +28,11 @@ export default class LoginContainer extends ElementBuilder {
     const { router } = this.props;
     api
       .fetchPost('/login', { userName: id, password: password })
-      .then((res) => router.route('main'))
+      .then((res) => {
+        router.globalState.isLogin = true;
+        api.fetchGet('/auth/ping').then((res) => console.log(res));
+        router.route('main');
+      })
       .catch((error) => console.log(error));
   };
 

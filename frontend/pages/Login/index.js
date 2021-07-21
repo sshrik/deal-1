@@ -13,22 +13,12 @@ export default class Login extends ElementBuilder {
     this.routeTo = routeTo;
   }
 
-  beforeRender() {
-    api
-      .fetchGet('/check_access')
-      .then((res) => {
-        this.router.route('logout');
-      })
-      .catch((error) => console.log(error));
-  }
-
   constructElement() {
-    console.log(this.props);
     const $element = $.create('div').addClass('login-container');
     new SubHeader({
       parent: this,
       title: '로그인',
-      moveHandler: () => this.router.route('logout'),
+      moveHandler: () => this.router.route('main'),
     });
     new LoginContainer({
       ...this.props,
