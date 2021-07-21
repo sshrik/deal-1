@@ -27,15 +27,9 @@ export default class LikeList extends ElementBuilder {
 
   handleClickLikeBtn = (pId) => {
     const { likeList } = this.state;
-    api
-      .fetchPost('/api/delete_like_product', { productId: pId })
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          likeList: likeList.filter(({ productId }) => productId !== pId),
-        });
-      })
-      .catch((error) => console.log(error));
+    this.setState({
+      likeList: likeList.filter(({ productId }) => productId !== pId),
+    });
   };
 
   constructElement() {

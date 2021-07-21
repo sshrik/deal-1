@@ -57,7 +57,7 @@ export default class ListItem extends ElementBuilder {
     if (prev.isOpen !== next.isOpen) {
       return true;
     }
-    if (prev.isActive !== next.isActive) {
+    if (prev.likeActive !== next.likeActive) {
       return true;
     }
     return false;
@@ -73,32 +73,25 @@ export default class ListItem extends ElementBuilder {
   };
 
   handleLikeBtnToggle = () => {
-    const { isActive } = this.state;
-    const { productId } = this.props;
+    const { likeActive } = this.state;
+    const { productId, onClickAction } = this.props;
     api
       .fetchPost(
-        isActive ? '/api/delete_like_product' : '/api/add_like_product',
+        likeActive ? '/api/delete_like_product' : '/api/add_like_product',
         { productId }
       )
       .then((res) => {
-        this.setState({ isActive: !isActive });
+        this.setState({ likeActive: !likeActive });
+        if (onClickAction) {
+          onClickAction(productId);
+        }
       })
       .catch((error) => console.log(error));
   };
 
   constructElement() {
-    const {
-      title,
-      lastTime,
-      price,
-      comment,
-      like,
-      area_1,
-      imgSrc,
-      type,
-      productId,
-      onClickAction,
-    } = this.props;
+    const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
+      this.props;
     const { isOpen, menuItems, likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
@@ -150,10 +143,7 @@ export default class ListItem extends ElementBuilder {
       const $likeBtn = IconBtns.like().addClass(
         likeActive ? 'active' : 'deactive'
       );
-      // $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
-      $likeBtn.addEventListener('click', (e) => {
-        onClickAction(productId);
-      });
+      $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
       $listItemActions.appendChild($likeBtn);
     }
 

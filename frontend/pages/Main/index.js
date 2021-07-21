@@ -21,7 +21,6 @@ export default class Main extends ElementBuilder {
     };
 
     this.moveToSetLocation = this.moveToSetLocation.bind(this);
-    // this.fecthData();
     this.useScroll();
   }
 
@@ -59,20 +58,6 @@ export default class Main extends ElementBuilder {
     this.router.addScreen('write', $writePage);
     this.router.route('write');
   };
-
-  fecthData() {
-    Promise.all([
-      api.fetchGet('/api/products'),
-      api.fetchGet('/api/categories'),
-    ])
-      .then(([products, categories]) => {
-        this.setState({
-          products: [...products.data],
-          categories: [...categories.data],
-        });
-      })
-      .catch((error) => console.log(error));
-  }
 
   constructElement() {
     const { products } = this.state;
