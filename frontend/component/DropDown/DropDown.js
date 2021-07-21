@@ -8,14 +8,17 @@ export default class DropDown extends ElementBuilder {
   }
 
   applyPosition(dropDown, position) {
-    Object.keys(position).forEach((pos) => {
-      dropDown.style[pos] = position[pos];
-    });
+    if (position) {
+      Object.keys(position).forEach((pos) => {
+        dropDown.style[pos] = position[pos];
+      });
+    }
   }
 
   showDropDown(dropDown, isOpen) {
     if (isOpen) {
       dropDown.style.display = 'block';
+      console.log('dropdoqns');
     } else {
       dropDown.style.display = 'none';
     }
@@ -34,6 +37,7 @@ export default class DropDown extends ElementBuilder {
         .addClass('drop-down-item', color)
         .addId(id)
         .setText(name);
+      $addLi.style.color = color;
       $addLi.addEventListener('click', (e) => {
         onClick(e);
       });

@@ -7,7 +7,6 @@ import './mainHeader.css';
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
     super(props);
-    const { moveHandler } = props;
     this.state = {
       isOpen: false,
       locations: [
