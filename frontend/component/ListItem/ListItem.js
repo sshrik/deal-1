@@ -25,15 +25,17 @@ function Like(like) {
 export default class ListItem extends ElementBuilder {
   constructor(props) {
     super(props);
+    const { isActive } = this.props;
     this.state = {
       isOpen: false,
+      likeActive: isActive,
       menuItems: [
         {
           id: 1,
           name: '수정하기',
           color: 'black',
           onClick: () => {
-            // 수정 페이지 이동 
+            // 수정 페이지 이동
             console.log('수정하기');
           },
         },
@@ -54,6 +56,9 @@ export default class ListItem extends ElementBuilder {
     if (prev.isOpen !== next.isOpen) {
       return true;
     }
+    if (prev.isActive !== next.isActive) {
+      return true;
+    }
     return false;
   }
 
@@ -66,10 +71,15 @@ export default class ListItem extends ElementBuilder {
     this.setState({ isOpen: false });
   };
 
+  handleLikeBtnToggle = () => {
+    const { isActive } = this.state;
+    this.setState({ isActive: !isActive });
+  };
+
   constructElement() {
     const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
       this.props;
-    const { isOpen, menuItems } = this.state;
+    const { isOpen, menuItems, isActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
@@ -117,7 +127,11 @@ export default class ListItem extends ElementBuilder {
         position: { top: '50px', right: '20px' },
       });
     } else {
-      $listItemActions.appendChild(IconBtns.like());
+      const $likeBtn = IconBtns.like().addClass(
+        isActive ? 'active' : 'deactive'
+      );
+      $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
+      $listItemActions.appendChild($likeBtn);
     }
 
     const $bottomIconInfoContainer = $.create('div').addClass(

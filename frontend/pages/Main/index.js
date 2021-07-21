@@ -89,15 +89,16 @@ export default class Main extends ElementBuilder {
       new ListItem({
         parent: this,
         ...element,
+        isActive: false,
         onClick: () => {
-          const $newPage = new ProductPage({
-            parent: this.parent,
-            element,
-            router: this.router,
-            routeTo: 'main',
-          });
-          this.router.addScreen('newPage', $newPage);
-          this.router.route('newPage');
+          // const $newPage = new ProductPage({
+          //   parent: this.parent,
+          //   element,
+          //   router: this.router,
+          //   routeTo: 'main',
+          // });
+          // this.router.addScreen('newPage', $newPage);
+          // this.router.route('newPage');
         },
       });
     });
