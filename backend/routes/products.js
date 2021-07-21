@@ -8,6 +8,7 @@ const {
   addNewProdcutSpec,
   addLikeProduct,
   deleteLikeProduct,
+  getUserSellingProducts,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -72,8 +73,19 @@ router.post('/add_like_product', async (req, res) => {
 router.post('/delete_like_product', async (req, res) => {
   try {
     const { productId } = req.body;
+    // access middle ware 설정 후 변경 예정
     await pool.execute(deleteLikeProduct, ['ag502', productId]);
     res.status(200).send({ message: '삭제 성공' });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+router.get('/user_selling_list', async (req, res) => {
+  try {
+    // access middle ware 설정 후 변경 예정
+    const [results, _] = await pool.execute(getUserSellingProducts, ['ag502']);
+    res.status(200).send({ data: results });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }

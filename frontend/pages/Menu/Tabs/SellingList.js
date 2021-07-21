@@ -9,6 +9,7 @@ export default class SellingList extends ElementBuilder {
     this.state = {
       sellingList: [],
     };
+    console.log('a');
   }
 
   constructElement() {

@@ -7,7 +7,9 @@ const addNewProdcutSpec =
 const addLikeProduct =
   'INSERT INTO likes (userId, productId) VALUES((SELECT id FROM users WHERE userName = ?), ?)';
 const deleteLikeProduct =
-  'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userNAME = ?) AND productId = ?';
+  'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userName = ?) AND productId = ?';
+const getUserSellingProducts =
+  'SELECT * FROM PRODUCTS WHERE seller = (SELECT id FROM users WHERE userName =?)';
 
 module.exports = {
   getAllProducts,
@@ -15,4 +17,5 @@ module.exports = {
   addNewProdcutSpec,
   addLikeProduct,
   deleteLikeProduct,
+  getUserSellingProducts,
 };
