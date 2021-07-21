@@ -11,8 +11,15 @@ export default class MainHeader extends ElementBuilder {
     this.state = {
       isOpen: false,
       locations: [
-        { id: 1, name: '역삼동', color: 'black' },
-        { id: 2, name: '내 동네 설정하기', color: 'black' },
+        { id: 1, name: '역삼동', color: 'black', onClick: () => {} },
+        {
+          id: 2,
+          name: '내 동네 설정하기',
+          color: 'black',
+          onClick: (e) => {
+            this.props.moveToSetLocation(e);
+          },
+        },
       ],
     };
   }
@@ -29,16 +36,8 @@ export default class MainHeader extends ElementBuilder {
     this.setState({ isOpen: true });
   };
 
-  handleDropDownClose = () => {
+  handleDropDownClose = (e) => {
     this.setState({ isOpen: false });
-  };
-
-  handleDropDownSelect = ({ target }) => {
-    const { router } = this.props;
-    const id = parseInt(target.id);
-    if (id === 2) {
-      router.route('write');
-    }
   };
 
   constructElement() {
@@ -54,7 +53,7 @@ export default class MainHeader extends ElementBuilder {
     );
     const $locationBtn = $.create('div').addClass('location-btn').setHTML(`
       ${IconBtns.mapPin().outerHTML}
-      <span>양재동</span>
+      <span>${this.props.location}</span>
     `);
     $locationBtn.addEventListener('click', this.handleDropDownOpen);
     window.addEventListener('click', this.handleDropDownClose);
@@ -70,7 +69,6 @@ export default class MainHeader extends ElementBuilder {
       $attachedTarget: $locationContainer.cloneNode(),
       dropDownInfo: locations,
       onClose: this.handleDropDownClose,
-      onSelect: this.handleDropDownSelect,
       isOpen: isOpen,
     });
 

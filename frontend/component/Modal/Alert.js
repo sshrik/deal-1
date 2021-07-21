@@ -3,6 +3,12 @@ import './modal.css';
 import ElementBuilder from '../../lib/ElementBuilder';
 
 export default class Alert extends ElementBuilder {
+  /* props
+  titleText : 위에 뜰 문구
+  proceedText : 계속하기 문구
+  onCancel : 취소를 눌렀을 때 일어날 함수
+  onProceed : 계속 진행 할 때 일어날 함수
+   */
   addOutAnimation = ($container, $totalContainer) => {
     if (this.props.animation === 'slide') {
       $container.addClass('slide-out-animation');
@@ -11,6 +17,7 @@ export default class Alert extends ElementBuilder {
     }
     $totalContainer.addClass('transparent-modal--container__out');
   };
+
   addInAnimation = ($container, $totalContainer) => {
     if (this.props.animation === 'slide') {
       $container.addClass('slide-in-animation');
@@ -19,6 +26,7 @@ export default class Alert extends ElementBuilder {
     }
     $totalContainer.addClass('transparent-modal--container__in');
   };
+
   constructElement() {
     const $modalContainer = $.create('div').addClass(
       'transparent-modal--container'
@@ -47,17 +55,17 @@ export default class Alert extends ElementBuilder {
     $cancel.addEventListener('click', (e) => {
       this.addOutAnimation($alertContainer, $modalContainer);
       if (this.props.onCancel) {
-        setTimeout(() => this.props.onCancel(e), 500);
+        setTimeout((e) => this.props.onCancel(e), 500);
       }
     });
     const $proceed = $.create('p')
-      .setText('나가기')
+      .setText(this.props.proceedText)
       .addClass('error-modal--answer-text')
       .addClass('error-modal--error-text');
     $proceed.addEventListener('click', (e) => {
       this.addOutAnimation($alertContainer, $modalContainer);
       if (this.props.onProceed) {
-        setTimeout(() => this.props.onProceed(e), 500);
+        setTimeout(() => this.props.onProceed(), 500);
       }
     });
 

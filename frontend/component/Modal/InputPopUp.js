@@ -3,6 +3,15 @@ import './modal.css';
 import ElementBuilder from '../../lib/ElementBuilder';
 
 export default class InputPopUp extends ElementBuilder {
+  /*
+    props
+    titleText : 위에 뜰 문구
+    placeholder : Placeholder
+    onInput : input event 가 실행 될 때 마다 수행 될 함수.
+    onCancel : 종료 버튼을 눌렀을 때 수행 될 함수.
+    checkInput : 입력의 문자열이 조건에 맞는지.
+    onProceed : 계속하기 버튼을 눌렀을 때 수행 될 함수.
+  */
   addOutAnimation = ($container, $totalContainer) => {
     if (this.props.animation === 'slide') {
       $container.addClass('slide-out-animation');
@@ -11,6 +20,7 @@ export default class InputPopUp extends ElementBuilder {
     }
     $totalContainer.addClass('transparent-modal--container__out');
   };
+
   addInAnimation = ($container, $totalContainer) => {
     if (this.props.animation === 'slide') {
       $container.addClass('slide-in-animation');
@@ -19,6 +29,7 @@ export default class InputPopUp extends ElementBuilder {
     }
     $totalContainer.addClass('transparent-modal--container__in');
   };
+
   constructElement() {
     const $modalContainer = $.create('div').addClass(
       'transparent-modal--container'
@@ -41,7 +52,7 @@ export default class InputPopUp extends ElementBuilder {
     $input.placeholder = this.props.placeholder;
     $inputContainer.appendChild($input);
     $input.addEventListener('input', (e) => {
-      if (e.target.value.endsWith('동')) {
+      if (this.props.checkInput(e.target.value)) {
         $proceed.addClass('input-modal--proceed-text__active');
         if (this.props.onInput) {
           this.props.onInput(e);
@@ -68,9 +79,11 @@ export default class InputPopUp extends ElementBuilder {
     });
 
     $proceed.addEventListener('click', (e) => {
-      this.addOutAnimation($alertContainer, $modalContainer);
-      if (this.props.onProceed) {
-        setTimeout(() => this.props.onProceed(e), 500);
+      if (this.props.checkInput($input.value)) {
+        this.addOutAnimation($alertContainer, $modalContainer);
+        if (this.props.onProceed) {
+          setTimeout(() => this.props.onProceed(e, $input.value), 500);
+        }
       }
     });
 
