@@ -1,6 +1,6 @@
 const http = require('http');
 const WebSocketServer = require('ws').Server;
-const wsRouter = require('../routes/webSocket');
+const wsRouter = require('../routes/chat');
 
 function appendWebSocketServer(app) {
   // Express App을 받아서 같은 Port를 사용하는 WebSocektServer를 만듭니다.
