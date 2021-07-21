@@ -74,7 +74,7 @@ export default class Main extends ElementBuilder {
       new ListItem({
         parent: this,
         ...element,
-        isActive: false,
+        isActive: element.likeId ? true : false,
         onClick: () => {
           // const $newPage = new ProductPage({
           //   parent: this.parent,

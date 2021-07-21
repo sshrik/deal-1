@@ -10,6 +10,7 @@ const {
   deleteLikeProduct,
   getUserSellingProducts,
   getUserLikeProducts,
+  getAllProductsAuth,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -18,6 +19,16 @@ router.get('/products', async (req, res) => {
     res.status(200).json({ data: results });
   } catch (error) {
     res.status(500).json({ error: '제품 조회실패' });
+  }
+});
+
+router.get('/products_user', async (req, res) => {
+  try {
+    // access middle ware 설정 후 변경 예정
+    const [results, _] = await pool.execute(getAllProductsAuth, ['ag502']);
+    res.status(200).json({ data: results });
+  } catch (error) {
+    res.status(500).json({ error: '제품조회 실패' });
   }
 });
 
