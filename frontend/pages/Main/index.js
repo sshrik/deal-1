@@ -40,7 +40,11 @@ export default class Main extends ElementBuilder {
     return false;
   }
 
-  moveHandler = () => {
+  moveHandler = (dest) => {
+    this.router.route(dest);
+  };
+
+  toLogin = () => {
     if (this.router.globalState.isLogin) {
       const $logoutPage = new Logout({
         parent: this.parent,
@@ -133,23 +137,19 @@ export default class Main extends ElementBuilder {
       location: '양재동',
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
+      toLogin: this.toLogin,
     });
+
     const $emptyDiv = new DragDownItem({
       parent: this,
     });
-    $element.addEventListener(
-      'drag',
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      },
-      true
-    );
+
     $element.addEventListener('mousedown', (e) => {
       this.mouseLocation.isDown = true;
       this.mouseLocation.pressY = e.pageY;
       this.mouseLocation.nowY = e.pageY;
     });
+
     $element.addEventListener('mousemove', (e) => {
       if (this.mouseLocation.isDown) {
         this.mouseLocation.nowY = e.pageY;
@@ -159,6 +159,7 @@ export default class Main extends ElementBuilder {
         }
       }
     });
+
     $element.addEventListener('mouseup', (e) => {
       this.mouseLocation.isDown = false;
       this.mouseLocation.nowY = e.pageY;
@@ -188,6 +189,7 @@ export default class Main extends ElementBuilder {
         },
       });
     });
+
     new FaB({
       parent: this,
       moveHandler: () => this.toWritePage(),
