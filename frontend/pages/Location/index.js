@@ -95,7 +95,10 @@ export default class Location extends ElementBuilder {
     new SubHeader({
       parent: this,
       title: '내동네 설정하기',
-      moveHandler: () => this.router.route(this.routeTo),
+      moveHandler: () =>
+        this.router.route(this.routeTo, {
+          props: { location: this.state.location },
+        }),
     });
 
     new LocationTitleContainer({
