@@ -33,6 +33,7 @@ export default class ListItem extends ElementBuilder {
           name: '수정하기',
           color: 'black',
           onClick: () => {
+            // 수정 페이지 이동 
             console.log('수정하기');
           },
         },
@@ -41,6 +42,7 @@ export default class ListItem extends ElementBuilder {
           name: '삭제하기',
           color: 'red',
           onClick: () => {
+            // 삭제 로직
             console.log('삭제하기');
           },
         },
@@ -49,13 +51,15 @@ export default class ListItem extends ElementBuilder {
   }
 
   compareState(prev, next) {
-    return true;
+    if (prev.isOpen !== next.isOpen) {
+      return true;
+    }
+    return false;
   }
 
   handleDropDownOpen = (e) => {
     e.stopPropagation();
     this.setState({ isOpen: true });
-    console.log(this.state);
   };
 
   handleDropDownClose = (e) => {

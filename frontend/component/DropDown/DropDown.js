@@ -18,7 +18,6 @@ export default class DropDown extends ElementBuilder {
   showDropDown(dropDown, isOpen) {
     if (isOpen) {
       dropDown.style.display = 'block';
-      console.log('dropdoqns');
     } else {
       dropDown.style.display = 'none';
     }
