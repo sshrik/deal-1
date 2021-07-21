@@ -22,6 +22,7 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
       categories: [],
+      location: [null, null],
       filter: '',
     };
     this.mouseLocation = {
@@ -36,8 +37,11 @@ export default class Main extends ElementBuilder {
 
   compareState(prevState, newState) {
     prevState.products.forEach((element, index) => {
-      if (element !== newState[index]) return true;
+      if (element !== newState.products[index]) return true;
     });
+    for (let i = 0; i < 2; i++) {
+      if (prevState.location[i] !== newState.location[i]) return true;
+    }
     if (prevState.filter !== newState.filter) return true;
     return false;
   }
@@ -137,7 +141,7 @@ export default class Main extends ElementBuilder {
     new MainHeader({
       ...this.props,
       parent: this,
-      location: '양재동',
+      location: this.state.location[0] ? this.state.location[0] : '양재동',
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
       toLogin: this.toLogin,

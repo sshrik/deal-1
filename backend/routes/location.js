@@ -4,15 +4,19 @@ const router = express.Router();
 const CONSTANT = require('../lib/constant');
 const util = require('../lib/util');
 
-const { getAllProductsAuth } = require('../model/query/location');
+const {
+  selectLocation,
+  updateLocationOne,
+  updateLocationAll,
+} = require('../model/query/location');
 
 router.get('/location', async (req, res) => {
   try {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
-    // access middle ware 설정 후 변경 예정
-    const [results, _] = await pool.execute(getAllProductsAuth, [id]);
-    util.sendJson(res, { data: results });
+    const [results, _] = await pool.execute(selectLocation, [id]);
+    console.log(results);
+    util.sendJson(res, { data: [results[0].area_1, results[0].area_2] });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }

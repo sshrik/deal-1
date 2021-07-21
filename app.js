@@ -16,6 +16,7 @@ const authRouter = require('./backend/routes/auth');
 const nonAuthRouter = require('./backend/routes/nonAuth');
 const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
+const locationRouter = require('./backend/routes/location');
 
 const app = express();
 
@@ -71,6 +72,7 @@ app.use('/api', profileRouter);
 app.use('/api', categoryRouter);
 app.use('/api', nonAuthRouter);
 app.use('/api/auth', productRouter);
+app.use('/api/auth', locationRouter);
 app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
