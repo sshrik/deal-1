@@ -10,6 +10,7 @@ import Write from '../Write/index';
 import $ from '../../util/domControll';
 import Location from '../Location/index';
 import Alert from '../../component/Modal/Alert';
+import DragDownItem from './DragDownItem';
 import './main.css';
 
 export default class Main extends ElementBuilder {
@@ -21,6 +22,11 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
       categories: [],
+    };
+    this.mouseLocation = {
+      isDown: false,
+      pressY: 0,
+      nowY: 0,
     };
 
     this.moveToSetLocation = this.moveToSetLocation.bind(this);
@@ -127,6 +133,40 @@ export default class Main extends ElementBuilder {
       location: '양재동',
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
+    });
+    const $emptyDiv = new DragDownItem({
+      parent: this,
+    });
+    $element.addEventListener(
+      'drag',
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      true
+    );
+    $element.addEventListener('mousedown', (e) => {
+      this.mouseLocation.isDown = true;
+      this.mouseLocation.pressY = e.pageY;
+      this.mouseLocation.nowY = e.pageY;
+    });
+    $element.addEventListener('mousemove', (e) => {
+      if (this.mouseLocation.isDown) {
+        this.mouseLocation.nowY = e.pageY;
+        const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
+        if (height > 0 && height < 65) {
+          $emptyDiv.setHeight(height);
+        }
+      }
+    });
+    $element.addEventListener('mouseup', (e) => {
+      this.mouseLocation.isDown = false;
+      this.mouseLocation.nowY = e.pageY;
+      const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
+      if (height > 65) {
+        this.fetchContents();
+      }
+      $emptyDiv.setHeight(0);
     });
 
     products.forEach((element) => {
