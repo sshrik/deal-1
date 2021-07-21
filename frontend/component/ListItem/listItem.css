@@ -59,6 +59,10 @@
   align-items: flex-end;
 }
 
+.dot-menu {
+  display: relative;
+}
+
 .actions__comments {
   display: flex;
   align-items: center;

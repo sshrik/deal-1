@@ -94,3 +94,11 @@
   background-color: var(--white);
   border: 1px solid var(--grey3);
 }
+
+.like.active svg {
+  fill: var(--primary1);
+}
+
+.like.active path{
+  stroke: var(--primary1);
+}

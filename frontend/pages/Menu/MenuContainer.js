@@ -3,6 +3,7 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import SellingList from './Tabs/SellingList';
 import ChattingList from './Tabs/ChattingList';
 import LikeList from './Tabs/LikeList';
+import api from '../../util/api';
 
 const tabs = [
   { id: 1, name: '판매목록' },
@@ -15,13 +16,25 @@ export default class MenuContainer extends ElementBuilder {
     super(props);
     this.state = {
       curTab: 1,
+      sellingList: [],
     };
+    this.fecthData();
   }
 
+  fecthData = () => {
+    Promise.all([
+      api.fetchGet('/api/user_selling_list'),
+      // api.fetchGet('/api/user_like_list'),
+    ])
+      .then(([sellingList]) => {
+        this.setState({
+          sellingList: [...sellingList.data],
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
   compareState(prevState, newState) {
-    if (prevState.curTab === newState.curTab) {
-      return false;
-    }
     return true;
   }
 
@@ -39,7 +52,7 @@ export default class MenuContainer extends ElementBuilder {
   };
 
   constructElement() {
-    const { curTab } = this.state;
+    const { curTab, sellingList } = this.state;
     const $element = $.create('div').addClass('menu-content-container');
     const $tab = $.create('div').addClass('menu-tab');
     $tab.setHTML(
@@ -58,6 +71,7 @@ export default class MenuContainer extends ElementBuilder {
     if (curTab === 1) {
       new SellingList({
         parent: this,
+        sellingList,
       });
     } else if (curTab === 2) {
       new ChattingList({

@@ -30,27 +30,35 @@ export default class Main extends ElementBuilder {
     }
   }
 
-  constructElement() {
-    const $element = $.create('div').addClass('loading-contianer');
-
-    let animationStartTime = new Date().getTime();
-    new LoadingModal({
-      parent: this,
-    });
-
-    api
-      .fetchGet('/products', {
-        delayTime: 1800,
-        startTime: animationStartTime,
-      })
-      .then((res) => {
+  fetchData = () => {
+    const animationStartTime = new Date().getTime();
+    const animationOptions = {
+      delayTime: 1800,
+      startTime: animationStartTime,
+    };
+    Promise.all([
+      api.fetchGet('/api/products_user', animationOptions),
+      api.fetchGet('/api/categories', animationOptions),
+    ])
+      .then(([products, categories]) => {
         this.router.route(this.routeTo, {
           props: {
-            products: [...res],
+            products: [...products.data],
+            categories: [...categories.data],
           },
         });
       })
       .catch((error) => console.log(error));
+  };
+
+  constructElement() {
+    const $element = $.create('div').addClass('loading-contianer');
+
+    new LoadingModal({
+      parent: this,
+    });
+
+    this.fetchData();
 
     return $element;
   }

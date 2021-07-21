@@ -3,6 +3,8 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import IconBtns from '../Button/IconButtons';
 import Image from '../Image';
 import { stringEllipsis } from '../../util/utils';
+import api from '../../util/api';
+import DropDown from '../DropDown/DropDown';
 import './listItem.css';
 
 function Comment(comment) {
@@ -22,10 +24,75 @@ function Like(like) {
 }
 
 export default class ListItem extends ElementBuilder {
+  constructor(props) {
+    super(props);
+    const { isActive } = this.props;
+    this.state = {
+      isOpen: false,
+      likeActive: isActive,
+      menuItems: [
+        {
+          id: 1,
+          name: '수정하기',
+          color: 'black',
+          onClick: () => {
+            // 수정 페이지 이동
+            console.log('수정하기');
+          },
+        },
+        {
+          id: 2,
+          name: '삭제하기',
+          color: 'red',
+          onClick: () => {
+            // 삭제 로직
+            console.log('삭제하기');
+          },
+        },
+      ],
+    };
+  }
+
+  compareState(prev, next) {
+    if (prev.isOpen !== next.isOpen) {
+      return true;
+    }
+    if (prev.likeActive !== next.likeActive) {
+      return true;
+    }
+    return false;
+  }
+
+  handleDropDownOpen = (e) => {
+    e.stopPropagation();
+    this.setState({ isOpen: true });
+  };
+
+  handleDropDownClose = (e) => {
+    this.setState({ isOpen: false });
+  };
+
+  handleLikeBtnToggle = () => {
+    const { likeActive } = this.state;
+    const { productId, onClickAction } = this.props;
+    api
+      .fetchPost(
+        likeActive ? '/api/delete_like_product' : '/api/add_like_product',
+        { productId }
+      )
+      .then((res) => {
+        this.setState({ likeActive: !likeActive });
+        if (onClickAction) {
+          onClickAction(productId);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   constructElement() {
-    console.log(this.props);
-    const { title, lastTime, price, comment, like, area_1, imgSrc } =
+    const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
       this.props;
+    const { isOpen, menuItems, likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
@@ -51,7 +118,34 @@ export default class ListItem extends ElementBuilder {
 
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
-    $listItemActions.appendChild(IconBtns.like());
+
+    if (type === 'menu') {
+      const $dotMenuBtn = $.create('button')
+        .addClass('dot-menu')
+        .setHTML(IconBtns.dotMenu);
+      $listItemActions.addElement($dotMenuBtn);
+      window.addEventListener('click', this.handleDropDownClose);
+      $dotMenuBtn.addEventListener('click', (e) => {
+        if (isOpen) {
+          this.handleDropDownClose(e);
+        } else {
+          this.handleDropDownOpen(e);
+        }
+      });
+      new DropDown({
+        parent: this,
+        isOpen,
+        dropDownInfo: menuItems,
+        onClose: this.handleDropDownClose,
+        position: { top: '50px', right: '20px' },
+      });
+    } else {
+      const $likeBtn = IconBtns.like().addClass(
+        likeActive ? 'active' : 'deactive'
+      );
+      $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
+      $listItemActions.appendChild($likeBtn);
+    }
 
     const $bottomIconInfoContainer = $.create('div').addClass(
       'list-item--bottom-info__container'
