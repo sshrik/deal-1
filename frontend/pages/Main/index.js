@@ -174,6 +174,7 @@ export default class Main extends ElementBuilder {
         parent: this,
         ...element,
         isActive: element.likeId ? true : false,
+        onAlert: this.showAlert,
         onClick: () => {
           // TODO : ADD event to refresh... this.fetchContents();
           // const $newPage = new ProductPage({

@@ -5,6 +5,7 @@ import Image from '../Image';
 import { stringEllipsis } from '../../util/utils';
 import api from '../../util/api';
 import DropDown from '../DropDown/DropDown';
+
 import './listItem.css';
 
 function Comment(comment) {
@@ -77,8 +78,10 @@ export default class ListItem extends ElementBuilder {
     const { productId, onClickAction } = this.props;
     api
       .fetchPost(
-        likeActive ? '/api/delete_like_product' : '/api/add_like_product',
-        { productId }
+        likeActive ? '/auth/delete_like_product' : '/auth/add_like_product',
+        {
+          productId,
+        }
       )
       .then((res) => {
         this.setState({ likeActive: !likeActive });
@@ -86,7 +89,7 @@ export default class ListItem extends ElementBuilder {
           onClickAction(productId);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => this.props.onAlert(error));
   };
 
   constructElement() {
