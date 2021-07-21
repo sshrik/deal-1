@@ -2,8 +2,10 @@ const express = require('express');
 const fs = require('fs');
 const pool = require('../model/db');
 const router = express.Router();
+const CONSTANT = require('../lib/constant');
+const util = require('../lib/util');
+
 const {
-  getAllProducts,
   addNewProduct,
   addNewProdcutSpec,
   addLikeProduct,
@@ -13,22 +15,15 @@ const {
   getAllProductsAuth,
 } = require('../model/query/products');
 
-router.get('/products', async (req, res) => {
-  try {
-    const [results, _] = await pool.execute(getAllProducts);
-    res.status(200).json({ data: results });
-  } catch (error) {
-    res.status(500).json({ error: '제품 조회실패' });
-  }
-});
-
 router.get('/products_user', async (req, res) => {
   try {
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
     // access middle ware 설정 후 변경 예정
-    const [results, _] = await pool.execute(getAllProductsAuth, ['ag502']);
-    res.status(200).json({ data: results });
+    const [results, _] = await pool.execute(getAllProductsAuth, [id]);
+    util.sendJson(res, { data: results });
   } catch (error) {
-    res.status(500).json({ error: '제품조회 실패' });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 

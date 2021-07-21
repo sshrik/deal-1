@@ -13,6 +13,7 @@ const authMw = require('./backend/middleware/auth');
 const indexRouter = require('./backend/routes/index');
 const profileRouter = require('./backend/routes/profile');
 const authRouter = require('./backend/routes/auth');
+const nonAuthRouter = require('./backend/routes/nonAuth');
 const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
 
@@ -67,8 +68,9 @@ app.use('/api/logout', authMw.removeSession); // 로그아웃은 session을 추�
 
 // API 요청을 위한 Router
 app.use('/api', profileRouter);
-app.use('/api', productRouter);
 app.use('/api', categoryRouter);
+app.use('/api', nonAuthRouter);
+app.use('/api/auth', productRouter);
 app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler

@@ -9,6 +9,7 @@ import Logout from '../Logout/index';
 import Write from '../Write/index';
 import $ from '../../util/domControll';
 import Location from '../Location/index';
+import Alert from '../../component/Modal/Alert';
 import './main.css';
 
 export default class Main extends ElementBuilder {
@@ -76,6 +77,47 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
+  showAlert = (error) => {
+    const $alert = new Alert({
+      parent: this,
+      titleText: error,
+      proceedText: '확인',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
+  fetchMine = () => {
+    api
+      .fetchGet('/auth/products_user')
+      .then((products) => {
+        this.setState({ products: [...products.data] });
+      })
+      .catch((error) => this.showAlert(error));
+  };
+
+  fetchAll = () => {
+    api
+      .fetchGet('/products')
+      .then((products) => {
+        this.setState({ products: [...products.data] });
+      })
+      .catch((error) => this.showAlert(error));
+  };
+
+  fetchContents = () => {
+    if (this.router.globalState.isLogin) {
+      this.fetchMine();
+    } else {
+      this.fetchAll();
+    }
+  };
+
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
@@ -93,6 +135,7 @@ export default class Main extends ElementBuilder {
         ...element,
         isActive: element.likeId ? true : false,
         onClick: () => {
+          // TODO : ADD event to refresh... this.fetchContents();
           // const $newPage = new ProductPage({
           //   parent: this.parent,
           //   element,
