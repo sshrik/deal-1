@@ -22,6 +22,7 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
       categories: [],
+      filter: '',
     };
     this.mouseLocation = {
       isDown: false,
@@ -34,9 +35,11 @@ export default class Main extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
+    console.log(prevState.filter !== newState.filter);
     prevState.products.forEach((element, index) => {
       if (element !== newState[index]) return true;
     });
+    if (prevState.filter !== newState.filter) return true;
     return false;
   }
 
@@ -171,23 +174,25 @@ export default class Main extends ElementBuilder {
     });
 
     products.forEach((element) => {
-      new ListItem({
-        parent: this,
-        ...element,
-        isActive: element.likeId ? true : false,
-        onAlert: this.showAlert,
-        onClick: () => {
-          // TODO : ADD event to refresh... this.fetchContents();
-          // const $newPage = new ProductPage({
-          //   parent: this.parent,
-          //   element,
-          //   router: this.router,
-          //   routeTo: 'main',
-          // });
-          // this.router.addScreen('newPage', $newPage);
-          // this.router.route('newPage');
-        },
-      });
+      if (element.category === this.state.filter || this.state.filter === '') {
+        new ListItem({
+          parent: this,
+          ...element,
+          isActive: element.likeId ? true : false,
+          onAlert: this.showAlert,
+          onClick: () => {
+            // TODO : ADD event to refresh... this.fetchContents();
+            // const $newPage = new ProductPage({
+            //   parent: this.parent,
+            //   element,
+            //   router: this.router,
+            //   routeTo: 'main',
+            // });
+            // this.router.addScreen('newPage', $newPage);
+            // this.router.route('newPage');
+          },
+        });
+      }
     });
 
     new FaB({
