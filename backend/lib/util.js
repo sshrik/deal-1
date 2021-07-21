@@ -8,14 +8,14 @@ function sendJson(res, data) {
 // Status Code가 200이 아닌 경우의 발송 방식. JSON 형태로 보낸다.
 function sendError(res, type) {
   const Break = new Error('Break');
-  const ERR_MSG = { error: '', errorType: type };
+  let ERR_MSG = { error: '', errorType: type };
   let statusCode = 401;
   // CONSTANT 객체들에 대해서 실행
   try {
-    CONSTANT.keys().forEach((keys) => {
-      const { elType, code, msg } = CONSTANT.keys;
-      if (elType === type) {
-        statusCode = code;
+    Object.keys(CONSTANT).forEach((element) => {
+      const { elType, code, msg } = CONSTANT[element];
+      {
+        if (elType === type) statusCode = code;
         ERR_MSG.error = msg;
         throw Break;
       }

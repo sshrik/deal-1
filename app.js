@@ -11,6 +11,7 @@ const { bundle } = require('./webpack.config');
 const authMw = require('./backend/middleware/auth');
 
 const indexRouter = require('./backend/routes/index');
+const profileRouter = require('./backend/routes/profile');
 const authRouter = require('./backend/routes/auth');
 const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
@@ -64,9 +65,11 @@ app.use('/api/auth', authMw.checkSession); // 인증이 필요한 페이지에 �
 app.use('/api/login', authMw.addSession); // 로그인은 session을 추가
 app.use('/api/logout', authMw.removeSession); // 로그아웃은 session을 추가하지 않음.
 
-app.use('/api', authRouter);
+// API 요청을 위한 Router
+app.use('/api', profileRouter);
 app.use('/api', productRouter);
 app.use('/api', categoryRouter);
+app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
