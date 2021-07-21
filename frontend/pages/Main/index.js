@@ -21,7 +21,6 @@ export default class Main extends ElementBuilder {
     };
 
     this.moveToSetLocation = this.moveToSetLocation.bind(this);
-    // this.fecthData();
     this.useScroll();
   }
 
@@ -60,20 +59,6 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
-  fecthData() {
-    Promise.all([
-      api.fetchGet('/api/products'),
-      api.fetchGet('/api/categories'),
-    ])
-      .then(([products, categories]) => {
-        this.setState({
-          products: [...products.data],
-          categories: [...categories.data],
-        });
-      })
-      .catch((error) => console.log(error));
-  }
-
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
@@ -89,15 +74,16 @@ export default class Main extends ElementBuilder {
       new ListItem({
         parent: this,
         ...element,
+        isActive: element.likeId ? true : false,
         onClick: () => {
-          const $newPage = new ProductPage({
-            parent: this.parent,
-            element,
-            router: this.router,
-            routeTo: 'main',
-          });
-          this.router.addScreen('newPage', $newPage);
-          this.router.route('newPage');
+          // const $newPage = new ProductPage({
+          //   parent: this.parent,
+          //   element,
+          //   router: this.router,
+          //   routeTo: 'main',
+          // });
+          // this.router.addScreen('newPage', $newPage);
+          // this.router.route('newPage');
         },
       });
     });

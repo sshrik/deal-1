@@ -37,7 +37,7 @@ export default class Main extends ElementBuilder {
       startTime: animationStartTime,
     };
     Promise.all([
-      api.fetchGet('/api/products', animationOptions),
+      api.fetchGet('/api/products_user', animationOptions),
       api.fetchGet('/api/categories', animationOptions),
     ])
       .then(([products, categories]) => {
