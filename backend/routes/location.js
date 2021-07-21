@@ -22,8 +22,33 @@ router.get('/location', async (req, res) => {
   }
 });
 
-router.post('/location', async (req, res) => {});
+router.post('/location', async (req, res) => {
+  try {
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
+    const [results, _] = await pool.execute(updateLocationOne, [
+      id,
+      req.body.area_1,
+    ]);
+    util.sendJson(res, { data: 'admit' });
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
 
-router.post('/location_all', async (req, res) => {});
+router.post('/location_all', async (req, res) => {
+  try {
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
+    const [results, _] = await pool.execute(updateLocationAll, [
+      id,
+      req.body.area_1,
+      req.body.area_2,
+    ]);
+    util.sendJson(res, { data: 'admit' });
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
 
 module.exports = router;

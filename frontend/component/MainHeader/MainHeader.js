@@ -8,15 +8,13 @@ export default class MainHeader extends ElementBuilder {
   constructor(props) {
     super(props);
     let locationState = [];
-    if (this.props.location[0]) {
+    if (this.props.location[0] && this.props.location[1]) {
       locationState = [
         {
           id: 1,
           name: this.props.location[0],
           color: 'black',
-          onClick: () => {
-            this.swapLocation();
-          },
+          onClick: () => {},
         },
         {
           id: 2,
@@ -24,6 +22,31 @@ export default class MainHeader extends ElementBuilder {
           color: 'black',
           onClick: () => {
             this.swapLocation();
+          },
+        },
+        {
+          id: 3,
+          name: '내 동네 설정하기',
+          color: 'black',
+          onClick: (e) => {
+            this.props.moveToSetLocation(e);
+          },
+        },
+      ];
+    } else if (this.props.location[0] && !this.props.location[1]) {
+      locationState = [
+        {
+          id: 1,
+          name: this.props.location[0],
+          color: 'black',
+          onClick: () => {},
+        },
+        {
+          id: 2,
+          name: '내 동네 설정하기',
+          color: 'black',
+          onClick: (e) => {
+            this.props.moveToSetLocation(e);
           },
         },
       ];
