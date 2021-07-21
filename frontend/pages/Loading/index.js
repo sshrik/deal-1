@@ -39,14 +39,15 @@ export default class Main extends ElementBuilder {
     });
 
     api
-      .fetchGet('/products')
+      .fetchGet('/products', {
+        delayTime: 1800,
+        startTime: animationStartTime,
+      })
       .then((res) => {
-        this.checkAnimationEnd(animationStartTime, 1800, () => {
-          this.router.route(this.routeTo, {
-            props: {
-              products: [...res],
-            },
-          });
+        this.router.route(this.routeTo, {
+          props: {
+            products: [...res],
+          },
         });
       })
       .catch((error) => console.log(error));
