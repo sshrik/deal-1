@@ -17,6 +17,7 @@ export default class SellingList extends ElementBuilder {
     tempData.forEach((element) => {
       new ListItem({
         parent: this,
+        type: 'menu',
         ...element,
       });
     });

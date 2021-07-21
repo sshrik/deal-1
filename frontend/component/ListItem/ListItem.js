@@ -4,6 +4,7 @@ import IconBtns from '../Button/IconButtons';
 import Image from '../Image';
 import { stringEllipsis } from '../../util/utils';
 import './listItem.css';
+import DropDown from '../DropDown/DropDown';
 
 function Comment(comment) {
   return $.create('div').addClass('actions__comments').setHTML(`
@@ -22,10 +23,53 @@ function Like(like) {
 }
 
 export default class ListItem extends ElementBuilder {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      menuItems: [
+        {
+          id: 1,
+          name: '수정하기',
+          color: 'black',
+          onClick: () => {
+            // 수정 페이지 이동 
+            console.log('수정하기');
+          },
+        },
+        {
+          id: 2,
+          name: '삭제하기',
+          color: 'red',
+          onClick: () => {
+            // 삭제 로직
+            console.log('삭제하기');
+          },
+        },
+      ],
+    };
+  }
+
+  compareState(prev, next) {
+    if (prev.isOpen !== next.isOpen) {
+      return true;
+    }
+    return false;
+  }
+
+  handleDropDownOpen = (e) => {
+    e.stopPropagation();
+    this.setState({ isOpen: true });
+  };
+
+  handleDropDownClose = (e) => {
+    this.setState({ isOpen: false });
+  };
+
   constructElement() {
-    console.log(this.props);
-    const { title, lastTime, price, comment, like, area_1, imgSrc } =
+    const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
       this.props;
+    const { isOpen, menuItems } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
@@ -51,7 +95,30 @@ export default class ListItem extends ElementBuilder {
 
     // 리스트 아이템 버튼
     const $listItemActions = $.create('div').addClass('list-item__actions');
-    $listItemActions.appendChild(IconBtns.like());
+
+    if (type === 'menu') {
+      const $dotMenuBtn = $.create('button')
+        .addClass('dot-menu')
+        .setHTML(IconBtns.dotMenu);
+      $listItemActions.addElement($dotMenuBtn);
+      window.addEventListener('click', this.handleDropDownClose);
+      $dotMenuBtn.addEventListener('click', (e) => {
+        if (isOpen) {
+          this.handleDropDownClose(e);
+        } else {
+          this.handleDropDownOpen(e);
+        }
+      });
+      new DropDown({
+        parent: this,
+        isOpen,
+        dropDownInfo: menuItems,
+        onClose: this.handleDropDownClose,
+        position: { top: '50px', right: '20px' },
+      });
+    } else {
+      $listItemActions.appendChild(IconBtns.like());
+    }
 
     const $bottomIconInfoContainer = $.create('div').addClass(
       'list-item--bottom-info__container'
