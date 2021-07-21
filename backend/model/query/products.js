@@ -1,4 +1,13 @@
 const getAllProducts =
   'SELECT * FROM products JOIN users ON products.seller = users.id JOIN productSpecs ON products.id = productSpecs.productId';
 
-module.exports = { getAllProducts };
+const addNewProduct =
+  'INSERT INTO products (title, uploadTime, price, detail, seller, category, viewCount, nowSelling) VALUES(?, ?, ?, ?, (SELECT id FROM users WHERE userName = ?), ?, ?, ?)';
+const addNewProdcutSpec =
+  'INSERT INTO productSpecs (productId, imgSrc, isMain) VALUES((SELECT id FROM products WHERE uploadTime = ?), ?, ?)';
+
+module.exports = {
+  getAllProducts,
+  addNewProduct,
+  addNewProdcutSpec,
+};

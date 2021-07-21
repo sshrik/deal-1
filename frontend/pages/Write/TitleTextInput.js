@@ -8,9 +8,17 @@ export default class TitleTextInput extends ElementBuilder {
     super(props);
   }
 
+  componentDidUpdate(prev, next) {
+    const { id, curFocus } = this.props;
+    if (curFocus === id) {
+      $.find(`#${id}`).focus();
+    }
+  }
+
   constructElement() {
+    const { categories, id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
-    const $input = $.create('input');
+    const $input = $.create('input').addId(id);
     $input.placeholder = '글 제목';
     $input.value = this.props.value;
     const $categorySelector = new CategorySelector({
@@ -18,6 +26,7 @@ export default class TitleTextInput extends ElementBuilder {
       invisible: $input.value.length === 0,
       buttonState: this.props.buttonState,
       setButtonState: this.props.setButtonState,
+      categories,
     });
 
     $input.addEventListener('input', (event) => {
@@ -26,7 +35,7 @@ export default class TitleTextInput extends ElementBuilder {
       } else {
         $categorySelector.addClassToContainer('invisible');
       }
-      this.props.onInput($input.value);
+      this.props.onInput(event);
     });
 
     $input.addEventListener('change', (event) => {
@@ -36,6 +45,8 @@ export default class TitleTextInput extends ElementBuilder {
         $categorySelector.addClassToContainer('invisible');
       }
     });
+
+    $input.addEventListener('click', onFocus);
 
     $element.appendChild($input);
     return $element;

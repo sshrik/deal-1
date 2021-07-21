@@ -18,6 +18,7 @@ export default class Main extends ElementBuilder {
     this.routeTo = routeTo;
     this.state = {
       products: [],
+      categories: [],
     };
 
     this.moveToSetLocation = this.moveToSetLocation.bind(this);
@@ -46,8 +47,10 @@ export default class Main extends ElementBuilder {
   }
 
   toWritePage = () => {
+    const { categories } = this.state;
     const $writePage = new Write({
       parent: this.parent,
+      categories,
       routeTo: '',
       router: this.router,
     });
@@ -56,10 +59,15 @@ export default class Main extends ElementBuilder {
   };
 
   fecthData() {
-    api
-      .fetchGet('/products')
-      .then((res) => {
-        this.setState({ products: [...res] });
+    Promise.all([
+      api.fetchGet('/api/products'),
+      api.fetchGet('/api/categories'),
+    ])
+      .then(([products, categories]) => {
+        this.setState({
+          products: [...products.data],
+          categories: [...categories.data],
+        });
       })
       .catch((error) => console.log(error));
   }
@@ -67,15 +75,15 @@ export default class Main extends ElementBuilder {
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
-    const $loadingModal = new LoadingModal({
-      parent: this,
-      needLoad: () => !this.router.globalState.firstLoading,
-      whenLoad: () => (this.router.globalState.firstLoading = true),
-    });
-    setTimeout(() => {
-      $loadingModal.removeClassToContainer('modal--top-fix');
-      $loadingModal.addClassToContainer('invisible');
-    }, 2000);
+    // const $loadingModal = new LoadingModal({
+    //   parent: this,
+    //   needLoad: () => !this.router.globalState.firstLoading,
+    //   whenLoad: () => (this.router.globalState.firstLoading = true),
+    // });
+    // setTimeout(() => {
+    //   $loadingModal.removeClassToContainer('modal--top-fix');
+    //   $loadingModal.addClassToContainer('invisible');
+    // }, 2000);
     new MainHeader({
       ...this.props,
       parent: this,

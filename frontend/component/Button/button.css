@@ -68,12 +68,6 @@
   cursor: pointer;
 }
 
-.category-selector__container {
-  flex-direction: row;
-  white-space: nowrap;
-  overflow-y: scroll;
-}
-
 .category-button--container {
   display: inline-block;
   justify-content: center;
