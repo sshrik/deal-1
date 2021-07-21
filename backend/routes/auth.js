@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../model/db');
 const bycrypt = require('bcrypt');
 const { getUser, createUser } = require('../model/query/auth');
+const app = require('../../app');
 
 const SALT_ROUNDS = 10;
 const router = express.Router();
@@ -32,10 +33,7 @@ router.post('/login', async (req, res) => {
     if (!bycrypt.compareSync(password, results[0].password)) {
       return res.status(401).json({ error: '비밀번호를 확인해 주세요.' });
     }
-    req.session.userName = userName;
-    req.session.save(() => {
-      res.status(200).json({ userName });
-    });
+    res.status(200).json({ userName });
   } catch (error) {
     res.status(500).json({ error: '회원 정보를 찾을 수 없습니다.' });
   }
@@ -66,13 +64,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/logout', async (req, res) => {
-  try {
-    req.session.destroy(() => {
-      res.status(200).json({ message: '로그아웃 성공' });
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  res.status(200).json({ message: '로그아웃 성공' });
 });
 
 module.exports = router;

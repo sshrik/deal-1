@@ -8,6 +8,8 @@ const session = require('express-session');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
 
+const authMw = require('./backend/middleware/auth');
+
 const indexRouter = require('./backend/routes/index');
 const authRouter = require('./backend/routes/auth');
 const categoryRouter = require('./backend/routes/categories');
@@ -53,6 +55,10 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'public/resource')));
+
+app.use('/api/auth', authMw.checkSession);
+app.use('/api/login', authMw.addSession);
+app.use('/api/logout', authMw.removeSession);
 
 app.use('/', indexRouter);
 app.use(authRouter);
