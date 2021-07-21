@@ -15,17 +15,28 @@ export default class TextInput extends ElementBuilder {
     }
   }
 
+  componentDidUpdate(prev, next) {
+    const { id, curFocus } = this.props;
+    if (id === curFocus) {
+      $.find(`#${id}`).focus();
+    }
+  }
+
   constructElement() {
+    const { id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
-    const $input = $.create('input');
+    const $input = $.create('input').addId(id);
     $input.placeholder = this.props.placeholder;
 
     $input.value = this.valueSetter(this.props.value);
 
     $input.addEventListener('input', (e) => {
       $input.value = this.valueSetter($input.value);
-      this.props.onInput($input.value);
+      this.props.onInput(e);
     });
+
+    $input.addEventListener('click', onFocus);
+
     $element.appendChild($input);
     return $element;
   }
