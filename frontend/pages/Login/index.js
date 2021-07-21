@@ -17,7 +17,9 @@ export default class Login extends ElementBuilder {
     new SubHeader({
       parent: this,
       title: '로그인',
-      moveHandler: () => this.router.route('main'),
+      moveHandler: () => {
+        this.router.route('main');
+      },
     });
     new LoginContainer({
       ...this.props,

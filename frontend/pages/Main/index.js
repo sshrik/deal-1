@@ -35,7 +35,6 @@ export default class Main extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
-    console.log(prevState.filter !== newState.filter);
     prevState.products.forEach((element, index) => {
       if (element !== newState[index]) return true;
     });
@@ -124,6 +123,7 @@ export default class Main extends ElementBuilder {
   };
 
   fetchContents = () => {
+    this.setState({ filter: '' });
     if (this.router.globalState.isLogin) {
       this.fetchMine();
     } else {
