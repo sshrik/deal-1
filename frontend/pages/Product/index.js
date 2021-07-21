@@ -7,6 +7,7 @@ import './product.css';
 
 export default class ProductPage extends ElementBuilder {
   constructElement() {
+    const { productInfo } = this.props;
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
       parent: this,
@@ -15,12 +16,12 @@ export default class ProductPage extends ElementBuilder {
     });
     new ProductContainer({
       parent: this,
-      element: this.props.element,
+      productInfo,
     });
     new ProductBar({
       parent: this,
-      like: this.props.element.iLike,
-      price: this.props.element.price,
+      like: productInfo.likeId ? true : false,
+      price: productInfo.price,
     });
     return $element;
   }

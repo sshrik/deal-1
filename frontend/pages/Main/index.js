@@ -59,6 +59,31 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
+  convertTime(uploadTime) {
+    const passedTime = new Date().getTime() - uploadTime;
+    let result = passedTime / 1000;
+    // millsec / 1000 -> 초
+    // millsec / 1000 / 60 -> 분
+    // millsec / 1000 / 60 / 60 -> 시간
+    // millsec / 1000 / 60 / 60 / 24 -> 일
+
+    if (result < 60) {
+      return `${parseInt(result)}초`;
+    }
+    result = result / 60;
+    if (result < 60) {
+      return `${parseInt(result)}분`;
+    }
+    result = result / 60;
+    if (result < 24) {
+      return `${parseInt(result)}시간`;
+    }
+    result = result / 24;
+    if (result < 24) {
+      return `${parseInt(result)}일`;
+    }
+  }
+
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
@@ -74,16 +99,18 @@ export default class Main extends ElementBuilder {
       new ListItem({
         parent: this,
         ...element,
+        uploadTime: this.convertTime(element.uploadTime),
         isActive: element.likeId ? true : false,
         onClick: () => {
-          // const $newPage = new ProductPage({
-          //   parent: this.parent,
-          //   element,
-          //   router: this.router,
-          //   routeTo: 'main',
-          // });
-          // this.router.addScreen('newPage', $newPage);
-          // this.router.route('newPage');
+          const $newPage = new ProductPage({
+            parent: this.parent,
+            productInfo: element,
+            uploadTime: this.convertTime(element.uploadTime),
+            router: this.router,
+            routeTo: 'main',
+          });
+          this.router.addScreen('newPage', $newPage);
+          this.router.route('newPage');
         },
       });
     });

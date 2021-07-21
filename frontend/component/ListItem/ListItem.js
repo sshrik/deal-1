@@ -89,31 +89,6 @@ export default class ListItem extends ElementBuilder {
       .catch((error) => console.log(error));
   };
 
-  convertTime(uploadTime) {
-    const passedTime = new Date().getTime() - uploadTime;
-    let result = passedTime / 1000;
-    // millsec / 1000 -> 초
-    // millsec / 1000 / 60 -> 분
-    // millsec / 1000 / 60 / 60 -> 시간
-    // millsec / 1000 / 60 / 60 / 24 -> 일
-
-    if (result < 60) {
-      return `${parseInt(result)}초`;
-    }
-    result = result / 60;
-    if (result < 60) {
-      return `${parseInt(result)}분`;
-    }
-    result = result / 60;
-    if (result < 24) {
-      return `${parseInt(result)}시간`;
-    }
-    result = result / 24;
-    if (result < 24) {
-      return `${parseInt(result)}일`;
-    }
-  }
-
   constructElement() {
     const { title, uploadTime, price, comment, like, area_1, imgSrc, type } =
       this.props;
@@ -129,7 +104,7 @@ export default class ListItem extends ElementBuilder {
     const $contentLocationTime = $.create('div').addClass('content__lo-time')
       .setHTML(`
       <span>${area_1}</span>
-      <span>${this.convertTime(uploadTime)} 전</span>
+      <span>${uploadTime} 전</span>
     `);
 
     const $contentPrice = $.create('span')

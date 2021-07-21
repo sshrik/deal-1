@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const pool = require('../model/db');
+const { getCertainCateogories } = require('../model/query/categories');
 const router = express.Router();
 const {
   getAllProducts,
@@ -11,6 +12,7 @@ const {
   getUserSellingProducts,
   getUserLikeProducts,
   getAllProductsAuth,
+  getCetainProduct,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -29,6 +31,27 @@ router.get('/products_user', async (req, res) => {
     res.status(200).json({ data: results });
   } catch (error) {
     res.status(500).json({ error: '제품조회 실패' });
+  }
+});
+
+router.get('/product/:id', async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const [productBasicInfo, _] = await pool.execute(getCetainProduct, [
+      req.params.id,
+    ]);
+    const imgSrc = [];
+    productBasicInfo.forEach((info) => imgSrc.push(info.imgSrc));
+    productBasicInfo[0].imgSrc = imgSrc;
+
+    const [category, __] = await pool.execute(getCertainCateogories, [
+      productBasicInfo[0].category,
+    ]);
+    productBasicInfo[0].category = category[0].name;
+
+    res.status(200).json({ data: productBasicInfo[0] });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

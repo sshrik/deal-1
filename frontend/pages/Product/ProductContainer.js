@@ -6,7 +6,7 @@ import './product.css';
 
 export default class ProductPage extends ElementBuilder {
   constructElement() {
-    const { title, imgSrc } = this.props;
+    const { productDetail } = this.props;
     const $element = $.create('div').addClass('product--middle--container');
     new SlidingWindowShower({
       parent: this,
