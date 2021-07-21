@@ -47,6 +47,7 @@ export default class ProductPage extends ElementBuilder {
       parent: this,
       productInfo: { ...productInfo, uploadTime, location },
     });
+    console.log(isActive);
     new ProductBar({
       parent: this,
       like: isActive,

@@ -78,16 +78,13 @@ router.post('/add_product', async (req, res) => {
     ]);
     files.forEach(async (file, idx) => {
       const imageBlob = file.split(',')[1];
-      fs.writeFileSync(
-        `public/resource/productImg/ag502_${title}.jpg`,
-        imageBlob,
-        'base64'
-      );
+      const fileName = `productImg/ag502_${title}_${idx}.jpg`;
+      fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
       try {
         console.log('aaa');
         await pool.execute(addNewProdcutSpec, [
           curTime,
-          `productImg/ag502_${title}.jpg`,
+          `${fileName}`,
           idx === 0 ? 1 : 0,
         ]);
       } catch (error) {

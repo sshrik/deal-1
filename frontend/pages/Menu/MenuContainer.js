@@ -18,7 +18,7 @@ export default class MenuContainer extends ElementBuilder {
       curTab: 1,
       sellingList: [],
     };
-    this.fecthData();
+    // this.fecthData();
   }
 
   fecthData = () => {
