@@ -57,11 +57,19 @@ export default class Router {
     return true;
   }
 
-  route(destScreenName, viewEmergeLocation = 'right') {
+  route(destScreenName, option = {}) {
+    let viewEmergeLocation;
+    if (!option.viewEmergeLocation) {
+      viewEmergeLocation = 'right';
+    } else {
+      viewEmergeLocation = option.viewEmergeLocation;
+    }
+
     // 만약 등록되어있지 않은 Screen이라면 로딩하지 않는다.
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
+      destObject.setState(option.props);
       if (!destObject.isInited()) {
         destObject.render();
       }

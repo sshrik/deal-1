@@ -10,6 +10,7 @@ import Location from './Location/index';
 import Menu from './Menu/index';
 import ChattingRoom from './ChattingRoom/index';
 import Logout from './Logout/index';
+import Loading from './Loading/index';
 
 const $root = document.querySelector('.app-container');
 const router = new Router($root);
@@ -54,6 +55,12 @@ const $menuPage = new Menu({
   router,
 });
 
+const $loadingPage = new Loading({
+  parent: $root,
+  routeTo: 'main',
+  router,
+});
+
 const $chattingRoom = new ChattingRoom({
   parent: $root,
   router,
@@ -67,8 +74,9 @@ router.addScreen('register', $registerPage);
 router.addScreen('location', $locationPage);
 router.addScreen('menu', $menuPage);
 router.addScreen('chattingRoom', $chattingRoom);
+router.addScreen('chattingRoom', $loadingPage);
 
 // 첫 화면 Render시에는 해당 화면을 현재 페이지라고 설정해주어야 합니다.
-router.setNowView($mainPage);
+router.setNowView($loadingPage);
 
-$mainPage.render();
+$loadingPage.render();
