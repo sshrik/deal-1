@@ -9,7 +9,7 @@ const addLikeProduct =
 const deleteLikeProduct =
   'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userName = ?) AND productId = ?';
 const getUserSellingProducts =
-  'SELECT * FROM PRODUCTS WHERE seller = (SELECT id FROM users WHERE userName =?)';
+  'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId WHERE seller = (SELECT id FROM users WHERE userName =?)';
 
 module.exports = {
   getAllProducts,

@@ -6,16 +6,13 @@ import { tempData } from '../../../util/tempList';
 export default class SellingList extends ElementBuilder {
   constructor(props) {
     super(props);
-    this.state = {
-      sellingList: [],
-    };
-    console.log('a');
   }
 
   constructElement() {
+    const { sellingList } = this.props;
     const $element = $.create('div').addClass('selling-list');
 
-    tempData.forEach((element) => {
+    sellingList.forEach((element) => {
       new ListItem({
         parent: this,
         type: 'menu',

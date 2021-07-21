@@ -14,7 +14,6 @@ const {
 router.get('/products', async (req, res) => {
   try {
     const [results, _] = await pool.execute(getAllProducts);
-    console.log(results);
     res.status(200).json({ data: results });
   } catch (error) {
     res.status(500).json({ error: '제품 조회실패' });
@@ -64,9 +63,9 @@ router.post('/add_like_product', async (req, res) => {
     const { productId } = req.body;
     // access middle ware 설정 후 변경 예정
     await pool.execute(addLikeProduct, ['ag502', productId]);
-    res.status(200).send({ message: '추가 성공' });
+    res.status(200).json({ message: '추가 성공' });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -75,9 +74,9 @@ router.post('/delete_like_product', async (req, res) => {
     const { productId } = req.body;
     // access middle ware 설정 후 변경 예정
     await pool.execute(deleteLikeProduct, ['ag502', productId]);
-    res.status(200).send({ message: '삭제 성공' });
+    res.status(200).json({ message: '삭제 성공' });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -85,9 +84,10 @@ router.get('/user_selling_list', async (req, res) => {
   try {
     // access middle ware 설정 후 변경 예정
     const [results, _] = await pool.execute(getUserSellingProducts, ['ag502']);
-    res.status(200).send({ data: results });
+    res.status(200).json({ data: results });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
