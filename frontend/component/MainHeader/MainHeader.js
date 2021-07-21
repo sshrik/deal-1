@@ -55,7 +55,13 @@ export default class MainHeader extends ElementBuilder {
       ${IconBtns.mapPin().outerHTML}
       <span>${this.props.location}</span>
     `);
-    $locationBtn.addEventListener('click', this.handleDropDownOpen);
+    $locationBtn.addEventListener('click', (e) => {
+      if (isOpen) {
+        this.handleDropDownClose(e);
+      } else {
+        this.handleDropDownOpen(e);
+      }
+    });
     window.addEventListener('click', this.handleDropDownClose);
     $locationContainer.addElement($locationBtn);
 
@@ -69,7 +75,8 @@ export default class MainHeader extends ElementBuilder {
       $attachedTarget: $locationContainer.cloneNode(),
       dropDownInfo: locations,
       onClose: this.handleDropDownClose,
-      isOpen: isOpen,
+      isOpen,
+      position: { top: '45px', left: 'calc(50% - 82px)' },
     });
 
     $headerContainer.addElement($locationContainer).addElement($rightContainer);

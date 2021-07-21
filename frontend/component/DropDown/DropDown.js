@@ -7,8 +7,22 @@ export default class DropDown extends ElementBuilder {
     super(props);
   }
 
+  applyPosition(dropDown, position) {
+    Object.keys(position).forEach((pos) => {
+      dropDown.style[pos] = position[pos];
+    });
+  }
+
+  showDropDown(dropDown, isOpen) {
+    if (isOpen) {
+      dropDown.style.display = 'block';
+    } else {
+      dropDown.style.display = 'none';
+    }
+  }
+
   constructElement() {
-    const { $attachedTarget, dropDownInfo, isOpen, onClose } = this.props;
+    const { dropDownInfo, isOpen, position, onClose } = this.props;
 
     const $dropDownContainer = $.create('ul').addClass('drop-downs-items');
     $dropDownContainer.addEventListener('click', (e) => {
@@ -27,16 +41,9 @@ export default class DropDown extends ElementBuilder {
       $dropDownContainer.addElement($addLi);
     });
 
-    if (isOpen) {
-      $attachedTarget.style.position = 'relative';
-      $dropDownContainer.style.display = 'block';
-    } else {
-      $attachedTarget.style.position = 'static';
-      $dropDownContainer.style.display = 'none';
-    }
+    this.applyPosition($dropDownContainer, position);
+    this.showDropDown($dropDownContainer, isOpen);
 
-    $attachedTarget.addElement($dropDownContainer);
-
-    return $attachedTarget;
+    return $dropDownContainer;
   }
 }
