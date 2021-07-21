@@ -6,6 +6,7 @@ const {
   getAllProducts,
   addNewProduct,
   addNewProdcutSpec,
+  addLikeProduct,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -17,25 +18,6 @@ router.get('/products', async (req, res) => {
     res.status(500).json({ error: '제품 조회실패' });
   }
 });
-
-const saveFile = async (imageBlob, title) => {
-  const blob = imageBlob.split(',')[1];
-  fs.writeFileSync(
-    `public/resource/productImg/ag502_${title}.jpg`,
-    blob,
-    'base64',
-    (error) => {
-      if (error) {
-        throw new Error({ error: error.message });
-      }
-      pool.execute(addNewProdcutSpec, [
-        title,
-        `public/resource/productImg/ag502_${title}.jpg`,
-        1,
-      ]);
-    }
-  );
-};
 
 router.post('/add_product', async (req, res) => {
   try {
@@ -72,6 +54,17 @@ router.post('/add_product', async (req, res) => {
     res.status(200).json({ message: '추가 성공' });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/add_like_prodcut', async (req, res) => {
+  try {
+    const { productId } = req.body;
+    // access middle ware 설정 후 변경 예정
+    await pool.execute(addLikeProduct, ['ag502', productId]);
+    res.status(200).send({ message: '추가 성공' });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
   }
 });
 
