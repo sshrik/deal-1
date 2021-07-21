@@ -26,8 +26,9 @@ router.post('/login', async (req, res) => {
       util.sendError(res, CONSTANT.UNVALID_LOGIN_INFO_ERROR.type);
     } else if (!bycrypt.compareSync(password, results[0].password)) {
       util.sendError(res, CONSTANT.UNVALID_LOGIN_INFO_ERROR.type);
+    } else {
+      util.sendJson(res, { userName });
     }
-    util.sendJson(res, { userName });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
@@ -39,8 +40,9 @@ router.post('/user_check', async (req, res) => {
     const results = await checkUser(userName);
     if (results.length !== 0) {
       util.sendError(res, CONSTANT.DUPLICATE_ID_INFO_ERROR.type);
+    } else {
+      util.sendJson(res, { userName });
     }
-    util.sendJson(res, { userName });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }

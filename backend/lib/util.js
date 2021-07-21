@@ -6,22 +6,22 @@ function sendJson(res, data) {
 }
 
 // Status Code가 200이 아닌 경우의 발송 방식. JSON 형태로 보낸다.
-function sendError(res, type) {
+function sendError(res, eType) {
   const Break = new Error('Break');
-  let ERR_MSG = { error: '', errorType: type };
-  let statusCode = 401;
+  let ERR_MSG = { error: '', errorType: eType };
+  let sCode = 401;
   // CONSTANT 객체들에 대해서 실행
   try {
     Object.keys(CONSTANT).forEach((element) => {
-      const { elType, code, msg } = CONSTANT[element];
-      {
-        if (elType === type) statusCode = code;
+      const { type, statusCode, msg } = CONSTANT[element];
+      if (type === eType) {
+        sCode = statusCode;
         ERR_MSG.error = msg;
         throw Break;
       }
     });
   } catch (e) {}
-  res.status(statusCode).json(ERR_MSG);
+  res.status(sCode).json(ERR_MSG);
 }
 
 module.exports = {

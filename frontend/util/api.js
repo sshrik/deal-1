@@ -36,16 +36,21 @@ export default {
             timing.startTime,
             timing.delayTime,
             () => {
-              const result = res.json();
-              if (res.status === 200) {
-                resolve(result);
-              }
-              reject(result?.error);
+              res.json().then((result) => {
+                if (res.status === 200) {
+                  resolve(result);
+                } else {
+                  console.log(result);
+                  console.log(result.error);
+                  reject(result.error);
+                }
+              });
             },
             timing.checkInterval
           );
         })
         .catch((error) => {
+          console.log(result);
           reject(error.message);
         });
     });
