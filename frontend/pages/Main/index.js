@@ -4,6 +4,8 @@ import ListItem from '../../component/ListItem';
 import FaB from '../../component/Button/FaB';
 import ProductPage from '../Product/index';
 import api from '../../util/api';
+import Login from '../Login/index';
+import Logout from '../Logout/index';
 import Write from '../Write/index';
 import $ from '../../util/domControll';
 import Location from '../Location/index';
@@ -33,8 +35,19 @@ export default class Main extends ElementBuilder {
 
   moveHandler = () => {
     if (this.router.globalState.isLogin) {
+      const $logoutPage = new Logout({
+        parent: this.parent,
+        router: this.router,
+      });
+      this.router.addScreen('logout', $logoutPage);
       this.router.route('logout');
     } else {
+      const $loginPage = new Login({
+        parent: this.parent,
+        routeTo: 'main',
+        router: this.router,
+      });
+      this.router.addScreen('login', $loginPage);
       this.router.route('login');
     }
   };
