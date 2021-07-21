@@ -14,7 +14,7 @@ export default class Write extends ElementBuilder {
     this.router = router;
     this.state = {
       files: [],
-      curFocus: '',
+      // curFocus: '',
       title: '',
       price: '',
       detail: '',
@@ -24,7 +24,10 @@ export default class Write extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
-    return true;
+    if (prevState.files !== newState.files) {
+      return true;
+    }
+    return false;
   }
 
   canSubmit = () => {
@@ -42,14 +45,15 @@ export default class Write extends ElementBuilder {
 
     if (isSubmit) {
       this.setState({ sendActive: true });
+      this.$checkBtn.removeClass('deactive').addClass('active');
     } else {
       this.setState({ sendActive: false });
+      this.$checkBtn.removeClass('active').addClass('deactive');
     }
   };
 
   handleInputChange = ({ target }) => {
     const { buttonState } = this.state;
-
     if (target.id === 'title') {
       this.setState({
         title: target.value,
@@ -73,7 +77,7 @@ export default class Write extends ElementBuilder {
   };
 
   setButtonState = (index) => {
-    let nowState = this.state.buttonState;
+    const nowState = [...this.state.buttonState];
     nowState[index] = nowState[index] === 'deactive' ? 'active' : 'deactive';
     this.setState({ buttonState: nowState });
     this.canSubmit();
@@ -103,6 +107,7 @@ export default class Write extends ElementBuilder {
         const newFiles = { files: [...this.state.files, res] };
         this.setState(newFiles);
       }
+      this.canSubmit();
     });
   };
 
@@ -128,16 +133,16 @@ export default class Write extends ElementBuilder {
     const { sendActive } = this.state;
     const $element = $.create('div').addClass('write-container');
 
-    const $checkBtn = $.create('button')
-      .addClass('check-button', sendActive ? 'active' : 'deactive')
+    this.$checkBtn = $.create('button')
+      .addClass('check-button', 'deactive')
       .setHTML(IconButtons.check);
-    $checkBtn.addEventListener('click', this.handleSubmitBtnClick);
+    this.$checkBtn.addEventListener('click', this.handleSubmitBtnClick);
 
     new SubHeader({
       parent: this,
       title: '글쓰기',
       moveHandler: () => this.router.route('main'),
-      action: $checkBtn,
+      action: this.$checkBtn,
     });
     new WriteContainer({
       ...this.state,
@@ -147,7 +152,7 @@ export default class Write extends ElementBuilder {
       uploadImgHandler: this.uploadImgHandler,
       deleteImage: this.deleteImage,
       onChange: this.handleInputChange,
-      onFocus: this.handleFocusChange,
+      // onFocus: this.handleFocusChange,
     });
     return $element;
   }
