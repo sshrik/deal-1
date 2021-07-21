@@ -6,6 +6,7 @@ import ProductPage from '../Product/index';
 import api from '../../util/api';
 import Write from '../Write/index';
 import $ from '../../util/domControll';
+import Location from '../Location/index';
 import './main.css';
 
 export default class Main extends ElementBuilder {
@@ -17,6 +18,9 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
     };
+
+    this.moveToSetLocation = this.moveToSetLocation.bind(this);
+    // this.fecthData();
     this.useScroll();
   }
 
@@ -30,6 +34,18 @@ export default class Main extends ElementBuilder {
   moveHandler = (dest) => {
     this.router.route(dest);
   };
+
+  moveToSetLocation(e) {
+    e.stopPropagation();
+    const $locationPage = new Location({
+      parent: this.parent,
+      router: this.router,
+      routeTo: 'main',
+    });
+
+    this.router.addScreen('location', $locationPage);
+    this.router.route('location');
+  }
 
   toWritePage = () => {
     const $writePage = new Write({
@@ -56,7 +72,9 @@ export default class Main extends ElementBuilder {
     new MainHeader({
       ...this.props,
       parent: this,
+      location: '양재동',
       moveHandler: this.moveHandler,
+      moveToSetLocation: this.moveToSetLocation,
     });
 
     products.forEach((element) => {
