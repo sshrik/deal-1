@@ -10,6 +10,8 @@ const deleteLikeProduct =
   'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userName = ?) AND productId = ?';
 const getUserSellingProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId WHERE seller = (SELECT id FROM users WHERE userName =?)';
+const getUserLikeProducts =
+  'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.seller = likes.userId AND products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
 module.exports = {
   getAllProducts,
@@ -18,4 +20,5 @@ module.exports = {
   addLikeProduct,
   deleteLikeProduct,
   getUserSellingProducts,
+  getUserLikeProducts,
 };

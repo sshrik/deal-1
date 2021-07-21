@@ -9,6 +9,7 @@ const {
   addLikeProduct,
   deleteLikeProduct,
   getUserSellingProducts,
+  getUserLikeProducts,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -86,7 +87,15 @@ router.get('/user_selling_list', async (req, res) => {
     const [results, _] = await pool.execute(getUserSellingProducts, ['ag502']);
     res.status(200).json({ data: results });
   } catch (error) {
-    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/user_like_list', async (req, res) => {
+  try {
+    const [results, _] = await pool.execute(getUserLikeProducts, ['ag502']);
+    res.status(200).json({ data: results });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
