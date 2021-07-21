@@ -6,10 +6,13 @@ const addNewProdcutSpec =
   'INSERT INTO productSpecs (productId, imgSrc, isMain) VALUES((SELECT id FROM products WHERE uploadTime = ?), ?, ?)';
 const addLikeProduct =
   'INSERT INTO likes (userId, productId) VALUES((SELECT id FROM users WHERE userName = ?), ?)';
+const deleteLikeProduct =
+  'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userNAME = ?) AND productId = ?';
 
 module.exports = {
   getAllProducts,
   addNewProduct,
   addNewProdcutSpec,
   addLikeProduct,
+  deleteLikeProduct,
 };

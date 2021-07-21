@@ -3,8 +3,9 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import IconBtns from '../Button/IconButtons';
 import Image from '../Image';
 import { stringEllipsis } from '../../util/utils';
-import './listItem.css';
+import api from '../../util/api';
 import DropDown from '../DropDown/DropDown';
+import './listItem.css';
 
 function Comment(comment) {
   return $.create('div').addClass('actions__comments').setHTML(`
@@ -73,7 +74,16 @@ export default class ListItem extends ElementBuilder {
 
   handleLikeBtnToggle = () => {
     const { isActive } = this.state;
-    this.setState({ isActive: !isActive });
+    const { productId } = this.props;
+    api
+      .fetchPost(
+        isActive ? '/api/delete_like_product' : '/api/add_like_product',
+        { productId }
+      )
+      .then((res) => {
+        this.setState({ isActive: !isActive });
+      })
+      .catch((error) => console.log(error));
   };
 
   constructElement() {
