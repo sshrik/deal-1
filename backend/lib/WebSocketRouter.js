@@ -24,27 +24,24 @@ class WebSocketRouter {
     };
     this.middlewareStack = [];
 
-    this.sendData = {
-      type: 'req_success',
-      serverMsg: '',
-      data: '',
-    };
     this.constant = {
       req_success: 'req_success',
       req_fail: 'req_fail',
+      msg_arrive: 'msg_arrive',
     };
     this.userList = {
       id: [],
       ws: [],
     };
-    this.set = this.set.bind(this);
-    this.onNoDestForProtocol = this.set.bind(this);
+
+    this.onDestNotFound = this.onDestNotFound.bind(this);
     this.use = this.use.bind(this);
   }
 
   addUser(id, ws) {
     const index = this.getIdIndex(id);
-    if (!index) {
+    console.log(index);
+    if (index !== null) {
       this.userList.id.push(id);
       this.userList.ws.push(ws);
     } else {
@@ -64,7 +61,7 @@ class WebSocketRouter {
     for (let i = 0; i < this.userList.id.length; i++) {
       if (this.userList.id[i] === id) return i;
     }
-    return false;
+    return null;
   }
 
   getWsWithId(id) {
@@ -74,10 +71,6 @@ class WebSocketRouter {
     } else {
       throw new Error('ID Do not match with anyone in list.');
     }
-  }
-
-  set(key, value) {
-    this.sendData[key] = value;
   }
 
   use(middleware) {
@@ -133,9 +126,9 @@ class WebSocketRouter {
     }
   }
 
-  onDestNotFound(req, res, next) {
-    this.set('type', this.constant.req_fail);
-    this.set('serverMsg', 'Invalid URL for server.');
+  onDestNotFound(req, res) {
+    res.type = this.constant.req_fail;
+    res.serverMsg = 'Invalid URL for server.';
   }
 
   runProtocol(protocol, dest) {
@@ -149,85 +142,65 @@ class WebSocketRouter {
 
   run(req, callback) {
     // MiddleWare를 모두 수행하여 sendData의 데이터 가공
+    const res = {
+      type: 'req_success',
+      serverMsg: '',
+      data: '',
+    };
     this.middlewareStack.forEach((middleware) => {
       // req, res 의 middleware 형태.
-      middleware(req, this.sendData);
+      if (!res.sendFlag) {
+        middleware(req, res);
+      }
     });
+
+    if (res.sendFlag) return;
 
     let registeredFunction = this.onNoDestForProtocol;
     switch (req.protocol) {
       case 'open':
         registeredFunction = this.runProtocol('open', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'get':
         registeredFunction = this.runProtocol('get', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'post':
         registeredFunction = this.runProtocol('post', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'delete':
         registeredFunction = this.runProtocol('delete', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       case 'update':
         registeredFunction = this.runProtocol('update', req.url);
-        registeredFunction(req, this.sendData, callback);
+        registeredFunction(req, res, callback);
         break;
       default:
-        this.set('type', this.constant.req_fail);
-        this.set('serverMsg', 'Invalid Type Error!');
+        res.type = this.constant.req_fail;
+        res.serverMsg = 'Invalid Type Error!';
         break;
     }
-    this.end(this.sendData.sendTo);
+    this.end(res);
   }
 
-  end(id) {
-    const destWs = this.getWsWithId(id);
-    destWs.send(JSON.stringify(this.sendData));
+  end(res, ws = null) {
+    if (ws) {
+      ws.send(JSON.stringify(res));
+    } else {
+      try {
+        const destWs = this.getWsWithId(res.sendTo);
+        destWs.send(JSON.stringify(res));
+      } catch (e) {
+        if (this.userList.id.includes(res.sendTo)) {
+          // Real error occured
+        }
+      }
+    }
+    res.sendFlag = true;
   }
 }
 
-// Client 예시는 현재 폴더의 clientTestFile 을 확인하세요!
-const wsRouter = new WebSocketRouter();
-
-wsRouter.use((req, res) => {
-  // DB에서 session ID를 검색하거나 할 수 있음. 혹은 express session을 사용 할 수 있는 형태로 현재 Router 를 업그레이드 해도 좋을듯!
-  if (req.sessionID !== 'USERNAME') {
-    // Session ID가 틀린 로직
-    console.log('SESSION NOT ALLOWED!');
-  }
-});
-
-wsRouter.use((req, res) => {
-  // 예시용 middleware
-  if (req.availableUser !== 'USERNAME') {
-    // Session ID가 틀린 로직
-    console.log('MIDDLEWARE #2');
-  }
-});
-
-wsRouter.open('/', (req, res, next) => {
-  // ws 는 사용자 개개인의 web socekt, 따라서 username과 ws 묶음이 있어야 채팅이나 알람을 보낼 수 있다.
-  if (!req.id) {
-    // console.log('message format need at least id / protocol / url');
-  } else {
-    wsRouter.addUser(req.id, req.socket);
-  }
-  res.serverMsg = 'good';
-  res.userID = '23ADC-1230ADC-AS23GKIERT';
-  res.sendTo = req.id;
-});
-
-wsRouter.get('/', (req, res, next) => {
-  if (!req.sendTo) {
-    // console.log('message format need at least id / protocol / url / sendTo');
-  }
-  res.serverMsg = 'good';
-  res.data = 'DATA FOR 23ADC-1230ADC-AS23GKIERT';
-  res.sendTo = req.sendTo;
-});
-
-module.exports = wsRouter;
+module.exports = WebSocketRouter;
