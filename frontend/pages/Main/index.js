@@ -78,7 +78,9 @@ export default class Main extends ElementBuilder {
     });
 
     this.router.addScreen('location', $locationPage);
-    this.router.route('location');
+    this.router.route('location', {
+      props: { location: this.state.location },
+    });
   }
 
   toWritePage = () => {

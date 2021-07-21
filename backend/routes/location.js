@@ -27,8 +27,8 @@ router.post('/location', async (req, res) => {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
     const [results, _] = await pool.execute(updateLocationOne, [
-      id,
       req.body.area_1,
+      id,
     ]);
     util.sendJson(res, { data: 'admit' });
   } catch (error) {
@@ -41,9 +41,9 @@ router.post('/location_all', async (req, res) => {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
     const [results, _] = await pool.execute(updateLocationAll, [
-      id,
       req.body.area_1,
       req.body.area_2,
+      id,
     ]);
     util.sendJson(res, { data: 'admit' });
   } catch (error) {

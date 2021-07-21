@@ -5,6 +5,7 @@ import LocationButtonContainer from './locationButtonContainer';
 import LocationTitleContainer from './LocationTitleContainer';
 import InputPopUp from '../../component/Modal/InputPopUp';
 import Alert from '../../component/Modal/Alert';
+import api from '../../util/api';
 
 import './location.css';
 export default class Location extends ElementBuilder {
@@ -14,21 +15,23 @@ export default class Location extends ElementBuilder {
     this.router = router;
     this.routeTo = routeTo;
     this.state = {
-      locations: ['역삼동'],
+      location: [],
     };
     this.popUpScreen = this.popUpScreen.bind(this);
     this.alertScreen = this.alertScreen.bind(this);
   }
 
   compareState(prevState, newState) {
-    if (prevState.locations.length !== newState.locations.length) {
+    if (prevState.location[0] !== newState.location[0]) return true;
+    if (prevState.location[1] !== newState.location[1]) return true;
+    if (prevState.location.length !== newState.location.length) {
       return true;
     }
     return false;
   }
 
   popUpScreen() {
-    if (this.state.locations.length === 2) return;
+    if (this.state.location[1] !== null) return;
 
     const $inputPopUp = new InputPopUp({
       parent: this,
@@ -40,15 +43,22 @@ export default class Location extends ElementBuilder {
       checkInput: (value) => value.endsWith('동'),
       onProceed: (e, value) => {
         this.getContentsElement().removeChild($inputPopUp.getContentsElement());
-        this.setState({ locations: [...this.state.locations, value] });
-        // TODO : 추가 할 때 마다 서버에 요청보내기
+        api
+          .fetchPost('/auth/location_all', {
+            area_1: this.state.location[0],
+            area_2: value,
+          })
+          .then((data) => {
+            this.setState({ location: [this.state.location[0], value] });
+          })
+          .catch((error) => this.showAlert(error));
       },
     });
     this.getContentsElement().appendChild($inputPopUp.getContentsElement());
   }
 
   alertScreen(deleteLocation) {
-    if (this.state.locations.length === 1) return;
+    if (this.state.location[1] === null) return;
 
     const $alert = new Alert({
       parent: this,
@@ -59,15 +69,22 @@ export default class Location extends ElementBuilder {
       },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
-        let tempState = [...this.state.locations];
+        let tempState = [...this.state.location];
         // 1개 삭제하고 state 재등록.
-        if (this.state.locations[0] === deleteLocation) {
+        if (this.state.location[0] === deleteLocation) {
           tempState.splice(0, 1);
         } else {
           tempState.splice(1, 1);
         }
-        this.setState({ locations: tempState });
-        // TODO : 삭제 할 때 마다 서버에 요청보내기
+        tempState.push(null);
+        api
+          .fetchPost('/auth/location', {
+            area_1: this.state.location[0],
+          })
+          .then((data) => {
+            this.setState({ location: tempState });
+          })
+          .catch((error) => this.showAlert(error));
       },
     });
     this.getContentsElement().appendChild($alert.getContentsElement());
@@ -87,7 +104,7 @@ export default class Location extends ElementBuilder {
 
     new LocationButtonContainer({
       parent: this,
-      locations: this.state.locations,
+      locations: this.state.location,
       addEvent: this.popUpScreen,
       deleteEvent: this.alertScreen,
     });
