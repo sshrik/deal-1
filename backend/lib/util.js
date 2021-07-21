@@ -24,7 +24,7 @@ function sendError(res, type) {
   res.status(statusCode).json(ERR_MSG);
 }
 
-exports.module = {
+module.exports = {
   sendJson,
   sendError,
 };

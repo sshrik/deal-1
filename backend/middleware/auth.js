@@ -16,9 +16,9 @@ function checkSession(req, res, next) {
 
 function addSession(req, res, next) {
   const bmCookie = uuid.v4();
-  if (!req.session[req.id] && !req.session[bmCookie]) {
-    req.session[req.id] = bmCookie;
-    req.session[bmCookie] = req.id;
+  if (!req.session[req.body.userName] && !req.session[bmCookie]) {
+    req.session[req.body.userName] = bmCookie;
+    req.session[bmCookie] = req.body.userName;
     res.append('Set-Cookie', `bmCookie=${bmCookie}`);
   } else {
     // 이미 session 정보가 있는 경우
@@ -36,14 +36,14 @@ function removeSession(req, res, next) {
     util.sendError(res, CONSTANT.NO_SESSION_INFOR_ERROR_MSG);
   } else {
     // ID, PW가 있는 경우에만 session을 제거.
-    const id = req.session[bmCookie];
-    delete req.session[id];
+    const userName = req.session[bmCookie];
+    delete req.session[userName];
     delete req.session[bmCookie];
     next();
   }
 }
 
-exports.module = {
+module.exports = {
   checkSession,
   addSession,
   removeSession,

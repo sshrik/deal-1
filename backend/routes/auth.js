@@ -3,6 +3,8 @@ const pool = require('../model/db');
 const bycrypt = require('bcrypt');
 const { getUser, createUser } = require('../model/query/auth');
 const app = require('../../app');
+const CONSTANT = require('../lib/constant');
+const util = require('../lib/util');
 
 const SALT_ROUNDS = 10;
 const router = express.Router();
@@ -16,26 +18,18 @@ const checkUser = async (userName) => {
   }
 };
 
-router.get('/check_access', async (req, res) => {
-  if (req.session?.userName) {
-    return res.status(200).json({ userName: req.session.userName });
-  }
-  res.status(401).json({ error: '접근할 수 없는 페이지 입니다.' });
-});
-
 router.post('/login', async (req, res) => {
   const { userName, password } = req.body;
   try {
     const results = await checkUser(userName);
     if (results.length === 0) {
-      return res.status(401).json({ error: '아이디를 확인해 주세요.' });
+      util.sendError(res, CONSTANT.UNVALID_LOGIN_INFO_ERROR.type);
+    } else if (!bycrypt.compareSync(password, results[0].password)) {
+      util.sendError(res, CONSTANT.UNVALID_LOGIN_INFO_ERROR.type);
     }
-    if (!bycrypt.compareSync(password, results[0].password)) {
-      return res.status(401).json({ error: '비밀번호를 확인해 주세요.' });
-    }
-    res.status(200).json({ userName });
+    util.sendJson(res, { userName });
   } catch (error) {
-    res.status(500).json({ error: '회원 정보를 찾을 수 없습니다.' });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
@@ -44,11 +38,11 @@ router.post('/user_check', async (req, res) => {
   try {
     const results = await checkUser(userName);
     if (results.length !== 0) {
-      return res.status(401).json({ error: '이미 존재하는 계정 입니다.' });
+      util.sendError(res, CONSTANT.DUPLICATE_ID_INFO_ERROR.type);
     }
-    return res.status(200).json({ userName });
+    util.sendJson(res, { userName });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
@@ -57,14 +51,14 @@ router.post('/register', async (req, res) => {
   try {
     const hashedPw = bycrypt.hashSync(password, SALT_ROUNDS);
     await pool.execute(createUser, [userName, hashedPw, area]);
-    res.status(200).json({ userName });
+    util.sendJson(res, { userName });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
 router.get('/logout', async (req, res) => {
-  res.status(200).json({ message: '로그아웃 성공' });
+  util.sendJson(res, { message: '로그아웃 성공' });
 });
 
 module.exports = router;

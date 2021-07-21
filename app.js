@@ -56,12 +56,15 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'public/resource')));
 
-app.use('/api/auth', authMw.checkSession);
-app.use('/api/login', authMw.addSession);
-app.use('/api/logout', authMw.removeSession);
-
+// index.html을 위한 routing
 app.use('/', indexRouter);
-app.use(authRouter);
+
+// SESSION을 위한 Middleware.
+app.use('/api/auth', authMw.checkSession); // 인증이 필요한 페이지에 대한 요청
+app.use('/api/login', authMw.addSession); // 로그인은 session을 추가
+app.use('/api/logout', authMw.removeSession); // 로그아웃은 session을 추가하지 않음.
+
+app.use('/api', authRouter);
 app.use('/api', productRouter);
 app.use('/api', categoryRouter);
 
