@@ -22,10 +22,14 @@ export default class MenuContainer extends ElementBuilder {
   }
 
   fecthData = () => {
-    api
-      .fetchGet('/api/user_selling_list')
-      .then((res) => {
-        this.setState({ sellingList: [...res.data] });
+    Promise.all([
+      api.fetchGet('/api/user_selling_list'),
+      // api.fetchGet('/api/user_like_list'),
+    ])
+      .then(([sellingList]) => {
+        this.setState({
+          sellingList: [...sellingList.data],
+        });
       })
       .catch((error) => console.log(error));
   };

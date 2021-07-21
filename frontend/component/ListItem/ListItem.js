@@ -87,9 +87,19 @@ export default class ListItem extends ElementBuilder {
   };
 
   constructElement() {
-    const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
-      this.props;
-    const { isOpen, menuItems, isActive } = this.state;
+    const {
+      title,
+      lastTime,
+      price,
+      comment,
+      like,
+      area_1,
+      imgSrc,
+      type,
+      productId,
+      onClickAction,
+    } = this.props;
+    const { isOpen, menuItems, likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
@@ -138,9 +148,12 @@ export default class ListItem extends ElementBuilder {
       });
     } else {
       const $likeBtn = IconBtns.like().addClass(
-        isActive ? 'active' : 'deactive'
+        likeActive ? 'active' : 'deactive'
       );
-      $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
+      // $likeBtn.addEventListener('click', this.handleLikeBtnToggle);
+      $likeBtn.addEventListener('click', (e) => {
+        onClickAction(productId);
+      });
       $listItemActions.appendChild($likeBtn);
     }
 
