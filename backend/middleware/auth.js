@@ -6,9 +6,9 @@ function checkSession(req, res, next) {
   // Session이 옳은지 확인하고 진행
   const bmCookie = req.cookies.bmCookie;
   if (!bmCookie) {
-    util.sendError(res, CONSTANT.NO_BMCOOKIE_ERROR_TYPE);
+    util.sendError(res, CONSTANT.NO_BMCOOKIE_ERROR.type);
   } else if (!req.session[bmCookie]) {
-    util.sendError(res, CONSTANT.NO_SESSION_INFOR_ERROR_MSG);
+    util.sendError(res, CONSTANT.NO_SESSION_INFOR_ERROR.type);
   } else {
     next();
   }
