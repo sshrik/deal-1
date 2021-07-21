@@ -13,6 +13,7 @@ const {
   getUserLikeProducts,
   getAllProductsAuth,
   getCetainProduct,
+  getProductLikes,
 } = require('../model/query/products');
 
 router.get('/products', async (req, res) => {
@@ -48,6 +49,12 @@ router.get('/product/:id', async (req, res) => {
       productBasicInfo[0].category,
     ]);
     productBasicInfo[0].category = category[0].name;
+
+    const [likeCount, ___] = await pool.execute(getProductLikes, [
+      req.params.id,
+    ]);
+    console.log(likeCount);
+    productBasicInfo[0].like = likeCount[0].likeCount;
 
     res.status(200).json({ data: productBasicInfo[0] });
   } catch (error) {

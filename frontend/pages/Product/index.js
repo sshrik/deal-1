@@ -4,10 +4,39 @@ import ProductBar from './ProductBar';
 import ProductContainer from './ProductContainer';
 import $ from '../../util/domControll';
 import './product.css';
+import api from '../../util/api';
 
 export default class ProductPage extends ElementBuilder {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productInfo: {},
+    };
+    this.fetchData();
+  }
+
+  compareState(prev, next) {
+    return true;
+  }
+
+  fetchData = () => {
+    const { productId } = this.props;
+    api
+      .fetchGet(`/api/product/${productId}`, {
+        delayTime: 1000,
+        startTime: new Date().getTime(),
+      })
+      .then((res) => {
+        this.setState({ productInfo: res.data });
+        console.log(this.state);
+      })
+      .catch((error) => console.log(error));
+  };
+
   constructElement() {
-    const { productInfo } = this.props;
+    const { isActive, uploadTime, location } = this.props;
+    const { productInfo } = this.state;
+    console.log(this.state);
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
       parent: this,
@@ -16,11 +45,11 @@ export default class ProductPage extends ElementBuilder {
     });
     new ProductContainer({
       parent: this,
-      productInfo,
+      productInfo: { ...productInfo, uploadTime, location },
     });
     new ProductBar({
       parent: this,
-      like: productInfo.likeId ? true : false,
+      like: isActive,
       price: productInfo.price,
     });
     return $element;

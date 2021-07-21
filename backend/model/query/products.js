@@ -9,15 +9,16 @@ p.price as price, p.detail as detail, p.category as category, p.viewCount as vie
 u.userName as userName, u.id as userId, u.area_1 as area_1, u.area_2 as area_2, ps.imgSrc as imgSrc, l.userId as likeId
 FROM products p JOIN users u ON p.seller = u.id JOIN productSpecs ps ON p.id = ps.productId 
 LEFT OUTER JOIN (SELECT * FROM likes WHERE likes.userId = (SELECT id FROM users WHERE users.userName = ?)) l ON p.id = l.productId
+WHERE ps.isMain = 1
 `;
 
 const getCetainProduct = `
-SELECT p.title, p.uploadTime, p.price, p.detail, p.seller, p.category, p.viewCount, p.nowSelling, ps.imgSrc
-FROM products p JOIN productSpecs ps on p.id = ps.productId WHERE p.id = ?
+SELECT p.title, p.uploadTime, p.price, p.detail, p.seller, p.category, p.viewCount, p.nowSelling, ps.imgSrc, u.userName as sellerName
+FROM products p JOIN productSpecs ps on p.id = ps.productId JOIN users u on p.seller = u.id WHERE p.id = ?
 `;
 
 const getProductLikes = `
-  SELECT count(*) FROM likes WHERE likes.productId = ?
+  SELECT count(*) as likeCount FROM likes WHERE likes.productId = ?
 `;
 
 const addNewProduct =
