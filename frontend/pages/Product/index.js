@@ -2,6 +2,8 @@ import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
 import ProductBar from './ProductBar';
 import ProductContainer from './ProductContainer';
+import SpinnerModal from '../../component/Modal/SpinnerModal';
+import Alert from '../../component/Modal/Alert';
 import $ from '../../util/domControll';
 import './product.css';
 import api from '../../util/api';
@@ -10,28 +12,68 @@ export default class ProductPage extends ElementBuilder {
   constructor(props) {
     super(props);
     const { isActive } = this.props;
+    this.fetched = false;
     this.state = {
       isActive,
-      productInfo: {},
+      productInfo: {
+        title: '',
+        lastTime: '',
+        location: '',
+        category: '',
+        specDetail: '',
+        seller: '',
+        view: 0,
+        like: 0,
+      },
     };
-    this.fetchData();
   }
 
-  compareState(prev, next) {
-    return true;
+  compareState(prevState, newState) {
+    console.log('Compare called.');
+    if (prevState.productInfo.title !== newState.productInfo.title) return true;
+    return false;
   }
 
-  fetchData = () => {
-    const { productId } = this.props;
-    api
-      .fetchGet(`/product/${productId}`, {
-        delayTime: 1000,
-        startTime: new Date().getTime(),
-      })
-      .then((res) => {
-        this.setState({ productInfo: res.data });
-      })
-      .catch((error) => console.log(error));
+  showAlert = (error) => {
+    const $alert = new Alert({
+      parent: this.parent,
+      titleText: error,
+      proceedText: '확인',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+        this.props.router.route(this.props.routeTo);
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
+  spinnerFetch = () => {
+    if (!this.fetched) {
+      this.fetched = true;
+      const $spinner = new SpinnerModal({
+        parent: this.parent,
+      });
+      this.getContentsElement().appendChild($spinner.getContentsElement());
+
+      const { productId } = this.props;
+      api
+        .fetchGet(`/product/${productId}`, {
+          delayTime: 1000,
+          startTime: new Date().getTime(),
+        })
+        .then((res) => {
+          this.setState({ productInfo: res.data });
+          this.getContentsElement().removeChild($spinner.getContentsElement());
+        })
+        .catch((error) => {
+          if (!error.name === 'NotFoundError') {
+            this.showAlert(error);
+          }
+        });
+    }
   };
 
   handleLikeBtnToggle = () => {
@@ -67,6 +109,7 @@ export default class ProductPage extends ElementBuilder {
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
     });
+    this.spinnerFetch();
     return $element;
   }
 }

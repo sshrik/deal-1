@@ -25,7 +25,6 @@ export default class SpinnerModal extends ElementBuilder {
       .addClass('transparent-modal--container-color');
     const $svgImage = $.create().addClass('loading-modal__svg-image');
     $svgImage.setHTML(this.spinnerSvg);
-    console.log($svgImage);
     $modalContainer.appendChild($svgImage);
 
     return $modalContainer;

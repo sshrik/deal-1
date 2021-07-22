@@ -118,8 +118,8 @@ export default class Main extends ElementBuilder {
     result = result / 24;
     return `${parseInt(result)}일`;
   }
-  
-  showAlert = (error) => {
+
+  showAlert = (error, callback = () => {}) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,

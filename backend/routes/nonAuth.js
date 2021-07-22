@@ -27,18 +27,17 @@ router.get('/product/:id', async (req, res) => {
     const imgSrc = [];
     productBasicInfo.forEach((info) => imgSrc.push(info.imgSrc));
     productBasicInfo[0].imgSrc = imgSrc;
+    console.log('here0');
 
     const [category, __] = await pool.execute(getCertainCateogories, [
       productBasicInfo[0].category,
     ]);
     productBasicInfo[0].category = category[0].name;
 
-    console.log(productBasicInfo);
     const [likeCount, ___] = await pool.execute(getProductLikes, [
       req.params.id,
     ]);
     productBasicInfo[0].like = likeCount[0].likeCount;
-
     res.status(200).json({ data: productBasicInfo[0] });
   } catch (error) {
     res.status(500).json({ error: error.message });
