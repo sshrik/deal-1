@@ -3,12 +3,6 @@ import $ from '../../util/domControll';
 import './textInput.css';
 
 export default class TextAreaInput extends ElementBuilder {
-  componentDidUpdate(prev, next) {
-    const { id, curFocus } = this.props;
-    if (curFocus === id) {
-      $.find(`#${id}`).focus();
-    }
-  }
   constructElement() {
     const { id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
@@ -19,8 +13,6 @@ export default class TextAreaInput extends ElementBuilder {
     $input.addEventListener('input', (event) => {
       this.props.onInput(event);
     });
-
-    $input.addEventListener('click', onFocus);
 
     $element.appendChild($input);
     return $element;

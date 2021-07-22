@@ -8,13 +8,6 @@ export default class TitleTextInput extends ElementBuilder {
     super(props);
   }
 
-  componentDidUpdate(prev, next) {
-    const { id, curFocus } = this.props;
-    if (curFocus === id) {
-      $.find(`#${id}`).focus();
-    }
-  }
-
   constructElement() {
     const { categories, id, onFocus } = this.props;
     const $element = $.create('div').addClass('text-input--container');
@@ -45,8 +38,6 @@ export default class TitleTextInput extends ElementBuilder {
         $categorySelector.addClassToContainer('invisible');
       }
     });
-
-    $input.addEventListener('click', onFocus);
 
     $element.appendChild($input);
     return $element;

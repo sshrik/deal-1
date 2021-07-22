@@ -2,6 +2,7 @@ import $ from '../../../util/domControll';
 import ElementBuilder from '../../../lib/ElementBuilder';
 import ChatLog from './ChatLog';
 import ChatInput from './ChatInput';
+import IconButtons from '../../../component/Button/IconButtons';
 
 export default class Chat extends ElementBuilder {
   constructor(props) {
@@ -35,6 +36,9 @@ export default class Chat extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
+    if (prevState.message !== newState.message) {
+      return false;
+    }
     return true;
   }
 
@@ -45,6 +49,16 @@ export default class Chat extends ElementBuilder {
       message: target.value,
       isSendActivated: target.value === '' ? false : true,
     });
+    this.activateBtn();
+  };
+
+  activateBtn = () => {
+    const { message } = this.state;
+    if (message !== '') {
+      this.$sendBtn.removeClass('not-active').addClass('active');
+    } else {
+      this.$sendBtn.removeClass('active').addClass('not-active');
+    }
   };
 
   handleSendBtnClick = () => {
@@ -66,6 +80,10 @@ export default class Chat extends ElementBuilder {
     const { chatLogs, curScrollPos, ...rest } = this.state;
     const $chatContents = $.create('div').addClass('chat-contents');
 
+    this.$sendBtn = $.create('button')
+      .addClass('send', 'not-active')
+      .setHTML(IconButtons.send);
+
     new ChatLog({
       parent: this,
       chatLogs,
@@ -77,6 +95,7 @@ export default class Chat extends ElementBuilder {
       parent: this,
       onChange: this.handleInputChange,
       onSend: this.handleSendBtnClick,
+      sendBtn: this.$sendBtn,
     });
 
     return $chatContents;

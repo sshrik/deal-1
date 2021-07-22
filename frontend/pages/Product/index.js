@@ -4,9 +4,53 @@ import ProductBar from './ProductBar';
 import ProductContainer from './ProductContainer';
 import $ from '../../util/domControll';
 import './product.css';
+import api from '../../util/api';
 
 export default class ProductPage extends ElementBuilder {
+  constructor(props) {
+    super(props);
+    const { isActive } = this.props;
+    this.state = {
+      isActive,
+      productInfo: {},
+    };
+    this.fetchData();
+  }
+
+  compareState(prev, next) {
+    return true;
+  }
+
+  fetchData = () => {
+    const { productId } = this.props;
+    api
+      .fetchGet(`/api/product/${productId}`, {
+        delayTime: 1000,
+        startTime: new Date().getTime(),
+      })
+      .then((res) => {
+        this.setState({ productInfo: res.data });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  handleLikeBtnToggle = () => {
+    const { isActive } = this.state;
+    const { productId } = this.props;
+    api
+      .fetchPost(
+        isActive ? '/api/delete_like_product' : '/api/add_like_product',
+        { productId }
+      )
+      .then((res) => {
+        this.setState({ isActive: !isActive });
+      })
+      .catch((error) => console.log(error));
+  };
+
   constructElement() {
+    const { uploadTime, location } = this.props;
+    const { productInfo, isActive } = this.state;
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
       parent: this,
@@ -15,12 +59,13 @@ export default class ProductPage extends ElementBuilder {
     });
     new ProductContainer({
       parent: this,
-      element: this.props.element,
+      productInfo: { ...productInfo, uploadTime, location },
     });
     new ProductBar({
       parent: this,
-      like: this.props.element.iLike,
-      price: this.props.element.price,
+      like: isActive,
+      price: productInfo.price,
+      onClick: this.handleLikeBtnToggle,
     });
     return $element;
   }
