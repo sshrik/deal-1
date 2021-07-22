@@ -56,6 +56,7 @@ export default class Write extends ElementBuilder {
             price,
             buttonState: newBtnState,
           });
+          this.canSubmit();
         })
         .catch((error) => console.log(error));
     }
@@ -154,16 +155,22 @@ export default class Write extends ElementBuilder {
 
   handleSubmitBtnClick = () => {
     const { sendActive, title, price, detail, files, buttonState } = this.state;
+    const { type, productId } = this.props;
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
-        .fetchPost('/auth/add_product', {
-          title,
-          price,
-          detail,
-          files,
-          category: activeBtn,
-        })
+        .fetchPost(
+          type === 'modify'
+            ? `/auth/update_product/${productId}`
+            : '/auth/add_product',
+          {
+            title,
+            price,
+            detail,
+            files,
+            category: activeBtn,
+          }
+        )
         .then((res) => console.log(res))
         .catch((error) => console.log(error));
     }

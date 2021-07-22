@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const uuid = require('uuid');
 const pool = require('../model/db');
 const { getCertainCateogories } = require('../model/query/categories');
 const router = express.Router();
@@ -17,6 +18,9 @@ const {
   getCetainProduct,
   getProductLikes,
   deleteSellingProduct,
+  updateProduct,
+  deleteProductSpecs,
+  updateProductSpecs,
 } = require('../model/query/products');
 
 router.get('/products_user', async (req, res) => {
@@ -59,6 +63,7 @@ router.get('/product/:id', async (req, res) => {
 router.post('/add_product', async (req, res) => {
   try {
     const { title, price, detail, category, files } = req.body;
+    console.log(title, price, detail, category, files);
     const curTime = new Date().getTime();
     await pool.execute(addNewProduct, [
       title,
@@ -85,6 +90,33 @@ router.post('/add_product', async (req, res) => {
       }
     });
     res.status(200).json({ message: '추가 성공' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/update_product/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, price, detail, files, category } = req.body;
+    console.log(id, title, price, detail, files, category);
+    await pool.execute(deleteProductSpecs, [id]);
+    files.forEach(async (file, idx) => {
+      if (!file.includes(',')) {
+        await pool.execute(updateProductSpecs, [id, file, idx === 0 ? 1 : 0]);
+      } else {
+        const imageBlob = file.split(',')[1];
+        const fileName = `productImg/ag502_${title}_${uuid.v4()}.jpg`;
+        fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
+        await pool.execute(updateProductSpecs, [
+          id,
+          fileName,
+          idx === 0 ? 1 : 0,
+        ]);
+      }
+    });
+    await pool.execute(updateProduct, [title, price, detail, category, id]);
+    util.sendJson(res, { message: '변경 성공' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

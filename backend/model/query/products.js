@@ -48,6 +48,20 @@ const deleteSellingProduct = `
 DELETE FROM products WHERE id = ?;
 `;
 
+const deleteProductSpecs = `
+DELETE FROM productSpecs WHERE productId = ?
+`;
+
+const updateProduct = `
+UPDATE products
+SET title = ?, price = ?, detail = ?, category = ?
+WHERE id = ?
+`;
+
+const updateProductSpecs = `
+INSERT INTO productSpecs (productId, imgSrc, isMain) values (? , ?, ?)
+`;
+
 module.exports = {
   getAllProducts,
   addNewProduct,
@@ -60,4 +74,7 @@ module.exports = {
   getCetainProduct,
   getProductLikes,
   deleteSellingProduct,
+  deleteProductSpecs,
+  updateProduct,
+  updateProductSpecs,
 };
