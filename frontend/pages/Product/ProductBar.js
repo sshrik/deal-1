@@ -26,9 +26,19 @@ export default class ProductBar extends ElementBuilder {
         .addClass('deactive-bar--button')
         .setText('채팅 목록 보기');
       $element.appendChild($callButton);
+      $callButton.addEventListener('click', () => {
+        this.props.router.route('menu');
+      });
     } else {
       const $callButton = $.create('button').setText('문의하기');
       $element.appendChild($callButton);
+      $callButton.addEventListener('click', () => {
+        if (this.props.router.globalState.isLogin) {
+          this.props.router.route('menu');
+        } else {
+          this.props.showAlert('로그인 후 사용하실 수 있습니다.', false);
+        }
+      });
     }
 
     return $element;

@@ -33,7 +33,7 @@ export default class ProductPage extends ElementBuilder {
     return false;
   }
 
-  showAlert = (error) => {
+  showAlert = (error, route = true) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -43,7 +43,9 @@ export default class ProductPage extends ElementBuilder {
       },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
-        this.props.router.route(this.props.routeTo);
+        if (route) {
+          this.props.router.route(this.props.routeTo);
+        }
       },
     });
     this.getContentsElement().appendChild($alert.getContentsElement());
@@ -103,6 +105,7 @@ export default class ProductPage extends ElementBuilder {
       transparent: true,
       moveHandler: () => this.props.router.route(this.props.routeTo),
     });
+
     new ProductContainer({
       parent: this,
       router: this.props.router,
@@ -113,12 +116,14 @@ export default class ProductPage extends ElementBuilder {
         location,
       },
     });
-    console.log(this.props.router.globalState);
+
     new ProductBar({
       parent: this,
       like: isActive,
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
+      showAlert: this.showAlert,
+      router: this.props.router,
       isActive: () => {
         return (
           productInfo.sellerName !== this.props.router.globalState.userName
