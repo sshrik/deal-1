@@ -44,14 +44,8 @@ WHERE ps.isMain = 1 AND p.seller = (SELECT id FROM users WHERE userName = ?)
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
-<<<<<<< HEAD
 const changeSellState = 'UPDATE products SET nowSelling=? where id=?';
-=======
-const deleteSellingProduct = `
-DELETE FROM products WHERE id = ?;
-`;
->>>>>>> dev
-
+const deleteSellingProduct = `DELETE FROM products WHERE id = ?;`;
 module.exports = {
   getAllProducts,
   addNewProduct,
@@ -63,9 +57,6 @@ module.exports = {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
-<<<<<<< HEAD
   changeSellState,
-=======
   deleteSellingProduct,
->>>>>>> dev
 };
