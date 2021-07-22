@@ -16,12 +16,20 @@ export default class ProductBar extends ElementBuilder {
     );
 
     const $price = $.create('p').setText(this.props.price);
-    const $callButton = $.create('button').setText('문의하기');
 
     $element.appendChild($likeButton);
     $element.appendChild($verticalLine);
     $element.appendChild($price);
-    $element.appendChild($callButton);
+
+    if (!this.props.isActive()) {
+      const $callButton = $.create('button')
+        .addClass('deactive-bar--button')
+        .setText('채팅 목록 보기');
+      $element.appendChild($callButton);
+    } else {
+      const $callButton = $.create('button').setText('문의하기');
+      $element.appendChild($callButton);
+    }
 
     return $element;
   }

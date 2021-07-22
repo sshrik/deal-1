@@ -62,6 +62,9 @@ const updateProductSpecs = `
 INSERT INTO productSpecs (productId, imgSrc, isMain) values (? , ?, ?)
 `;
 
+const changeSellState = 'UPDATE products SET nowSelling=? where id=?';
+const deleteSellingProduct = `DELETE FROM products WHERE id = ?;`;
+
 module.exports = {
   getAllProducts,
   addNewProduct,
@@ -73,6 +76,7 @@ module.exports = {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+  changeSellState,
   deleteSellingProduct,
   deleteProductSpecs,
   updateProduct,
