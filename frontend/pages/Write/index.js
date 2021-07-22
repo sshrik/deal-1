@@ -116,14 +116,16 @@ export default class Write extends ElementBuilder {
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
-        .fetchPost('/api/add_product', {
+        .fetchPost('/auth/add_product', {
           title,
           price,
           detail,
           files,
           category: activeBtn,
         })
-        .then((res) => console.log(res))
+        .then((res) => {
+          this.router.route('main');
+        })
         .catch((error) => console.log(error));
     }
   };

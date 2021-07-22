@@ -140,6 +140,7 @@ export default class Main extends ElementBuilder {
   };
 
   fetchMine = () => {
+    console;
     api
       .fetchGet('/auth/products_user')
       .then((products) => {
@@ -158,7 +159,6 @@ export default class Main extends ElementBuilder {
   };
 
   fetchContents = () => {
-    this.setState({ filter: '' });
     if (this.router.globalState.isLogin) {
       this.fetchMine();
     } else {
@@ -205,6 +205,7 @@ export default class Main extends ElementBuilder {
       this.mouseLocation.nowY = e.pageY;
       const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
       if (height > 65) {
+        console.log('Fetching');
         this.fetchContents();
       }
       $emptyDiv.setHeight(0);

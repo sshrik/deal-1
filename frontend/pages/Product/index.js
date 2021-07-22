@@ -29,7 +29,6 @@ export default class ProductPage extends ElementBuilder {
   }
 
   compareState(prevState, newState) {
-    console.log('Compare called.');
     if (prevState.productInfo.title !== newState.productInfo.title) return true;
     return false;
   }
@@ -50,18 +49,25 @@ export default class ProductPage extends ElementBuilder {
     this.getContentsElement().appendChild($alert.getContentsElement());
   };
 
+  componentDidMount() {
+    this.spinnerFetch();
+  }
+
   spinnerFetch = () => {
     if (!this.fetched) {
       this.fetched = true;
       const $spinner = new SpinnerModal({
         parent: this.parent,
       });
+
+      console.log($spinner);
+      console.log($spinner.getContentsElement());
       this.getContentsElement().appendChild($spinner.getContentsElement());
 
       const { productId } = this.props;
       api
         .fetchGet(`/product/${productId}`, {
-          delayTime: 1000,
+          delayTime: 2000,
           startTime: new Date().getTime(),
         })
         .then((res) => {
@@ -109,7 +115,6 @@ export default class ProductPage extends ElementBuilder {
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
     });
-    this.spinnerFetch();
     return $element;
   }
 }
