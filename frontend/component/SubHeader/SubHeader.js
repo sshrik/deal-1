@@ -15,7 +15,7 @@ export default class SubHeader extends ElementBuilder {
   }
 
   constructElement() {
-    const { isOpen, menuItems } = this.props;
+    const { isOpen, menuItems, onClose } = this.props;
     const $element = $.create('div').addClass('sub-header-container');
     $element.appendChild(IconBtns.back(this.onMove));
     if (this.transparent) {
@@ -37,6 +37,7 @@ export default class SubHeader extends ElementBuilder {
         parent: this,
         isOpen,
         dropDownInfo: menuItems,
+        onClose,
         position: { top: '50px', right: '20px' },
       });
     }

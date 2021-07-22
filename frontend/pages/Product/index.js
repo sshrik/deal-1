@@ -110,14 +110,23 @@ export default class ProductPage extends ElementBuilder {
     this.setState({ isOpen: !isOpen });
   };
 
+  handleDeleteBtnClick = (pId) => {
+    api
+      .fetchPost('/auth/delete_selling_product', { productId: pId })
+      .then((res) => {
+        this.showAlert('삭제되었습니다.');
+      })
+      .catch((error) => console.log(error));
+  };
+
   constructElement() {
-    const { uploadTime, location } = this.props;
+    const { uploadTime, location, productId } = this.props;
     const { productInfo, isActive, isOpen } = this.state;
     console.log(productInfo);
     const $element = $.create('div').addClass('product--container');
 
     const $dotMenuBtn = $.create('button')
-      .addClass('dot-menu')
+      .addClass('xdot-menu')
       .setHTML(IconButtons.dotMenu);
 
     $dotMenuBtn.addEventListener('click', this.handleToggleDropDown);
@@ -129,6 +138,7 @@ export default class ProductPage extends ElementBuilder {
       moveHandler: () => this.props.router.route(this.props.routeTo),
       action: $dotMenuBtn,
       isOpen,
+      onClose: this.handleToggleDropDown,
       menuItems: [
         {
           id: 1,
@@ -142,9 +152,9 @@ export default class ProductPage extends ElementBuilder {
               new Write({
                 parent: router.root,
                 type: 'modify',
-                productId: element.productId,
+                productId,
                 router,
-                routeTo: 'menu',
+                routeTo: 'main',
               })
             );
             router.route('newPage');
@@ -154,7 +164,7 @@ export default class ProductPage extends ElementBuilder {
           id: 2,
           name: '삭제하기',
           color: 'red',
-          onClick: (e) => this.handleDeleteBtnClick(element.productId),
+          onClick: (e) => this.handleDeleteBtnClick(productId),
         },
       ],
     });
