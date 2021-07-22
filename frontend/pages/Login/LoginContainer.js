@@ -47,6 +47,7 @@ export default class LoginContainer extends ElementBuilder {
       .then((res) => {
         api.fetchGet('/auth/location').then((res) => {
           router.globalState.isLogin = true;
+          router.globalState.userName = id;
           router.route('main', {
             props: { filter: '', location: [...res.data] },
           });

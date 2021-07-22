@@ -55,6 +55,7 @@ export default class Main extends ElementBuilder {
       const $logoutPage = new Logout({
         parent: this.parent,
         router: this.router,
+        userName: this.router.globalState.userName,
       });
       this.router.addScreen('logout', $logoutPage);
       this.router.route('logout');
