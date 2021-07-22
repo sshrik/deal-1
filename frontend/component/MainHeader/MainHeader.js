@@ -1,6 +1,7 @@
 import $ from '../../util/domControll';
 import IconBtns from '../Button/IconButtons';
 import ElementBuilder from '../../lib/ElementBuilder';
+import Alert from '../Modal/Alert';
 import DropDown from '../DropDown';
 import './mainHeader.css';
 
@@ -94,7 +95,7 @@ export default class MainHeader extends ElementBuilder {
   };
 
   constructElement() {
-    const { moveHandler, toLogin } = this.props;
+    const { moveHandler, toLogin, showAlert } = this.props;
     const { isOpen, locations } = this.state;
 
     const $headerContainer = $.create('div').addClass('header-container');
@@ -121,7 +122,15 @@ export default class MainHeader extends ElementBuilder {
     const $rightContainer = $.create('div')
       .addClass('header-container__right')
       .addElement(IconBtns.user(toLogin))
-      .addElement(IconBtns.menu(moveHandler));
+      .addElement(
+        IconBtns.menu((dest) => {
+          if (this.props.isLogin) {
+            moveHandler(dest);
+          } else {
+            showAlert('로그인을 진행해야 합니다.', toLogin);
+          }
+        })
+      );
 
     new DropDown({
       parent: this,
