@@ -47,6 +47,7 @@ wsRouter.open('/', (req, res, next) => {
 wsRouter.post('/', (req, res, next) => {
   res.serverMsg = 'Chat message arrive.';
   res.type = wsRouter.constant.msg_arrive;
+  res.productId = req.productId;
   res.data = req.data;
   res.sendTo = req.sendTo;
   console.log(res);

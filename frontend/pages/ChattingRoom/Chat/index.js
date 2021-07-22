@@ -72,7 +72,7 @@ export default class Chat extends ElementBuilder {
         this.setState({
           message: '',
           // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음
-          curScrollPos: scrollTarget.clientHeight * 2,
+          curScrollPos: scrollTarget.clientHeight * 10,
           isSendActivated: false,
           chatLogs: [...chatLogs, { sender: 'me', content: message }],
         });

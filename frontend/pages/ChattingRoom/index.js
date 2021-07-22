@@ -15,11 +15,11 @@ export default class ChattingRoom extends ElementBuilder {
   }
 
   compareState(prevState, nextState) {
+    if (prevState.otherName != nextState.otherName) return true;
     return prevState.chatLogs.length !== nextState.chatLogs.length;
   }
 
   setChatMsg = (res) => {
-    const otherName = this.props.sellerName;
     const myName = this.props.router.globalState.userName;
     if (res.length > 0) {
       Promise.all([
@@ -45,16 +45,10 @@ export default class ChattingRoom extends ElementBuilder {
     }
     this.setState({
       myName: myName,
-      otherName: otherName,
     });
   };
 
-  componentDidMount() {
-    addOpenRouting(this.socket, this.props.router.globalState.userName);
-    addMessageListener(this.socket, (data) => {
-      console.log(data);
-    });
-
+  reloadLog = () => {
     api
       .fetchPost('/auth/chat/get_log', {
         roomId: this.props.roomId,
@@ -65,6 +59,33 @@ export default class ChattingRoom extends ElementBuilder {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  componentDidMount() {
+    addOpenRouting(this.socket, this.props.router.globalState.userName);
+    addMessageListener(this.socket, (data) => {
+      if (this.props.productId === data.productId) {
+        this.reloadLog();
+      }
+    });
+    api
+      .fetchPost('/auth/chat/get_names', { roomId: this.props.roomId })
+      .then((res) => {
+        Promise.all([
+          api.fetchPost('/auth/search_id', { id: res.data[0].user1 }),
+          api.fetchPost('/auth/search_id', { id: res.data[0].user2 }),
+        ]).then(([userName1, userName2]) => {
+          if (
+            userName1.data.userName === this.props.router.globalState.userName
+          ) {
+            this.setState({ otherName: userName2.data.userName });
+          } else {
+            this.setState({ otherName: userName1.data.userName });
+          }
+        });
+      });
+
+    this.reloadLog();
   }
   constructElement() {
     const $chattingRoomContainer = $.create('div').addClass(
@@ -85,7 +106,7 @@ export default class ChattingRoom extends ElementBuilder {
       productId: this.props.productId,
       chatLogs: this.state.chatLogs,
       myName: this.props.router.globalState.userName,
-      otherName: this.props.sellerName,
+      otherName: this.state.otherName,
       roomId: this.props.roomId,
     });
     return $chattingRoomContainer;
