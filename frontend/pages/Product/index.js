@@ -4,6 +4,7 @@ import ProductBar from './ProductBar';
 import ProductContainer from './ProductContainer';
 import SpinnerModal from '../../component/Modal/SpinnerModal';
 import Alert from '../../component/Modal/Alert';
+import Write from '../Write/index';
 import $ from '../../util/domControll';
 import './product.css';
 import api from '../../util/api';
@@ -120,13 +121,13 @@ export default class ProductPage extends ElementBuilder {
   };
 
   constructElement() {
-    const { uploadTime, location, productId } = this.props;
+    const { uploadTime, location, productId, router } = this.props;
     const { productInfo, isActive, isOpen } = this.state;
     console.log(productInfo);
     const $element = $.create('div').addClass('product--container');
 
     const $dotMenuBtn = $.create('button')
-      .addClass('xdot-menu')
+      .addClass('dot-menu')
       .setHTML(IconButtons.dotMenu);
 
     $dotMenuBtn.addEventListener('click', this.handleToggleDropDown);
@@ -146,7 +147,6 @@ export default class ProductPage extends ElementBuilder {
           color: 'black',
           onClick: (e) => {
             e.stopPropagation();
-            const { router } = this.props;
             router.addScreen(
               'newPage',
               new Write({

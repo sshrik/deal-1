@@ -33,6 +33,9 @@ export default class SubHeader extends ElementBuilder {
       const $actionBtn = $.create('div').addClass('sub-header__action');
       $actionBtn.appendChild(this.action);
       $element.appendChild($actionBtn);
+    }
+
+    if (menuItems) {
       new DropDown({
         parent: this,
         isOpen,
