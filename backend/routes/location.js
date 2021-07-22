@@ -10,6 +10,16 @@ const {
   updateLocationAll,
 } = require('../model/query/location');
 
+let curLocation = '흑석동';
+
+router.post('/location_change', async (req, res) => {
+  try {
+    
+  } catch(error) {
+
+  }
+})
+
 router.get('/location', async (req, res) => {
   try {
     const bmCookie = req.cookies.bmCookie;

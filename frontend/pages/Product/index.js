@@ -69,6 +69,7 @@ export default class ProductPage extends ElementBuilder {
           startTime: new Date().getTime(),
         })
         .then((res) => {
+          console.log(res.data);
           this.setState({ productInfo: res.data });
           this.getContentsElement().removeChild($spinner.getContentsElement());
         })
