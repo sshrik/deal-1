@@ -10,6 +10,7 @@ export default class SellingList extends ElementBuilder {
     super(props);
     this.state = {
       sellingList: [],
+      isDropDownActive: [],
     };
     this.fetchData();
   }
@@ -24,8 +25,8 @@ export default class SellingList extends ElementBuilder {
       .then((res) => {
         this.setState({
           sellingList: [...res.data],
+          isDropDownActive: new Array(res.data.length).fill(false),
         });
-        console.log(this.state);
       })
       .catch((error) => console.log(error));
   };
@@ -43,16 +44,29 @@ export default class SellingList extends ElementBuilder {
       .catch((error) => console.log(error));
   };
 
+  handleToggleDropDown = (idx) => {
+    const { isDropDownActive } = this.state;
+    const newIdDropDownActive = new Array(isDropDownActive.length).fill(false);
+    if (isDropDownActive[idx]) {
+      this.setState({ isDropDownActive: newIdDropDownActive });
+    } else {
+      newIdDropDownActive[idx] = true;
+      this.setState({ isDropDownActive: newIdDropDownActive });
+    }
+  };
+
   constructElement() {
     const { sellingList } = this.state;
     const $element = $.create('div').addClass('selling-list');
 
-    sellingList.forEach((element) => {
+    sellingList.forEach((element, idx) => {
       new ListItem({
         parent: this,
         type: 'menu',
         ...element,
         uploadTime: convertTime(element.uploadTime),
+        onToggleDropDown: (e) => this.handleToggleDropDown(idx),
+        isOpen: this.state.isDropDownActive[idx],
         menuItems: [
           {
             id: 1,
