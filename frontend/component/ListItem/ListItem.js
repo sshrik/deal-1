@@ -108,7 +108,6 @@ export default class ListItem extends ElementBuilder {
         .addClass('dot-menu')
         .setHTML(IconBtns.dotMenu);
       $listItemActions.addElement($dotMenuBtn);
-      window.addEventListener('click', this.handleDropDownClose);
       $dotMenuBtn.addEventListener('click', onToggleDropDown);
       new DropDown({
         parent: this,
