@@ -39,6 +39,8 @@ const getUserSellingProducts =
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
+const changeSellState = 'UPDATE products SET nowSelling=? where id=?';
+
 module.exports = {
   getAllProducts,
   addNewProduct,
@@ -50,4 +52,5 @@ module.exports = {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+  changeSellState,
 };

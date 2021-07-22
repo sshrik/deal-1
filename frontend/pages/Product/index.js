@@ -107,7 +107,12 @@ export default class ProductPage extends ElementBuilder {
     });
     new ProductContainer({
       parent: this,
-      productInfo: { ...productInfo, uploadTime, location },
+      pid: this.props.productId,
+      productInfo: {
+        ...productInfo,
+        uploadTime,
+        location,
+      },
     });
     new ProductBar({
       parent: this,

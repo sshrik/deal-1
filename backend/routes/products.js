@@ -16,6 +16,7 @@ const {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+  changeSellState,
 } = require('../model/query/products');
 
 router.get('/products_user', async (req, res) => {
@@ -129,6 +130,19 @@ router.get('/user_like_list', async (req, res) => {
     res.status(200).json({ data: results });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/set_sell_state', async (req, res) => {
+  try {
+    console.log(req.body);
+    const [results, _] = await pool.execute(changeSellState, [
+      req.body.nowSelling,
+      req.body.productId,
+    ]);
+    util.sendJson(res, { data: results });
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 

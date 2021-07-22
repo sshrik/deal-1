@@ -198,8 +198,9 @@
   width: 105px;
   margin-top: 50%;
   background-color: var(--off-white);
-  border: 1px solid var(--grey3);
+  border: 0.5px solid var(--grey3);
   overflow: hidden;
+  cursor:pointer;
 }
 .seller-drop-down__container:first-child {
   border-top-left-radius: 8px;
@@ -211,7 +212,7 @@
 }
 
 .seller-drop-down__item {
-  border: 1px solid var(--grey3);
+  border-bottom: 0.5px solid var(--grey3);
   cursor: pointer;
   height: 40px;
   display: flex;

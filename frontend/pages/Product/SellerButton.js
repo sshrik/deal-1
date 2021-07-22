@@ -7,14 +7,16 @@ export default class SellerButton extends ElementBuilder {
     super(props);
     this.state = {
       isOpen: false,
+      nowSelling: this.props.nowSelling,
     };
   }
 
   compareState(prevState, newState) {
-    if (prevState.isOpen === newState.isOpen) {
-      return false;
+    if (prevState.isOpen !== newState.isOpen) {
+      return true;
     }
-    return true;
+    if (prevState.nowSelling !== newState.nowSelling) return true;
+    return false;
   }
 
   handleDropDownOpen = (e) => {
@@ -22,23 +24,27 @@ export default class SellerButton extends ElementBuilder {
     this.setState({ isOpen: true });
   };
 
-  handleDropDownClose = (e) => {
+  handleDropDownClose = (e, toggleOption) => {
     e.stopPropagation();
-    this.setState({ isOpen: false });
+    console.log(this.state);
+    console.log(this.props);
+    if (toggleOption) {
+      this.setState({ isOpen: false, nowSelling: !this.state.nowSelling });
+    } else {
+      this.setState({ isOpen: false });
+    }
   };
 
   constructElement() {
     const $element = $.create('div').addClass('seller-button__container');
 
     let sellInfo = ['판매중', '예약중'];
-    if (this.props.nowSelling) {
-      const $buttonText = $.create('p').setText('판매중');
-      $element.appendChild($buttonText);
-    } else {
-      const $buttonText = $.create('p').setText('예약중');
+    if (!this.state.nowSelling) {
       sellInfo = ['예약중', '판매중'];
-      $element.appendChild($buttonText);
     }
+
+    const $buttonText = $.create('p').setText(sellInfo[0]);
+    $element.appendChild($buttonText);
 
     const $downImage = $.create('img');
     $downImage.src = 'down.png';
@@ -58,6 +64,7 @@ export default class SellerButton extends ElementBuilder {
       dropDownInfo: sellInfo,
       onClose: this.handleDropDownClose,
       isOpen: this.state.isOpen,
+      productNumber: this.props.productNumber,
     });
 
     return $element;
