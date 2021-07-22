@@ -17,6 +17,9 @@ export default class CategoryBody extends ElementBuilder {
       const $category = $.create('div').addClass('category');
       $category.appendChild(Image('small', this.props.catImages[index]));
       $category.appendChild($.create('span').setText(category));
+      $category.addEventListener('click', (e) => {
+        this.props.onClick(index);
+      });
       $element.appendChild($category);
     });
 

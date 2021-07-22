@@ -40,7 +40,7 @@ export default class MainHeader extends ElementBuilder {
   };
 
   constructElement() {
-    const { moveHandler } = this.props;
+    const { moveHandler, toLogin } = this.props;
     const { isOpen, locations } = this.state;
 
     const $headerContainer = $.create('div').addClass('header-container');
@@ -66,7 +66,7 @@ export default class MainHeader extends ElementBuilder {
 
     const $rightContainer = $.create('div')
       .addClass('header-container__right')
-      .addElement(IconBtns.user(moveHandler))
+      .addElement(IconBtns.user(toLogin))
       .addElement(IconBtns.menu(moveHandler));
 
     new DropDown({

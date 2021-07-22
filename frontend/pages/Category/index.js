@@ -21,7 +21,14 @@ export default class Category extends ElementBuilder {
       action: null,
       moveHandler: () => this.router.route(this.routeTo),
     });
-    new CategoryBody({ parent: this, catImages, categories });
+    new CategoryBody({
+      parent: this,
+      catImages,
+      categories,
+      onClick: (filter) => {
+        this.router.route(this.routeTo, { props: { filter: filter } });
+      },
+    });
 
     return $element;
   }

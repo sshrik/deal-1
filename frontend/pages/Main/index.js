@@ -22,6 +22,7 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
       categories: [],
+      filter: '',
     };
     this.mouseLocation = {
       isDown: false,
@@ -37,10 +38,15 @@ export default class Main extends ElementBuilder {
     prevState.products.forEach((element, index) => {
       if (element !== newState[index]) return true;
     });
+    if (prevState.filter !== newState.filter) return true;
     return false;
   }
 
-  moveHandler = () => {
+  moveHandler = (dest) => {
+    this.router.route(dest);
+  };
+
+  toLogin = () => {
     if (this.router.globalState.isLogin) {
       const $logoutPage = new Logout({
         parent: this.parent,
@@ -117,6 +123,7 @@ export default class Main extends ElementBuilder {
   };
 
   fetchContents = () => {
+    this.setState({ filter: '' });
     if (this.router.globalState.isLogin) {
       this.fetchMine();
     } else {
@@ -133,23 +140,19 @@ export default class Main extends ElementBuilder {
       location: '양재동',
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
+      toLogin: this.toLogin,
     });
+
     const $emptyDiv = new DragDownItem({
       parent: this,
     });
-    $element.addEventListener(
-      'drag',
-      (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      },
-      true
-    );
+
     $element.addEventListener('mousedown', (e) => {
       this.mouseLocation.isDown = true;
       this.mouseLocation.pressY = e.pageY;
       this.mouseLocation.nowY = e.pageY;
     });
+
     $element.addEventListener('mousemove', (e) => {
       if (this.mouseLocation.isDown) {
         this.mouseLocation.nowY = e.pageY;
@@ -159,6 +162,7 @@ export default class Main extends ElementBuilder {
         }
       }
     });
+
     $element.addEventListener('mouseup', (e) => {
       this.mouseLocation.isDown = false;
       this.mouseLocation.nowY = e.pageY;
@@ -170,24 +174,27 @@ export default class Main extends ElementBuilder {
     });
 
     products.forEach((element) => {
-      new ListItem({
-        parent: this,
-        ...element,
-        isActive: element.likeId ? true : false,
-        onAlert: this.showAlert,
-        onClick: () => {
-          // TODO : ADD event to refresh... this.fetchContents();
-          // const $newPage = new ProductPage({
-          //   parent: this.parent,
-          //   element,
-          //   router: this.router,
-          //   routeTo: 'main',
-          // });
-          // this.router.addScreen('newPage', $newPage);
-          // this.router.route('newPage');
-        },
-      });
+      if (element.category === this.state.filter || this.state.filter === '') {
+        new ListItem({
+          parent: this,
+          ...element,
+          isActive: element.likeId ? true : false,
+          onAlert: this.showAlert,
+          onClick: () => {
+            // TODO : ADD event to refresh... this.fetchContents();
+            // const $newPage = new ProductPage({
+            //   parent: this.parent,
+            //   element,
+            //   router: this.router,
+            //   routeTo: 'main',
+            // });
+            // this.router.addScreen('newPage', $newPage);
+            // this.router.route('newPage');
+          },
+        });
+      }
     });
+
     new FaB({
       parent: this,
       moveHandler: () => this.toWritePage(),
