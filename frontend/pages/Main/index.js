@@ -79,9 +79,7 @@ export default class Main extends ElementBuilder {
       return `${parseInt(result)}시간`;
     }
     result = result / 24;
-    if (result < 24) {
-      return `${parseInt(result)}일`;
-    }
+    return `${parseInt(result)}일`;
   }
 
   constructElement() {

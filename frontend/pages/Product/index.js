@@ -30,7 +30,6 @@ export default class ProductPage extends ElementBuilder {
       })
       .then((res) => {
         this.setState({ productInfo: res.data });
-        console.log(this.state);
       })
       .catch((error) => console.log(error));
   };
@@ -52,7 +51,6 @@ export default class ProductPage extends ElementBuilder {
   constructElement() {
     const { uploadTime, location } = this.props;
     const { productInfo, isActive } = this.state;
-    console.log(this.state);
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
       parent: this,
@@ -63,7 +61,6 @@ export default class ProductPage extends ElementBuilder {
       parent: this,
       productInfo: { ...productInfo, uploadTime, location },
     });
-    console.log(isActive);
     new ProductBar({
       parent: this,
       like: isActive,

@@ -36,7 +36,6 @@ router.get('/products_user', async (req, res) => {
 });
 
 router.get('/product/:id', async (req, res) => {
-  console.log(req.params.id);
   try {
     const [productBasicInfo, _] = await pool.execute(getCetainProduct, [
       req.params.id,
@@ -53,7 +52,6 @@ router.get('/product/:id', async (req, res) => {
     const [likeCount, ___] = await pool.execute(getProductLikes, [
       req.params.id,
     ]);
-    console.log(likeCount);
     productBasicInfo[0].like = likeCount[0].likeCount;
 
     res.status(200).json({ data: productBasicInfo[0] });
@@ -81,7 +79,6 @@ router.post('/add_product', async (req, res) => {
       const fileName = `productImg/ag502_${title}_${idx}.jpg`;
       fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
       try {
-        console.log('aaa');
         await pool.execute(addNewProdcutSpec, [
           curTime,
           `${fileName}`,
