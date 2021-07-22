@@ -2,12 +2,12 @@
 drop database deal1;
 CREATE DATABASE deal1;
 */
-use deal1;
+use deal_1;
 CREATE TABLE users
 (
     `id`        INT UNSIGNED   NOT NULL    AUTO_INCREMENT,
     `userName`  VARCHAR(25)    NOT NULL    UNIQUE,
-    `password`  VARCHAR(20)    NOT NULL,
+    `password`  VARCHAR(80)    NOT NULL,
     `area_1`    VARCHAR(10)    NOT NULL,
     `area_2`    VARCHAR(10)    NULL,
     PRIMARY KEY (id)
@@ -25,7 +25,7 @@ CREATE TABLE products
 (
     `id`          INT UNSIGNED   NOT NULL    AUTO_INCREMENT,
     `title`       VARCHAR(25)    NOT NULL,
-    `uploadTime`  INT UNSIGNED   NOT NULL,
+    `uploadTime`  BIGINT UNSIGNED   NOT NULL,
     `price`       INT UNSIGNED   NOT NULL,
     `detail`      VARCHAR(500)   NOT NULL,
     `seller`      INT UNSIGNED   NOT NULL,
@@ -33,8 +33,8 @@ CREATE TABLE products
     `viewCount`   INT UNSIGNED   NOT NULL,
     `nowSelling`  BOOLEAN        NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (seller) REFERENCES users(id) ON UPDATE CASCADE,
-    FOREIGN KEY (category) REFERENCES categories(id) ON UPDATE CASCADE
+    FOREIGN KEY (seller) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (category) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE productSpecs
@@ -44,7 +44,7 @@ CREATE TABLE productSpecs
     `imgSrc`    VARCHAR(60)    NOT NULL,
     `isMain`    BOOLEAN        NOT NULL    DEFAULT false,
     PRIMARY KEY (id),
-    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE
+    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE likes
@@ -53,8 +53,8 @@ CREATE TABLE likes
     `userId`    INT UNSIGNED   NOT NULL,
     `productId` INT UNSIGNED   NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (userId) REFERENCES users(id) ON UPDATE CASCADE,
-    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE
+    FOREIGN KEY (userId) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE chats
@@ -67,9 +67,9 @@ CREATE TABLE chats
     `sendTime`  INT UNSIGNED   NULL,
     `type`      VARCHAR(20)    NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (sendName) REFERENCES users(id) ON UPDATE CASCADE,
-    FOREIGN KEY (recvName) REFERENCES users(id) ON UPDATE CASCADE,
-    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE
+    FOREIGN KEY (sendName) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (recvName) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE chatrooms
@@ -79,6 +79,6 @@ CREATE TABLE chatrooms
     `userName`  INT UNSIGNED   NOT NULL,
     `lastview`  INT UNSIGNED   NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (userName) REFERENCES users(id) ON UPDATE CASCADE,
-    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE
+    FOREIGN KEY (userName) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
 );

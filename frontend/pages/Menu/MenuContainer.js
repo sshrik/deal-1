@@ -18,21 +18,7 @@ export default class MenuContainer extends ElementBuilder {
       curTab: 1,
       sellingList: [],
     };
-    // this.fecthData();
   }
-
-  fecthData = () => {
-    Promise.all([
-      api.fetchGet('/api/user_selling_list'),
-      // api.fetchGet('/api/user_like_list'),
-    ])
-      .then(([sellingList]) => {
-        this.setState({
-          sellingList: [...sellingList.data],
-        });
-      })
-      .catch((error) => console.log(error));
-  };
 
   compareState(prevState, newState) {
     return true;
@@ -52,7 +38,7 @@ export default class MenuContainer extends ElementBuilder {
   };
 
   constructElement() {
-    const { curTab, sellingList } = this.state;
+    const { curTab } = this.state;
     const $element = $.create('div').addClass('menu-content-container');
     const $tab = $.create('div').addClass('menu-tab');
     $tab.setHTML(
@@ -71,7 +57,6 @@ export default class MenuContainer extends ElementBuilder {
     if (curTab === 1) {
       new SellingList({
         parent: this,
-        sellingList,
       });
     } else if (curTab === 2) {
       new ChattingList({

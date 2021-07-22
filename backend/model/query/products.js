@@ -1,7 +1,7 @@
 const getAllProducts = `SELECT p.id as productId, p.title as title, p.uploadTime as uploadTime, p.viewCount as viewCount,
   p.price as price, p.detail as detail, p.category as category, p.viewCount as viewCount, p.nowSelling as nowSelling,
   u.userName as userName, u.id as userId, u.area_1 as area_1, u.area_2 as area_2, ps.imgSrc as imgSrc
-   FROM products p JOIN users u ON p.seller = u.id JOIN productSpecs ps ON p.id = ps.productId`;
+  FROM products p JOIN users u ON p.seller = u.id JOIN productSpecs ps ON p.id = ps.productId WHERE ps.isMain = 1`;
 
 const getAllProductsAuth = `
 SELECT p.id as productId, p.title as title, p.uploadTime as uploadTime,
@@ -33,13 +33,24 @@ const addLikeProduct =
 const deleteLikeProduct =
   'DELETE FROM likes WHERE userId = (SELECT id FROM users WHERE userName = ?) AND productId = ?';
 
-const getUserSellingProducts =
-  'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId WHERE seller = (SELECT id FROM users WHERE userName =?)';
-
+const getUserSellingProducts = `
+SELECT p.id as productId, p.title as title, p.uploadTime as uploadTime,
+p.price as price, p.detail as detail, p.category as category, p.viewCount as viewCount, p.nowSelling as nowSelling, p.viewCount as viewCount,
+u.userName as userName, u.id as userId, u.area_1 as area_1, u.area_2 as area_2, ps.imgSrc as imgSrc, l.userId as likeId
+FROM products p JOIN users u ON p.seller = u.id JOIN productSpecs ps ON p.id = ps.productId 
+LEFT OUTER JOIN (SELECT * FROM likes WHERE likes.userId = (SELECT id FROM users WHERE users.userName = ?)) l ON p.id = l.productId
+WHERE ps.isMain = 1 AND p.seller = (SELECT id FROM users WHERE userName = ?)
+`;
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
+<<<<<<< HEAD
 const changeSellState = 'UPDATE products SET nowSelling=? where id=?';
+=======
+const deleteSellingProduct = `
+DELETE FROM products WHERE id = ?;
+`;
+>>>>>>> dev
 
 module.exports = {
   getAllProducts,
@@ -52,5 +63,9 @@ module.exports = {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+<<<<<<< HEAD
   changeSellState,
+=======
+  deleteSellingProduct,
+>>>>>>> dev
 };
