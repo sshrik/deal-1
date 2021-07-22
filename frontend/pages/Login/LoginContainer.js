@@ -3,6 +3,7 @@ import Button from '../../component/Button/Button';
 import ElementBuilder from '../../lib/ElementBuilder';
 import Input from '../../component/Input';
 import Alert from '../../component/Modal/Alert';
+import Register from '../Register/index';
 import api from '../../util/api';
 
 export default class LoginContainer extends ElementBuilder {
@@ -98,7 +99,17 @@ export default class LoginContainer extends ElementBuilder {
       size: 'large',
       type: 'text',
       fontColor: 'black',
-      onClick: () => router.route('register'),
+      // onClick: () => {router.route('register')},
+      onClick: () => {
+        router.addScreen(
+          'register',
+          new Register({
+            parent: router.root,
+            router,
+          })
+        );
+        router.route('register');
+      },
     });
 
     return $element;
