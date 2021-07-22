@@ -6,7 +6,6 @@
   border-style: none; 
   border: 1px solid var(--grey3);
   border-radius: 8px;
-  padding: 10px 16px 8px 16px;
   width: 100%;
   color: var(--title-active);
 }
@@ -17,23 +16,23 @@
 }
 
 .font-medium{
-  height: 36px;
+  height: 40px;
   line-height: 20px;
   font-size: 14px;
 }
 
 .font-large {
-  height: 40px;
+  height: 44px;
   font-size: 16px;
   line-height: 22px;
 }
 
 .input-medium {
-  padding-left: 8px;
+  padding: 10px;
 }
 
 .input-large {
-  padding-left: 16px;
+  padding: 12px 16px 10px 16px;
 }
 
 .input-container > input::placeholder {
