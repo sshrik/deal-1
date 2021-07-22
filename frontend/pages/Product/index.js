@@ -24,7 +24,7 @@ export default class ProductPage extends ElementBuilder {
   fetchData = () => {
     const { productId } = this.props;
     api
-      .fetchGet(`/api/product/${productId}`, {
+      .fetchGet(`/product/${productId}`, {
         delayTime: 1000,
         startTime: new Date().getTime(),
       })
@@ -39,7 +39,7 @@ export default class ProductPage extends ElementBuilder {
     const { productId } = this.props;
     api
       .fetchPost(
-        isActive ? '/api/delete_like_product' : '/api/add_like_product',
+        isActive ? '/auth/delete_like_product' : '/auth/add_like_product',
         { productId }
       )
       .then((res) => {
