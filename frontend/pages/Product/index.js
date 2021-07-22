@@ -9,7 +9,9 @@ import api from '../../util/api';
 export default class ProductPage extends ElementBuilder {
   constructor(props) {
     super(props);
+    const { isActive } = this.props;
     this.state = {
+      isActive,
       productInfo: {},
     };
     this.fetchData();
@@ -33,9 +35,23 @@ export default class ProductPage extends ElementBuilder {
       .catch((error) => console.log(error));
   };
 
+  handleLikeBtnToggle = () => {
+    const { isActive } = this.state;
+    const { productId } = this.props;
+    api
+      .fetchPost(
+        isActive ? '/api/delete_like_product' : '/api/add_like_product',
+        { productId }
+      )
+      .then((res) => {
+        this.setState({ isActive: !isActive });
+      })
+      .catch((error) => console.log(error));
+  };
+
   constructElement() {
-    const { isActive, uploadTime, location } = this.props;
-    const { productInfo } = this.state;
+    const { uploadTime, location } = this.props;
+    const { productInfo, isActive } = this.state;
     console.log(this.state);
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
@@ -52,6 +68,7 @@ export default class ProductPage extends ElementBuilder {
       parent: this,
       like: isActive,
       price: productInfo.price,
+      onClick: this.handleLikeBtnToggle,
     });
     return $element;
   }
