@@ -85,17 +85,7 @@ router.post('/get_log', async (req, res) => {
       user1,
     ]);
 
-    const bmCookie = req.cookies.bmCookie;
-    const id = req.session[bmCookie];
-    await updateLast(productId, id, id, nowTime);
-
-    // const data = { chatMsg, sendName, recvName, sendTime, type };
-    const chatLogs = {};
-    results.forEach((element) => {
-      const { chatMsg, sendName, recvName, sendTime, type } = element;
-      console.log(element);
-    });
-    util.sendJson(res, { data: chatLogs });
+    util.sendJson(res, { data: results });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }

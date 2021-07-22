@@ -20,6 +20,8 @@ WHERE productId = ? AND
 const updateLast1 = `UPDATE chatrooms SET lastview1 = ? where productId = ? and user1 = ?`;
 const updateLast2 = `UPDATE chatrooms SET lastview2 = ? where productId = ? and user2 = ?`;
 
+const searchUser = `SELECT userName from users where id = ?`;
+
 module.exports = {
   enterChattingRoom,
   getChatLog,
@@ -27,4 +29,5 @@ module.exports = {
   getChattingRoom,
   updateLast1,
   updateLast2,
+  searchUser,
 };

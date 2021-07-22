@@ -43,11 +43,11 @@ export default class ProductBar extends ElementBuilder {
               user2: this.props.router.globalState.userName,
             })
             .then((res) => {
-              console.log(res);
               const goToChatRoom = () => {
                 const dcRoom = new ChattingRoom({
                   parent: this.props.router.root,
                   router: this.props.router,
+                  productId: this.props.pid,
                   sellerName: this.props.productInfo.sellerName,
                   title: this.props.productInfo.title,
                   price: this.props.productInfo.price,
