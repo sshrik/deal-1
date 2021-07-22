@@ -4,6 +4,7 @@ import $ from '../../util/domControll';
 import WriteContainer from './WriteContainer';
 import IconButtons from '../../component/Button/IconButtons';
 import { commaSerateToPrice } from '../../util/utils';
+import Alert from '../../component/Modal/Alert';
 import './write.css';
 import api from '../../util/api';
 
@@ -153,9 +154,25 @@ export default class Write extends ElementBuilder {
     });
   };
 
+  showAlert = (error, callback) => {
+    const $alert = new Alert({
+      parent: this.parent,
+      titleText: error,
+      proceedText: '확인',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+        callback();
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
   handleSubmitBtnClick = () => {
     const { sendActive, title, price, detail, files, buttonState } = this.state;
-    const { type, productId } = this.props;
+    const { type, productId, router } = this.props;
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
@@ -171,7 +188,10 @@ export default class Write extends ElementBuilder {
             category: activeBtn,
           }
         )
-        .then((res) => console.log(res))
+        .then((res) => {
+          console.log(res);
+          this.showAlert('등록했습니다.', () => router.back());
+        })
         .catch((error) => console.log(error));
     }
   };

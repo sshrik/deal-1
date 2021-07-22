@@ -97,7 +97,7 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
-  showAlert = (error) => {
+  showAlert = (error, callback = () => {}) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -106,6 +106,7 @@ export default class Main extends ElementBuilder {
         this.getContentsElement().removeChild($alert.getContentsElement());
       },
       onProceed: (e) => {
+        console.log(callback);
         this.getContentsElement().removeChild($alert.getContentsElement());
         callback();
       },
