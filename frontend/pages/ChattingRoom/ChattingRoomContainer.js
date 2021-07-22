@@ -22,6 +22,7 @@ export default class ChattingRoomContainer extends ElementBuilder {
       otherName: this.props.otherName,
       productId: this.props.productId,
       chatLogs: this.props.chatLogs,
+      roomId: this.props.roomId,
       ...this.state,
     });
 

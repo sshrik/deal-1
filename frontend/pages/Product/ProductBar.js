@@ -36,40 +36,30 @@ export default class ProductBar extends ElementBuilder {
       $element.appendChild($callButton);
       $callButton.addEventListener('click', () => {
         if (this.props.router.globalState.isLogin) {
+          const goToChatRoom = (roomId) => {
+            console.log(roomId);
+            const dcRoom = new ChattingRoom({
+              parent: this.props.router.root,
+              router: this.props.router,
+              productId: this.props.pid,
+              sellerName: this.props.productInfo.sellerName,
+              title: this.props.productInfo.title,
+              price: this.props.productInfo.price,
+              nowSelling: this.props.productInfo.nowSelling === 1,
+              imgSrc: this.props.productInfo.imgSrc[0],
+              roomId: roomId,
+            });
+            this.props.router.addScreen('newChat', dcRoom);
+            this.props.router.route('newChat');
+          };
           api
-            .fetchPost('/auth/chat/room_exist', {
+            .fetchPost('/auth/chat/enter_chat', {
               productId: this.props.pid,
               user1: this.props.productInfo.sellerName,
               user2: this.props.router.globalState.userName,
             })
             .then((res) => {
-              const goToChatRoom = () => {
-                const dcRoom = new ChattingRoom({
-                  parent: this.props.router.root,
-                  router: this.props.router,
-                  productId: this.props.pid,
-                  sellerName: this.props.productInfo.sellerName,
-                  title: this.props.productInfo.title,
-                  price: this.props.productInfo.price,
-                  nowSelling: this.props.productInfo.nowSelling === 1,
-                  imgSrc: this.props.productInfo.imgSrc[0],
-                });
-                this.props.router.addScreen('newChat', dcRoom);
-                this.props.router.route('newChat');
-              };
-              if (res.data) {
-                api
-                  .fetchPost('/auth/chat/enter_chat', {
-                    productId: this.props.pid,
-                    user1: this.props.productInfo.sellerName,
-                    user2: this.props.router.globalState.userName,
-                  })
-                  .then((res) => {
-                    goToChatRoom();
-                  });
-              } else {
-                goToChatRoom();
-              }
+              goToChatRoom(res.roomId);
             })
             .catch((error) => {
               console.log(error);

@@ -57,9 +57,7 @@ export default class ChattingRoom extends ElementBuilder {
 
     api
       .fetchPost('/auth/chat/get_log', {
-        user1: this.props.sellerName,
-        user2: this.props.router.globalState.userName,
-        productId: this.props.productId,
+        roomId: this.props.roomId,
       })
       .then((res) => {
         this.setChatMsg(res.data);
@@ -88,6 +86,7 @@ export default class ChattingRoom extends ElementBuilder {
       chatLogs: this.state.chatLogs,
       myName: this.props.router.globalState.userName,
       otherName: this.props.sellerName,
+      roomId: this.props.roomId,
     });
     return $chattingRoomContainer;
   }

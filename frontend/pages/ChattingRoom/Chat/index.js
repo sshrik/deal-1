@@ -56,6 +56,7 @@ export default class Chat extends ElementBuilder {
         productId: this.props.productId,
         chatMsg: message,
         type: 'chat',
+        roomId: this.props.roomId,
       })
       .then((res) => {
         // Websocket으로 핑퐁 보내기
@@ -64,6 +65,7 @@ export default class Chat extends ElementBuilder {
           this.props.myName,
           this.props.otherName,
           this.props.productId,
+          this.props.roomId,
           message
         );
 
