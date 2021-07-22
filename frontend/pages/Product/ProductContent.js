@@ -13,7 +13,7 @@ export default class ProductContent extends ElementBuilder {
     $titleSection.appendChild(
       $.create('p')
         .addClass('product-content__title__sub')
-        .setText(`${this.props.category}·${this.props.lastTime} 전`)
+        .setText(`${this.props.category} · ${this.props.lastTime} 전`)
     );
     $element.appendChild($titleSection);
     const $contentSection = $.create('div').addClass(
