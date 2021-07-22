@@ -116,7 +116,7 @@ export default class Write extends ElementBuilder {
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
-        .fetchPost('/api/add_product', {
+        .fetchPost('/auth/add_product', {
           title,
           price,
           detail,

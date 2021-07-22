@@ -16,6 +16,7 @@ const {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+  deleteSellingProduct,
 } = require('../model/query/products');
 
 router.get('/products_user', async (req, res) => {
@@ -116,10 +117,10 @@ router.get('/user_selling_list', async (req, res) => {
   try {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
-    const [results, _] = await pool.execute(getUserSellingProducts, [id]);
-    res.status(200).json({ data: results });
+    const [results, _] = await pool.execute(getUserSellingProducts, [id, id]);
+    util.sendJson(res, { data: results });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
@@ -129,6 +130,16 @@ router.get('/user_like_list', async (req, res) => {
     res.status(200).json({ data: results });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/delete_selling_product', async (req, res) => {
+  try {
+    const { productId } = req.body;
+    await pool.execute(deleteSellingProduct, [productId]);
+    util.sendJson(res, { message: '삭제 성공' });
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 

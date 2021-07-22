@@ -31,26 +31,6 @@ export default class ListItem extends ElementBuilder {
     this.state = {
       isOpen: false,
       likeActive: isActive,
-      menuItems: [
-        {
-          id: 1,
-          name: '수정하기',
-          color: 'black',
-          onClick: () => {
-            // 수정 페이지 이동
-            console.log('수정하기');
-          },
-        },
-        {
-          id: 2,
-          name: '삭제하기',
-          color: 'red',
-          onClick: () => {
-            // 삭제 로직
-            console.log('삭제하기');
-          },
-        },
-      ],
     };
   }
 
@@ -93,9 +73,18 @@ export default class ListItem extends ElementBuilder {
   };
 
   constructElement() {
-    const { title, uploadTime, price, comment, like, area_1, imgSrc, type } =
-      this.props;
-    const { isOpen, menuItems, likeActive } = this.state;
+    const {
+      title,
+      uploadTime,
+      price,
+      comment,
+      like,
+      area_1,
+      imgSrc,
+      type,
+      menuItems,
+    } = this.props;
+    const { isOpen, likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
