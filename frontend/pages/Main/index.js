@@ -85,15 +85,19 @@ export default class Main extends ElementBuilder {
   }
 
   toWritePage = () => {
-    const { categories } = this.state;
-    const $writePage = new Write({
-      parent: this.parent,
-      categories,
-      routeTo: '',
-      router: this.router,
-    });
-    this.router.addScreen('write', $writePage);
-    this.router.route('write');
+    if (this.router.globalState.isLogin) {
+      const { categories } = this.state;
+      const $writePage = new Write({
+        parent: this.parent,
+        categories,
+        routeTo: '',
+        router: this.router,
+      });
+      this.router.addScreen('write', $writePage);
+      this.router.route('write');
+    } else {
+      this.showAlert('글을 쓰려면 로그인부터 해야합니다.', this.toLogin);
+    }
   };
 
   convertTime(uploadTime) {
