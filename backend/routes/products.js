@@ -120,7 +120,7 @@ router.get('/user_selling_list', async (req, res) => {
     const [results, _] = await pool.execute(getUserSellingProducts, [id, id]);
     util.sendJson(res, { data: results });
   } catch (error) {
-    util.sendError(res, error.message);
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
@@ -139,7 +139,7 @@ router.post('/delete_selling_product', async (req, res) => {
     await pool.execute(deleteSellingProduct, [productId]);
     util.sendJson(res, { message: '삭제 성공' });
   } catch (error) {
-    util.sendError(res, error.message);
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
