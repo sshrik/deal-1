@@ -40,8 +40,6 @@ export default {
                 if (res.status === 200) {
                   resolve(result);
                 } else {
-                  console.log(result);
-                  console.log(result.error);
                   reject(result.error);
                 }
               });
@@ -50,7 +48,6 @@ export default {
           );
         })
         .catch((error) => {
-          console.log(result);
           reject(error.message);
         });
     });

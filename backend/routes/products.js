@@ -49,7 +49,6 @@ router.post('/add_product', async (req, res) => {
         'base64'
       );
       try {
-        console.log('aaa');
         await pool.execute(addNewProdcutSpec, [
           curTime,
           `productImg/ag502_${title}.jpg`,
