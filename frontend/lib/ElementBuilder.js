@@ -122,35 +122,39 @@ export default class ElementBuilder {
     let parentDOMElement;
     if (this.parent.isPageElement) {
       parentDOMElement = this.parent.getContentsElement();
+      // 현재 자신이 부모의 몇번째 자식인지 확인.
+      const $parentChild = parentDOMElement.childNodes;
+      const $childNodes = [];
+
+      [...$parentChild].forEach((element) => {
+        if (element === $contents) {
+          $childNodes.push(-1);
+        } else {
+          $childNodes.push(element);
+        }
+      });
+
+      // 부모 노드를 비워줌.
+      while (parentDOMElement.hasChildNodes()) {
+        parentDOMElement.removeChild(parentDOMElement.firstChild);
+      }
+
+      // 자신의 위치에 자기 자신을 넣어줌.
+      $childNodes.forEach((element) => {
+        if (element === -1) {
+          parentDOMElement.appendChild(this.regenerateContents());
+        } else {
+          parentDOMElement.appendChild(element);
+        }
+      });
     } else {
+      // 만약 ElementBuilder의 자손이 아니라면 전부 regenerate.
       parentDOMElement = this.parent;
-    }
-
-    // 현재 자신이 부모의 몇번째 자식인지 확인.
-    const $parentChild = parentDOMElement.childNodes;
-    const $childNodes = [];
-
-    [...$parentChild].forEach((element) => {
-      if (element === $contents) {
-        $childNodes.push(-1);
-      } else {
-        $childNodes.push(element);
+      while (parentDOMElement.hasChildNodes()) {
+        parentDOMElement.removeChild(parentDOMElement.firstChild);
       }
-    });
-
-    // 부모 노드를 비워줌.
-    while (parentDOMElement.hasChildNodes()) {
-      parentDOMElement.removeChild(parentDOMElement.firstChild);
+      parentDOMElement.appendChild(this.regenerateContents());
     }
-
-    // 자신의 위치에 자기 자신을 넣어줌.
-    $childNodes.forEach((element) => {
-      if (element === -1) {
-        parentDOMElement.appendChild(this.regenerateContents());
-      } else {
-        parentDOMElement.appendChild(element);
-      }
-    });
   }
 
   componentDidUpdate() {
@@ -161,7 +165,6 @@ export default class ElementBuilder {
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
       this.init();
-      // this.beforeRender();
     }
     // 하위 element의 rendering 시작. 재귀적으로 호출하여 BFS의 형태로 Rendering 합니다.
     this.child.forEach((element) => {

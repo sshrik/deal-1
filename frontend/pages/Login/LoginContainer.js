@@ -2,6 +2,7 @@ import $ from '../../util/domControll';
 import Button from '../../component/Button/Button';
 import ElementBuilder from '../../lib/ElementBuilder';
 import Input from '../../component/Input';
+import Alert from '../../component/Modal/Alert';
 import api from '../../util/api';
 
 export default class LoginContainer extends ElementBuilder {
@@ -23,13 +24,35 @@ export default class LoginContainer extends ElementBuilder {
     return true;
   }
 
+  onAlert = (error) => {
+    const $alert = new Alert({
+      parent: this,
+      titleText: error,
+      proceedText: '다시 입력',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
   handleLoginBtnClick = () => {
     const { id, password } = this.state;
     const { router } = this.props;
     api
       .fetchPost('/login', { userName: id, password: password })
-      .then((res) => router.route('main'))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        api.fetchGet('/auth/location').then((res) => {
+          router.globalState.isLogin = true;
+          router.route('main', {
+            props: { filter: '', location: [...res.data] },
+          });
+        });
+      })
+      .catch((error) => this.onAlert(error));
   };
 
   handleInputChange = ({ target }) => {
