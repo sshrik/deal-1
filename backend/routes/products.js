@@ -117,9 +117,9 @@ router.get('/user_selling_list', async (req, res) => {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
     const [results, _] = await pool.execute(getUserSellingProducts, [id]);
-    res.status(200).json({ data: results });
+    util.sendJson(res, { data: results });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });
 
