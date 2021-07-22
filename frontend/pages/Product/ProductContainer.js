@@ -18,6 +18,7 @@ export default class ProductContainer extends ElementBuilder {
     if (productInfo.sellerName === 'ag502') {
       new SellerButton({
         parent: this,
+        nowSelling: true,
       });
     }
     new ProductContent({
