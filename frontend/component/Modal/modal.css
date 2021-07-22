@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.transparent-modal--container-color {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .transparent-modal--container__in {
   animation-name: alphaIn;
   animation-duration: .5s;
@@ -318,5 +322,23 @@
   to{
     transform: scale(0);
     opacity: 0;
+  }
+}
+
+.loading-modal__svg-image{
+  stroke-dasharray: 80px;  
+  animation-name: spinner;
+  animation-duration: 1.0s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}
+
+@keyframes spinner {
+  0% {
+    stroke-dashoffset: 0px;
+  }
+  100% {
+    stroke-dashoffset: 318px; 
   }
 }
