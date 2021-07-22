@@ -194,7 +194,7 @@ export default class Main extends ElementBuilder {
               productId: element.productId,
               location: element.area_1,
               isActive: element.likeId ? true : false,
-              uploadTime: this.convertTime(element.uploadTime),
+              uploadTime: convertTime(element.uploadTime),
               router: this.router,
               routeTo: 'main',
             });
