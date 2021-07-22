@@ -1,8 +1,13 @@
-.menu-content-container {
-  width: 100%;
+.menu-container {
   height: 100%;
   background-color: var(--white);
+  overflow: auto;
 }
+
+/* .menu-content-container {
+  width: 100%;
+  height: 100%;
+} */
 
 .menu-tab {
   display: grid;
