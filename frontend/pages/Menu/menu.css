@@ -75,10 +75,16 @@
   justify-content: center;
   align-items: center;
   color: var(--white);
-  height: 20px;
+  height: 24px;
   width: 20px;
   border-radius: 100%;
   background-color: var(--primary3);
+}
+
+.msg-count {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 14px;
 }
 
 .msg-count.ten {
