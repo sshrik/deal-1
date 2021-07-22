@@ -16,12 +16,12 @@ export default class TextInput extends ElementBuilder {
   }
 
   constructElement() {
-    const { id, onFocus } = this.props;
+    const { id, onFocus, value } = this.props;
     const $element = $.create('div').addClass('text-input--container');
     const $input = $.create('input').addId(id);
     $input.placeholder = this.props.placeholder;
 
-    $input.value = this.valueSetter(this.props.value);
+    $input.value = this.valueSetter(String(value));
 
     $input.addEventListener('input', (e) => {
       $input.value = this.valueSetter($input.value);

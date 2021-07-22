@@ -1,7 +1,7 @@
 import $ from '../../../util/domControll';
 import ElementBuilder from '../../../lib/ElementBuilder';
 import ListItem from '../../../component/ListItem';
-import { tempData } from '../../../util/tempList';
+import Write from '../../Write/index';
 import api from '../../../util/api';
 import { convertTime } from '../../../util/utils';
 
@@ -58,6 +58,19 @@ export default class SellingList extends ElementBuilder {
             id: 1,
             name: '수정하기',
             color: 'black',
+            onClick: () => {
+              const { router } = this.props;
+              router.addScreen(
+                'newPage',
+                new Write({
+                  parent: router.root,
+                  type: 'modify',
+                  productId: element.productId,
+                  router,
+                })
+              );
+              router.route('newPage');
+            },
           },
           {
             id: 2,
