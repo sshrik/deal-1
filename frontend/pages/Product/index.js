@@ -63,11 +63,11 @@ export default class ProductPage extends ElementBuilder {
       });
 
       this.getContentsElement().appendChild($spinner.getContentsElement());
-
+      const waitTime = Math.random() * 500 + 250;
       const { productId } = this.props;
       api
         .fetchGet(`/product/${productId}`, {
-          delayTime: 2000,
+          delayTime: waitTime,
           startTime: new Date().getTime(),
         })
         .then((res) => {
@@ -121,6 +121,7 @@ export default class ProductPage extends ElementBuilder {
       parent: this,
       like: isActive,
       price: productInfo.price,
+      productInfo: productInfo,
       onClick: this.handleLikeBtnToggle,
       showAlert: this.showAlert,
       router: this.props.router,

@@ -1,5 +1,6 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
+import ChattingRoom from '../ChattingRoom/index';
 import './product.css';
 
 export default class ProductBar extends ElementBuilder {
@@ -34,7 +35,18 @@ export default class ProductBar extends ElementBuilder {
       $element.appendChild($callButton);
       $callButton.addEventListener('click', () => {
         if (this.props.router.globalState.isLogin) {
-          this.props.router.route('menu');
+          const dcRoom = new ChattingRoom({
+            parent: this.props.router.root,
+            router: this.props.router,
+            sellerName: this.props.productInfo.sellerName,
+            title: this.props.productInfo.title,
+            price: this.props.productInfo.price,
+            nowSelling: this.props.productInfo.nowSelling === 1,
+            imgSrc: this.props.productInfo.imgSrc[0],
+          });
+          this.props.router.addScreen('newChat', dcRoom);
+
+          this.props.router.route('newChat');
         } else {
           this.props.showAlert('로그인 후 사용하실 수 있습니다.', false);
         }
