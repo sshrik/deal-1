@@ -1,5 +1,6 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
+import { priceCommaSeperator } from '../../util/utils';
 import './product.css';
 
 export default class ProductBar extends ElementBuilder {
@@ -15,7 +16,9 @@ export default class ProductBar extends ElementBuilder {
       'product-bar--vertical-line'
     );
 
-    const $price = $.create('p').setText(this.props.price);
+    const $price = $.create('p').setText(
+      priceCommaSeperator(String(this.props.price))
+    );
 
     $element.appendChild($likeButton);
     $element.appendChild($verticalLine);

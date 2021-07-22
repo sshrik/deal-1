@@ -2,6 +2,7 @@ import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import IconBtns from '../Button/IconButtons';
 import Image from '../Image';
+import { priceCommaSeperator } from '../../util/utils';
 import { stringEllipsis } from '../../util/utils';
 import api from '../../util/api';
 import DropDown from '../DropDown/DropDown';
@@ -94,7 +95,7 @@ export default class ListItem extends ElementBuilder {
 
     const $contentPrice = $.create('span')
       .addClass('content__price')
-      .setText(price);
+      .setText(priceCommaSeperator(String(price)));
 
     $listItemContent
       .addElement($contentTitle)

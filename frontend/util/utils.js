@@ -8,12 +8,12 @@ const stringEllipsis = (string) => {
 const priceCommaSeperator = (value) => {
   let formatedText = '';
   let remainText = value;
-  if (!value.startsWith('$')) {
-    formatedText = '$';
+  if (!value.startsWith('₩')) {
+    formatedText = '₩';
   } else {
     remainText = remainText.substring(1);
   }
-  formatedText += Number(remainText).toLocaleString('en');
+  formatedText += Number(remainText).toLocaleString('ko-KR');
   return formatedText;
 };
 
@@ -28,7 +28,7 @@ const numberChecker = (value) => {
 };
 
 const commaSerateToPrice = (value) => {
-  // value = $200,200,200 같은 숫자.
+  // value = ₩200,200,200 같은 숫자.
   return value
     .substring(1)
     .split(',')
