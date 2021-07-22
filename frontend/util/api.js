@@ -1,4 +1,4 @@
-const API_ADDRESS = 'http://localhost:3000';
+const API_ADDRESS = 'http://localhost:3000/api';
 
 function delayPromise(startTime, waitTime, next, checkInterval = 100) {
   // 만약 에니메이션 시간이 지나지 않았으면 checkInterval 만큼 기다린 다음 다시 자긴을 수행.
@@ -36,16 +36,21 @@ export default {
             timing.startTime,
             timing.delayTime,
             () => {
-              const result = res.json();
-              if (res.status === 200) {
-                resolve(result);
-              }
-              reject(result?.error);
+              res.json().then((result) => {
+                if (res.status === 200) {
+                  resolve(result);
+                } else {
+                  console.log(result);
+                  console.log(result.error);
+                  reject(result.error);
+                }
+              });
             },
             timing.checkInterval
           );
         })
         .catch((error) => {
+          console.log(result);
           reject(error.message);
         });
     });

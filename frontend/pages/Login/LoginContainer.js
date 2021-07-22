@@ -2,6 +2,7 @@ import $ from '../../util/domControll';
 import Button from '../../component/Button/Button';
 import ElementBuilder from '../../lib/ElementBuilder';
 import Input from '../../component/Input';
+import Alert from '../../component/Modal/Alert';
 import api from '../../util/api';
 
 export default class LoginContainer extends ElementBuilder {
@@ -28,8 +29,25 @@ export default class LoginContainer extends ElementBuilder {
     const { router } = this.props;
     api
       .fetchPost('/login', { userName: id, password: password })
-      .then((res) => router.route('main'))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        router.globalState.isLogin = true;
+        api.fetchGet('/auth/ping').then((res) => console.log(res));
+        router.route('main');
+      })
+      .catch((error) => {
+        const $alert = new Alert({
+          parent: this,
+          titleText: error,
+          proceedText: '다시 입력',
+          onCancel: (e) => {
+            this.getContentsElement().removeChild($alert.getContentsElement());
+          },
+          onProceed: (e) => {
+            this.getContentsElement().removeChild($alert.getContentsElement());
+          },
+        });
+        this.getContentsElement().appendChild($alert.getContentsElement());
+      });
   };
 
   handleInputChange = ({ target }) => {

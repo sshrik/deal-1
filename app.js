@@ -8,8 +8,12 @@ const session = require('express-session');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
 
+const authMw = require('./backend/middleware/auth');
+
 const indexRouter = require('./backend/routes/index');
+const profileRouter = require('./backend/routes/profile');
 const authRouter = require('./backend/routes/auth');
+const nonAuthRouter = require('./backend/routes/nonAuth');
 const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
 
@@ -54,10 +58,20 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'public/resource')));
 
+// index.html을 위한 routing
 app.use('/', indexRouter);
-app.use(authRouter);
-app.use('/api', productRouter);
+
+// SESSION을 위한 Middleware.
+app.use('/api/auth', authMw.checkSession); // 인증이 필요한 페이지에 대한 요청
+app.use('/api/login', authMw.addSession); // 로그인은 session을 추가
+app.use('/api/logout', authMw.removeSession); // 로그아웃은 session을 추가하지 않음.
+
+// API 요청을 위한 Router
+app.use('/api', profileRouter);
 app.use('/api', categoryRouter);
+app.use('/api', nonAuthRouter);
+app.use('/api/auth', productRouter);
+app.use('/api/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

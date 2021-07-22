@@ -4,9 +4,13 @@ import ListItem from '../../component/ListItem';
 import FaB from '../../component/Button/FaB';
 import ProductPage from '../Product/index';
 import api from '../../util/api';
+import Login from '../Login/index';
+import Logout from '../Logout/index';
 import Write from '../Write/index';
 import $ from '../../util/domControll';
 import Location from '../Location/index';
+import Alert from '../../component/Modal/Alert';
+import DragDownItem from './DragDownItem';
 import './main.css';
 
 export default class Main extends ElementBuilder {
@@ -18,6 +22,11 @@ export default class Main extends ElementBuilder {
     this.state = {
       products: [],
       categories: [],
+    };
+    this.mouseLocation = {
+      isDown: false,
+      pressY: 0,
+      nowY: 0,
     };
 
     this.moveToSetLocation = this.moveToSetLocation.bind(this);
@@ -31,8 +40,23 @@ export default class Main extends ElementBuilder {
     return false;
   }
 
-  moveHandler = (dest) => {
-    this.router.route(dest);
+  moveHandler = () => {
+    if (this.router.globalState.isLogin) {
+      const $logoutPage = new Logout({
+        parent: this.parent,
+        router: this.router,
+      });
+      this.router.addScreen('logout', $logoutPage);
+      this.router.route('logout');
+    } else {
+      const $loginPage = new Login({
+        parent: this.parent,
+        routeTo: 'main',
+        router: this.router,
+      });
+      this.router.addScreen('login', $loginPage);
+      this.router.route('login');
+    }
   };
 
   moveToSetLocation(e) {
@@ -59,6 +83,47 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
+  showAlert = (error) => {
+    const $alert = new Alert({
+      parent: this,
+      titleText: error,
+      proceedText: '확인',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
+  fetchMine = () => {
+    api
+      .fetchGet('/auth/products_user')
+      .then((products) => {
+        this.setState({ products: [...products.data] });
+      })
+      .catch((error) => this.showAlert(error));
+  };
+
+  fetchAll = () => {
+    api
+      .fetchGet('/products')
+      .then((products) => {
+        this.setState({ products: [...products.data] });
+      })
+      .catch((error) => this.showAlert(error));
+  };
+
+  fetchContents = () => {
+    if (this.router.globalState.isLogin) {
+      this.fetchMine();
+    } else {
+      this.fetchAll();
+    }
+  };
+
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
@@ -69,13 +134,49 @@ export default class Main extends ElementBuilder {
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
     });
+    const $emptyDiv = new DragDownItem({
+      parent: this,
+    });
+    $element.addEventListener(
+      'drag',
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      true
+    );
+    $element.addEventListener('mousedown', (e) => {
+      this.mouseLocation.isDown = true;
+      this.mouseLocation.pressY = e.pageY;
+      this.mouseLocation.nowY = e.pageY;
+    });
+    $element.addEventListener('mousemove', (e) => {
+      if (this.mouseLocation.isDown) {
+        this.mouseLocation.nowY = e.pageY;
+        const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
+        if (height > 0 && height < 65) {
+          $emptyDiv.setHeight(height);
+        }
+      }
+    });
+    $element.addEventListener('mouseup', (e) => {
+      this.mouseLocation.isDown = false;
+      this.mouseLocation.nowY = e.pageY;
+      const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
+      if (height > 65) {
+        this.fetchContents();
+      }
+      $emptyDiv.setHeight(0);
+    });
 
     products.forEach((element) => {
       new ListItem({
         parent: this,
         ...element,
         isActive: element.likeId ? true : false,
+        onAlert: this.showAlert,
         onClick: () => {
+          // TODO : ADD event to refresh... this.fetchContents();
           // const $newPage = new ProductPage({
           //   parent: this.parent,
           //   element,

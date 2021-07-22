@@ -9,6 +9,7 @@ export default class LogoutContainer extends ElementBuilder {
     api
       .fetchGet('/logout')
       .then((res) => {
+        router.globalState.isLogin = false;
         router.route('main');
       })
       .catch((error) => console.log(error));
