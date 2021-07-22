@@ -198,12 +198,10 @@ export default class Main extends ElementBuilder {
           isActive: element.likeId ? true : false,
           onAlert: this.showAlert,
           onClick: () => {
-            // TODO :새로운 페이지 만들기
             const $newPage = new ProductPage({
               parent: this.parent,
               productId: element.productId,
               location: element.area_1,
-              isActive: element.likeId ? true : false,
               uploadTime: convertTime(element.uploadTime),
               router: this.router,
               routeTo: 'main',

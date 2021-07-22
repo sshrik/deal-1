@@ -11,10 +11,9 @@ import api from '../../util/api';
 export default class ProductPage extends ElementBuilder {
   constructor(props) {
     super(props);
-    const { isActive } = this.props;
     this.fetched = false;
     this.state = {
-      isActive,
+      isActive: false,
       productInfo: {
         title: '',
         lastTime: '',
@@ -30,6 +29,7 @@ export default class ProductPage extends ElementBuilder {
 
   compareState(prevState, newState) {
     if (prevState.productInfo.title !== newState.productInfo.title) return true;
+    if (prevState.isActive !== newState.isActive) return true;
     return false;
   }
 
@@ -74,7 +74,10 @@ export default class ProductPage extends ElementBuilder {
           }
         )
         .then((res) => {
-          this.setState({ productInfo: res.data });
+          this.setState({
+            productInfo: res.data,
+            isActive: res.data?.likeId ? true : false,
+          });
           this.getContentsElement().removeChild($spinner.getContentsElement());
         })
         .catch((error) => {
@@ -86,7 +89,7 @@ export default class ProductPage extends ElementBuilder {
   };
 
   handleLikeBtnToggle = () => {
-    const { isActive } = this.state;
+    const { productInfo, isActive } = this.state;
     const { productId } = this.props;
     api
       .fetchPost(
@@ -122,14 +125,10 @@ export default class ProductPage extends ElementBuilder {
     console.log(this.props.router.globalState);
     new ProductBar({
       parent: this,
-      like: isActive,
+      like: productInfo.likeId ? true : false,
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
-      isActive: () => {
-        return (
-          productInfo.sellerName !== this.props.router.globalState.userName
-        );
-      },
+      isActive,
     });
     return $element;
   }

@@ -4,11 +4,11 @@ import './product.css';
 
 export default class ProductBar extends ElementBuilder {
   constructElement() {
-    const { onClick } = this.props;
+    const { onClick, isActive } = this.props;
     const $element = $.create('div').addClass('product-bar--container');
 
     const $likeButton = $.create('img');
-    $likeButton.src = this.props.like ? 'like-full.png' : 'like-empty.png';
+    $likeButton.src = isActive ? 'like-full.png' : 'like-empty.png';
     $likeButton.addEventListener('click', onClick);
 
     const $verticalLine = $.create('div').addClass(
@@ -21,7 +21,7 @@ export default class ProductBar extends ElementBuilder {
     $element.appendChild($verticalLine);
     $element.appendChild($price);
 
-    if (!this.props.isActive()) {
+    if (isActive) {
       const $callButton = $.create('button')
         .addClass('deactive-bar--button')
         .setText('채팅 목록 보기');
