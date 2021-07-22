@@ -4,6 +4,7 @@ import ChatLog from './ChatLog';
 import ChatInput from './ChatInput';
 import IconButtons from '../../../component/Button/IconButtons';
 import api from '../../../util/api';
+import { sendChat } from '../../../util/webSocketApi';
 
 export default class Chat extends ElementBuilder {
   constructor(props) {
@@ -45,7 +46,9 @@ export default class Chat extends ElementBuilder {
 
   handleSendBtnClick = () => {
     const { message, chatLogs, scrollTarget } = this.state;
-    // TODO : Web Socket으로 Ping to the Pong
+    const webSocket = this.props.socket;
+
+    // 실제 DB에 데이터 보내기.
     api
       .fetchPost('/auth/chat/set_log', {
         sendName: this.props.myName,
@@ -55,6 +58,15 @@ export default class Chat extends ElementBuilder {
         type: 'chat',
       })
       .then((res) => {
+        // Websocket으로 핑퐁 보내기
+        sendChat(
+          webSocket,
+          this.props.myName,
+          this.props.otherName,
+          this.props.productId,
+          message
+        );
+
         this.setState({
           message: '',
           // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음

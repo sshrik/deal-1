@@ -65,7 +65,6 @@ export default class ProductBar extends ElementBuilder {
                     user2: this.props.router.globalState.userName,
                   })
                   .then((res) => {
-                    console.log(res);
                     goToChatRoom();
                   });
               } else {

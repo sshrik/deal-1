@@ -12,10 +12,11 @@ export const addOpenRouting = (socket, id) => {
   };
 };
 
-export const sendChat = (socket, senderId, receiverId, message) => {
+export const sendChat = (socket, senderId, receiverId, productId, message) => {
   sendSocket(socket, {
-    protocol: 'get',
+    protocol: 'post',
     url: '/',
+    productId: productId,
     id: senderId,
     data: message,
     sendTo: receiverId,
