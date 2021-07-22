@@ -37,9 +37,33 @@ const commaSerateToPrice = (value) => {
     }, '');
 };
 
+const convertTime = (uploadTime) => {
+  const passedTime = new Date().getTime() - uploadTime;
+  let result = passedTime / 1000;
+  // millsec / 1000 -> 초
+  // millsec / 1000 / 60 -> 분
+  // millsec / 1000 / 60 / 60 -> 시간
+  // millsec / 1000 / 60 / 60 / 24 -> 일
+
+  if (result < 60) {
+    return `${parseInt(result)}초`;
+  }
+  result = result / 60;
+  if (result < 60) {
+    return `${parseInt(result)}분`;
+  }
+  result = result / 60;
+  if (result < 24) {
+    return `${parseInt(result)}시간`;
+  }
+  result = result / 24;
+  return `${parseInt(result)}일`;
+};
+
 export {
   stringEllipsis,
   priceCommaSeperator,
   numberChecker,
   commaSerateToPrice,
+  convertTime,
 };

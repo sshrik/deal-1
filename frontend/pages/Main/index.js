@@ -11,6 +11,7 @@ import $ from '../../util/domControll';
 import Location from '../Location/index';
 import Alert from '../../component/Modal/Alert';
 import DragDownItem from './DragDownItem';
+import { convertTime } from '../../util/utils';
 import './main.css';
 
 export default class Main extends ElementBuilder {
@@ -95,29 +96,6 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
-  convertTime(uploadTime) {
-    const passedTime = new Date().getTime() - uploadTime;
-    let result = passedTime / 1000;
-    // millsec / 1000 -> 초
-    // millsec / 1000 / 60 -> 분
-    // millsec / 1000 / 60 / 60 -> 시간
-    // millsec / 1000 / 60 / 60 / 24 -> 일
-
-    if (result < 60) {
-      return `${parseInt(result)}초`;
-    }
-    result = result / 60;
-    if (result < 60) {
-      return `${parseInt(result)}분`;
-    }
-    result = result / 60;
-    if (result < 24) {
-      return `${parseInt(result)}시간`;
-    }
-    result = result / 24;
-    return `${parseInt(result)}일`;
-  }
-  
   showAlert = (error) => {
     const $alert = new Alert({
       parent: this,
@@ -207,6 +185,7 @@ export default class Main extends ElementBuilder {
         new ListItem({
           parent: this,
           ...element,
+          uploadTime: convertTime(element.uploadTime),
           isActive: element.likeId ? true : false,
           onAlert: this.showAlert,
           onClick: () => {
