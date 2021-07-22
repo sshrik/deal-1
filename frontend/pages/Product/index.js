@@ -7,6 +7,7 @@ import Alert from '../../component/Modal/Alert';
 import $ from '../../util/domControll';
 import './product.css';
 import api from '../../util/api';
+import IconButtons from '../../component/Button/IconButtons';
 
 export default class ProductPage extends ElementBuilder {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class ProductPage extends ElementBuilder {
     this.fetched = false;
     this.state = {
       isActive: false,
+      isOpen: false,
       productInfo: {
         title: '',
         lastTime: '',
@@ -30,6 +32,7 @@ export default class ProductPage extends ElementBuilder {
   compareState(prevState, newState) {
     if (prevState.productInfo.title !== newState.productInfo.title) return true;
     if (prevState.isActive !== newState.isActive) return true;
+    if (prevState.isOpen !== newState.isOpen) return true;
     return false;
   }
 
@@ -102,15 +105,58 @@ export default class ProductPage extends ElementBuilder {
       .catch((error) => this.showAlert(error));
   };
 
+  handleToggleDropDown = () => {
+    const { isOpen } = this.state;
+    this.setState({ isOpen: !isOpen });
+  };
+
   constructElement() {
     const { uploadTime, location } = this.props;
-    const { productInfo, isActive } = this.state;
+    const { productInfo, isActive, isOpen } = this.state;
     console.log(productInfo);
     const $element = $.create('div').addClass('product--container');
+
+    const $dotMenuBtn = $.create('button')
+      .addClass('dot-menu')
+      .setHTML(IconButtons.dotMenu);
+
+    $dotMenuBtn.addEventListener('click', this.handleToggleDropDown);
+
     new SubHeader({
       parent: this,
       transparent: true,
+      title: ' ',
       moveHandler: () => this.props.router.route(this.props.routeTo),
+      action: $dotMenuBtn,
+      isOpen,
+      menuItems: [
+        {
+          id: 1,
+          name: '수정하기',
+          color: 'black',
+          onClick: (e) => {
+            e.stopPropagation();
+            const { router } = this.props;
+            router.addScreen(
+              'newPage',
+              new Write({
+                parent: router.root,
+                type: 'modify',
+                productId: element.productId,
+                router,
+                routeTo: 'menu',
+              })
+            );
+            router.route('newPage');
+          },
+        },
+        {
+          id: 2,
+          name: '삭제하기',
+          color: 'red',
+          onClick: (e) => this.handleDeleteBtnClick(element.productId),
+        },
+      ],
     });
     new ProductContainer({
       parent: this,
@@ -122,9 +168,10 @@ export default class ProductPage extends ElementBuilder {
         location,
       },
     });
-    console.log(this.props.router.globalState);
     new ProductBar({
       parent: this,
+      router: this.props.router,
+      sellerName: productInfo.sellerName,
       like: productInfo.likeId ? true : false,
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,

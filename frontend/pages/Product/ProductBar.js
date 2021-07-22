@@ -4,7 +4,7 @@ import './product.css';
 
 export default class ProductBar extends ElementBuilder {
   constructElement() {
-    const { onClick, isActive } = this.props;
+    const { onClick, isActive, sellerName } = this.props;
     const $element = $.create('div').addClass('product-bar--container');
 
     const $likeButton = $.create('img');
@@ -21,7 +21,7 @@ export default class ProductBar extends ElementBuilder {
     $element.appendChild($verticalLine);
     $element.appendChild($price);
 
-    if (isActive) {
+    if (sellerName === this.props.router.globalState.userName) {
       const $callButton = $.create('button')
         .addClass('deactive-bar--button')
         .setText('채팅 목록 보기');
