@@ -56,6 +56,7 @@ export default class MenuContainer extends ElementBuilder {
 
     if (curTab === 1) {
       new SellingList({
+        ...this.props,
         parent: this,
       });
     } else if (curTab === 2) {

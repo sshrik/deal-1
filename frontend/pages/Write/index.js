@@ -4,6 +4,7 @@ import $ from '../../util/domControll';
 import WriteContainer from './WriteContainer';
 import IconButtons from '../../component/Button/IconButtons';
 import { commaSerateToPrice } from '../../util/utils';
+import Alert from '../../component/Modal/Alert';
 import './write.css';
 import api from '../../util/api';
 
@@ -14,17 +15,59 @@ export default class Write extends ElementBuilder {
     this.router = router;
     this.state = {
       files: [],
-      // curFocus: '',
       title: '',
       price: '',
       detail: '',
       sendActive: false,
-      buttonState: new Array(categories.length).fill('deactive'),
+      buttonState: [],
+      categories: [],
     };
+    this.fetchCategory();
+    this.fetchProductData();
   }
+
+  fetchCategory = () => {
+    api
+      .fetchGet('/categories')
+      .then((res) => {
+        console.log(res);
+        const categories = res.data;
+        this.setState({
+          buttonState: new Array(categories.length).fill('deactive'),
+          categories,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  fetchProductData = () => {
+    const { type, productId } = this.props;
+    if (type === 'modify') {
+      api
+        .fetchGet(`/auth/product/${productId}`)
+        .then((res) => {
+          console.log(res.data);
+          const { title, detail, price, category, imgSrc } = res.data;
+          const newBtnState = [...this.state.buttonState];
+          newBtnState[category - 1] = 'active';
+          this.setState({
+            files: imgSrc,
+            title,
+            detail,
+            price,
+            buttonState: newBtnState,
+          });
+          this.canSubmit();
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   compareState(prevState, newState) {
     if (prevState.files !== newState.files) {
+      return true;
+    }
+    if (prevState.categories !== newState.categories) {
       return true;
     }
     return false;
@@ -111,28 +154,49 @@ export default class Write extends ElementBuilder {
     });
   };
 
+  showAlert = (error, callback) => {
+    const $alert = new Alert({
+      parent: this.parent,
+      titleText: error,
+      proceedText: '확인',
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+        callback();
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
   handleSubmitBtnClick = () => {
     const { sendActive, title, price, detail, files, buttonState } = this.state;
+    const { type, productId, router, routeTo } = this.props;
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
-        .fetchPost('/auth/add_product', {
-          title,
-          price,
-          detail,
-          files,
-          category: activeBtn,
-        })
+        .fetchPost(
+          type === 'modify'
+            ? `/auth/update_product/${productId}`
+            : '/auth/add_product',
+          {
+            title,
+            price,
+            detail,
+            files,
+            category: activeBtn,
+          }
+        )
         .then((res) => {
-          this.router.route('main');
+          console.log(res);
+          this.showAlert('등록했습니다.', () => router.route(routeTo));
         })
         .catch((error) => console.log(error));
     }
   };
 
   constructElement() {
-    const { categories } = this.props;
-    const { sendActive } = this.state;
+    // const { categories } = this.props;
+    const { sendActive, categories } = this.state;
+    const { routeTo } = this.props;
     const $element = $.create('div').addClass('write-container');
 
     this.$checkBtn = $.create('button')
@@ -143,7 +207,7 @@ export default class Write extends ElementBuilder {
     new SubHeader({
       parent: this,
       title: '글쓰기',
-      moveHandler: () => this.router.route('main'),
+      moveHandler: () => this.router.route(routeTo),
       action: this.$checkBtn,
     });
     new WriteContainer({

@@ -69,7 +69,7 @@ export default class Alert extends ElementBuilder {
       }
     });
 
-    $answerContainer.appendChild($cancel);
+    this.props.onCancel && $answerContainer.appendChild($cancel);
     $answerContainer.appendChild($proceed);
 
     $alertContainer.appendChild($errorTextContainer);

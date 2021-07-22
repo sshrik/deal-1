@@ -29,7 +29,6 @@ export default class ListItem extends ElementBuilder {
     super(props);
     const { isActive } = this.props;
     this.state = {
-      isOpen: false,
       likeActive: isActive,
     };
   }
@@ -43,15 +42,6 @@ export default class ListItem extends ElementBuilder {
     }
     return false;
   }
-
-  handleDropDownOpen = (e) => {
-    e.stopPropagation();
-    this.setState({ isOpen: true });
-  };
-
-  handleDropDownClose = (e) => {
-    this.setState({ isOpen: false });
-  };
 
   handleLikeBtnToggle = () => {
     const { likeActive } = this.state;
@@ -83,8 +73,10 @@ export default class ListItem extends ElementBuilder {
       imgSrc,
       type,
       menuItems,
+      onToggleDropDown,
+      isOpen,
     } = this.props;
-    const { isOpen, likeActive } = this.state;
+    const { likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
 
     // 리스트 아이템 컨텐츠
@@ -116,19 +108,12 @@ export default class ListItem extends ElementBuilder {
         .addClass('dot-menu')
         .setHTML(IconBtns.dotMenu);
       $listItemActions.addElement($dotMenuBtn);
-      window.addEventListener('click', this.handleDropDownClose);
-      $dotMenuBtn.addEventListener('click', (e) => {
-        if (isOpen) {
-          this.handleDropDownClose(e);
-        } else {
-          this.handleDropDownOpen(e);
-        }
-      });
+      $dotMenuBtn.addEventListener('click', onToggleDropDown);
       new DropDown({
         parent: this,
         isOpen,
         dropDownInfo: menuItems,
-        onClose: this.handleDropDownClose,
+        onClose: onToggleDropDown,
         position: { top: '50px', right: '20px' },
       });
     } else {
