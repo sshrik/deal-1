@@ -4,6 +4,7 @@ import ListItem from '../../../component/ListItem';
 import Write from '../../Write/index';
 import api from '../../../util/api';
 import { convertTime } from '../../../util/utils';
+import ProductPage from '../../Product/index';
 
 export default class SellingList extends ElementBuilder {
   constructor(props) {
@@ -57,6 +58,7 @@ export default class SellingList extends ElementBuilder {
 
   constructElement() {
     const { sellingList } = this.state;
+    const { router } = this.props;
     const $element = $.create('div').addClass('selling-list');
 
     sellingList.forEach((element, idx) => {
@@ -65,7 +67,10 @@ export default class SellingList extends ElementBuilder {
         type: 'menu',
         ...element,
         uploadTime: convertTime(element.uploadTime),
-        onToggleDropDown: (e) => this.handleToggleDropDown(idx),
+        onToggleDropDown: (e) => {
+          e.stopPropagation();
+          this.handleToggleDropDown(idx);
+        },
         isOpen: this.state.isDropDownActive[idx],
         menuItems: [
           {
@@ -81,6 +86,7 @@ export default class SellingList extends ElementBuilder {
                   type: 'modify',
                   productId: element.productId,
                   router,
+                  routeTo: 'menu',
                 })
               );
               router.route('newPage');
@@ -90,11 +96,24 @@ export default class SellingList extends ElementBuilder {
             id: 2,
             name: '삭제하기',
             color: 'red',
-            onClick: () => {
-              this.handleDeleteBtnClick(element.productId);
-            },
+            onClick: (e) => this.handleDeleteBtnClick(element.productId),
           },
         ],
+        onClick: () => {
+          router.addScreen(
+            'newPage',
+            new ProductPage({
+              parent: this.parent,
+              productId: element.productId,
+              loaction: element.area_1,
+              isActive: element.likeId ? true : false,
+              uploadTime: convertTime(element.uploadTime),
+              router,
+              routeTo: 'menu',
+            })
+          );
+          router.route('newPage');
+        },
       });
     });
 

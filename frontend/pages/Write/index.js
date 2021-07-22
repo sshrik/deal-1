@@ -169,7 +169,7 @@ export default class Write extends ElementBuilder {
 
   handleSubmitBtnClick = () => {
     const { sendActive, title, price, detail, files, buttonState } = this.state;
-    const { type, productId, router } = this.props;
+    const { type, productId, router, routeTo } = this.props;
     if (sendActive) {
       const activeBtn = buttonState.indexOf('active') + 1;
       api
@@ -187,7 +187,7 @@ export default class Write extends ElementBuilder {
         )
         .then((res) => {
           console.log(res);
-          this.showAlert('등록했습니다.', () => router.back());
+          this.showAlert('등록했습니다.', () => router.route(routeTo));
         })
         .catch((error) => console.log(error));
     }
@@ -196,6 +196,7 @@ export default class Write extends ElementBuilder {
   constructElement() {
     // const { categories } = this.props;
     const { sendActive, categories } = this.state;
+    const { routeTo } = this.props;
     const $element = $.create('div').addClass('write-container');
 
     this.$checkBtn = $.create('button')
@@ -206,7 +207,7 @@ export default class Write extends ElementBuilder {
     new SubHeader({
       parent: this,
       title: '글쓰기',
-      moveHandler: () => this.router.route('main'),
+      moveHandler: () => this.router.route(routeTo),
       action: this.$checkBtn,
     });
     new WriteContainer({

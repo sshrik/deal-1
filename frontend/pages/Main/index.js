@@ -90,7 +90,7 @@ export default class Main extends ElementBuilder {
     const $writePage = new Write({
       parent: this.parent,
       categories,
-      routeTo: '',
+      routeTo: 'main',
       router: this.router,
     });
     this.router.addScreen('write', $writePage);
