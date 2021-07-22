@@ -43,7 +43,7 @@ router.get('/product/:id', async (req, res) => {
     const [category, __] = await pool.execute(getCertainCateogories, [
       productBasicInfo[0].category,
     ]);
-    productBasicInfo[0].category = category[0].name;
+    productBasicInfo[0].categoryName = category[0].name;
 
     const [likeCount, ___] = await pool.execute(getProductLikes, [
       req.params.id,
