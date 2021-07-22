@@ -43,7 +43,8 @@ export default class ListItem extends ElementBuilder {
     return false;
   }
 
-  handleLikeBtnToggle = () => {
+  handleLikeBtnToggle = (e) => {
+    e.stopPropagation();
     const { likeActive } = this.state;
     const { productId, onClickAction } = this.props;
     api

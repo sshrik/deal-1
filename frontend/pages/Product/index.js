@@ -97,6 +97,7 @@ export default class ProductPage extends ElementBuilder {
   constructElement() {
     const { uploadTime, location } = this.props;
     const { productInfo, isActive } = this.state;
+    console.log(productInfo);
     const $element = $.create('div').addClass('product--container');
     new SubHeader({
       parent: this,

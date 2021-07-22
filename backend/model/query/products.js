@@ -44,10 +44,6 @@ WHERE ps.isMain = 1 AND p.seller = (SELECT id FROM users WHERE userName = ?)
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
-const deleteSellingProduct = `
-DELETE FROM products WHERE id = ?;
-`;
-
 const deleteProductSpecs = `
 DELETE FROM productSpecs WHERE productId = ?
 `;
