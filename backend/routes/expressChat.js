@@ -14,7 +14,7 @@ const {
 
 async function updateLast(productId, user1, user2, nowTime) {
   const [r1, _] = await pool.execute(updateLast1, [nowTime, productId, user1]);
-  const [r2, _] = await pool.execute(updateLast2, [nowTime, productId, user2]);
+  const [r2, __] = await pool.execute(updateLast2, [nowTime, productId, user2]);
 }
 
 router.post('/enter_chat', async (req, res) => {
@@ -31,19 +31,39 @@ router.post('/enter_chat', async (req, res) => {
       user1,
     ]);
 
-    console.log(results);
-
-    if (results[0] == 0) {
-      const [results, _] = await pool.execute(getChattingRoom, [
+    if (results[0]['COUNT(*)'] === 0) {
+      const [result, _] = await pool.execute(enterChattingRoom, [
         productId,
         user1,
         user2,
         nowTime,
         nowTime,
       ]);
-      util.sendJson(res, { data: results });
+      util.sendJson(res, { data: result });
     } else {
       util.sendError(res, CONSTANT.ALREADY_EXIST_ROOM.type);
+    }
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
+
+router.post('/room_exist', async (req, res) => {
+  try {
+    const user1 = req.body.user1;
+    const user2 = req.body.user2;
+    const productId = req.body.productId;
+    const [results, _] = await pool.execute(getChattingRoom, [
+      productId,
+      user1,
+      user2,
+      user2,
+      user1,
+    ]);
+    if (results[0]['COUNT(*)'] === 0) {
+      util.sendJson(res, { data: true });
+    } else {
+      util.sendJson(res, { data: false });
     }
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);

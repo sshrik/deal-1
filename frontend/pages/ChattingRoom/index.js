@@ -1,10 +1,24 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
 import SubHeader from '../../component/SubHeader';
-import './chattingRoom.css';
 import ChattingRoomContainer from './ChattingRoomContainer';
+import './chattingRoom.css';
+
+import {
+  addOpenRouting,
+  sendChat,
+  addMessageListener,
+} from '../../util/webSocketApi';
 
 export default class ChattingRoom extends ElementBuilder {
+  componentDidMount() {
+    this.socket = new WebSocket('ws://localhost:3000/');
+
+    addOpenRouting(this.socket, this.props.router.globalState.userName);
+    addMessageListener(this.socket, (data) => {
+      console.log(data);
+    });
+  }
   constructElement() {
     const $chattingRoomContainer = $.create('div').addClass(
       'chatting-room-container'
@@ -16,6 +30,7 @@ export default class ChattingRoom extends ElementBuilder {
     });
     new ChattingRoomContainer({
       parent: this,
+      socket: this.socket,
       title: this.props.title,
       price: this.props.price,
       nowSelling: this.props.nowSelling,

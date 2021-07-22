@@ -120,6 +120,7 @@ export default class ProductPage extends ElementBuilder {
     new ProductBar({
       parent: this,
       like: isActive,
+      pid: this.props.productId,
       price: productInfo.price,
       productInfo: productInfo,
       onClick: this.handleLikeBtnToggle,
