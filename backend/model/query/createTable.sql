@@ -64,7 +64,7 @@ CREATE TABLE chats
     `recvName`  INT UNSIGNED   NOT NULL,
     `productId` INT UNSIGNED   NOT NULL,
     `chatMsg`   VARCHAR(400)    NULL,
-    `sendTime`  INT UNSIGNED   NULL,
+    `sendTime`  BIGINT UNSIGNED   NULL,
     `type`      VARCHAR(20)    NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (sendName) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -77,7 +77,7 @@ CREATE TABLE chatrooms
     `id`        INT UNSIGNED   NOT NULL    AUTO_INCREMENT,
     `productId` INT UNSIGNED   NOT NULL,
     `userName`  INT UNSIGNED   NOT NULL,
-    `lastview`  INT UNSIGNED   NOT NULL,
+    `lastview`  BIGINT UNSIGNED   NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (userName) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (productId) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
