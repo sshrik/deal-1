@@ -40,9 +40,6 @@ export default class Write extends ElementBuilder {
     api
       .fetchGet('/categories')
       .then((res) => {
-        console.log('~~~~~~');
-        console.log(res.data);
-        console.log('~~~~~~');
         const categories = res.data;
         this.setState({
           buttonState: new Array(categories.length).fill('deactive'),
@@ -58,9 +55,6 @@ export default class Write extends ElementBuilder {
       api
         .fetchGet(`/auth/product/${productId}`)
         .then((res) => {
-          console.log('~~~~~~');
-          console.log(res.data);
-          console.log('~~~~~~');
           const { title, detail, price, category, imgSrc } = res.data;
           const newBtnState = [...this.state.buttonState];
           newBtnState[category - 1] = 'active';

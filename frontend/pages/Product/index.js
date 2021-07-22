@@ -137,7 +137,10 @@ export default class ProductPage extends ElementBuilder {
       transparent: true,
       title: ' ',
       moveHandler: () => this.props.router.route(this.props.routeTo),
-      action: $dotMenuBtn,
+      action:
+        productInfo.sellerName === router.globalState.userName
+          ? $dotMenuBtn
+          : null,
       isOpen,
       onClose: this.handleToggleDropDown,
       menuItems: [
