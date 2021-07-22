@@ -159,9 +159,6 @@ export default class Write extends ElementBuilder {
       parent: this.parent,
       titleText: error,
       proceedText: '확인',
-      onCancel: (e) => {
-        this.getContentsElement().removeChild($alert.getContentsElement());
-      },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
         callback();
