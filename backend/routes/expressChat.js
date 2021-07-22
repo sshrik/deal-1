@@ -93,7 +93,6 @@ router.post('/get_log', async (req, res) => {
 
 router.post('/set_log', async (req, res) => {
   try {
-    sendName, recvName, productId, chatMsg, sendTime, type;
     const sendName = req.body.sendName;
     const recvName = req.body.recvName;
     const productId = req.body.productId;
@@ -109,16 +108,11 @@ router.post('/set_log', async (req, res) => {
       sendTime,
       type,
     ]);
-    // const data = { chatMsg, sendName, recvName, sendTime, type };
-    const chatLogs = {};
-    results.forEach((element) => {
-      //  { chatMsg, sendName, recvName, sendTime, type } = element;
-      console.log(element);
-    });
 
-    await updateLast(productId, sendName, sendName, nowTime);
-    util.sendJson(res, { data: chatLogs });
+    // await updateLast(productId, sendName, sendName, nowTime);
+    util.sendJson(res, { data: results });
   } catch (error) {
+    console.log(error);
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });

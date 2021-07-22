@@ -8,7 +8,7 @@ const getChatLog = `SELECT chatMsg, sendName, recvName, sendTime, type from chat
 
 const sendChat = `
 INSERT INTO chats ( sendName, recvName, productId, chatMsg, sendTime, type)
-VALUE(  (SELECT id FROM users WHERE userName= ? ), (SELECT id FROM users WHERE userName= ? ), ?, ?, ?, 'chat');`;
+VALUE(  (SELECT id FROM users WHERE userName= ? ), (SELECT id FROM users WHERE userName= ? ), ?, ?, ?, ?);`;
 
 const getChattingRoom = `SELECT COUNT(*) from chatrooms 
 WHERE productId = ? AND

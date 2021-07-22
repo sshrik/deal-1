@@ -17,6 +17,11 @@ export default class ChattingRoomContainer extends ElementBuilder {
     });
     new Chat({
       parent: this,
+      myId: this.props.myId,
+      myName: this.props.myName,
+      otherId: this.props.otherId,
+      otherName: this.props.otherName,
+      productId: this.props.productId,
       chatLogs: this.props.chatLogs,
       ...this.state,
     });

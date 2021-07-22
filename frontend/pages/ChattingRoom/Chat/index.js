@@ -3,6 +3,7 @@ import ElementBuilder from '../../../lib/ElementBuilder';
 import ChatLog from './ChatLog';
 import ChatInput from './ChatInput';
 import IconButtons from '../../../component/Button/IconButtons';
+import api from '../../../util/api';
 
 export default class Chat extends ElementBuilder {
   constructor(props) {
@@ -18,9 +19,9 @@ export default class Chat extends ElementBuilder {
 
   compareState(prevState, newState) {
     if (prevState.message !== newState.message) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   handleInputChange = ({ target }) => {
@@ -44,13 +45,24 @@ export default class Chat extends ElementBuilder {
 
   handleSendBtnClick = () => {
     const { message, chatLogs, scrollTarget } = this.state;
-    this.setState({
-      message: '',
-      // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음
-      curScrollPos: scrollTarget.clientHeight * 2,
-      isSendActivated: false,
-      chatLogs: [...chatLogs, { sender: 'me', content: message }],
-    });
+    // TODO : Web Socket으로 Ping to the Pong
+    api
+      .fetchPost('/auth/chat/set_log', {
+        sendName: this.props.myName,
+        recvName: this.props.otherName,
+        productId: this.props.productId,
+        chatMsg: message,
+        type: 'chat',
+      })
+      .then((res) => {
+        this.setState({
+          message: '',
+          // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음
+          curScrollPos: scrollTarget.clientHeight * 2,
+          isSendActivated: false,
+          chatLogs: [...chatLogs, { sender: 'me', content: message }],
+        });
+      });
   };
 
   setScrollTarget = (target) => {
