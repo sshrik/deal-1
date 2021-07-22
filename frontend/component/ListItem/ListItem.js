@@ -113,7 +113,7 @@ export default class ListItem extends ElementBuilder {
         parent: this,
         isOpen,
         dropDownInfo: menuItems,
-        onClose: this.handleDropDownClose,
+        onClose: onToggleDropDown,
         position: { top: '50px', right: '20px' },
       });
     } else {
