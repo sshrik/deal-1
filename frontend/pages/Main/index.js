@@ -205,7 +205,6 @@ export default class Main extends ElementBuilder {
       this.mouseLocation.nowY = e.pageY;
       const height = this.mouseLocation.nowY - this.mouseLocation.pressY;
       if (height > 65) {
-        console.log('Fetching');
         this.fetchContents();
       }
       $emptyDiv.setHeight(0);

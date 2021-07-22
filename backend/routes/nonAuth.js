@@ -27,7 +27,6 @@ router.get('/product/:id', async (req, res) => {
     const imgSrc = [];
     productBasicInfo.forEach((info) => imgSrc.push(info.imgSrc));
     productBasicInfo[0].imgSrc = imgSrc;
-    console.log('here0');
 
     const [category, __] = await pool.execute(getCertainCateogories, [
       productBasicInfo[0].category,

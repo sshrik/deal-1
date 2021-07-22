@@ -14,8 +14,7 @@ export default class ProductContainer extends ElementBuilder {
       specImage: productInfo?.imgSrc ? productInfo.imgSrc : [],
     });
 
-    // TODO : this.router.globalState.userName과 비교 필요
-    if (productInfo.sellerName === 'ag502') {
+    if (productInfo.sellerName === this.props.router.globalState.userName) {
       new SellerButton({
         parent: this,
         productNumber: this.props.pid,

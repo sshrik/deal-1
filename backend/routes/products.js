@@ -58,6 +58,8 @@ router.get('/product/:id', async (req, res) => {
 
 router.post('/add_product', async (req, res) => {
   try {
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
     const { title, price, detail, category, files } = req.body;
     const curTime = new Date().getTime();
     await pool.execute(addNewProduct, [
@@ -65,14 +67,14 @@ router.post('/add_product', async (req, res) => {
       curTime,
       parseInt(price),
       detail,
-      'ag502',
+      id,
       category,
       0,
       1,
     ]);
     files.forEach(async (file, idx) => {
       const imageBlob = file.split(',')[1];
-      const fileName = `productImg/ag502_${title}_${idx}.jpg`;
+      const fileName = `productImg/${id}_${title}_${idx}.jpg`;
       fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
       try {
         await pool.execute(addNewProdcutSpec, [

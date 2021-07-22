@@ -60,8 +60,6 @@ export default class ProductPage extends ElementBuilder {
         parent: this.parent,
       });
 
-      console.log($spinner);
-      console.log($spinner.getContentsElement());
       this.getContentsElement().appendChild($spinner.getContentsElement());
 
       const { productId } = this.props;
@@ -107,6 +105,7 @@ export default class ProductPage extends ElementBuilder {
     });
     new ProductContainer({
       parent: this,
+      router: this.props.router,
       pid: this.props.productId,
       productInfo: {
         ...productInfo,
@@ -114,14 +113,16 @@ export default class ProductPage extends ElementBuilder {
         location,
       },
     });
+    console.log(this.props.router.globalState);
     new ProductBar({
       parent: this,
       like: isActive,
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
       isActive: () => {
-        // TODO : this.router.globalState.userName과 같지 않은지 비교 필요
-        return productInfo.seller === this.props.router.globalState.userName;
+        return (
+          productInfo.sellerName !== this.props.router.globalState.userName
+        );
       },
     });
     return $element;
