@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const pool = require('../model/db');
+const { getCertainCateogories } = require('../model/query/categories');
 const router = express.Router();
 const CONSTANT = require('../lib/constant');
 const util = require('../lib/util');
@@ -13,6 +14,8 @@ const {
   getUserSellingProducts,
   getUserLikeProducts,
   getAllProductsAuth,
+  getCetainProduct,
+  getProductLikes,
 } = require('../model/query/products');
 
 router.get('/products_user', async (req, res) => {
@@ -24,6 +27,31 @@ router.get('/products_user', async (req, res) => {
     util.sendJson(res, { data: results });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
+
+router.get('/product/:id', async (req, res) => {
+  try {
+    const [productBasicInfo, _] = await pool.execute(getCetainProduct, [
+      req.params.id,
+    ]);
+    const imgSrc = [];
+    productBasicInfo.forEach((info) => imgSrc.push(info.imgSrc));
+    productBasicInfo[0].imgSrc = imgSrc;
+
+    const [category, __] = await pool.execute(getCertainCateogories, [
+      productBasicInfo[0].category,
+    ]);
+    productBasicInfo[0].category = category[0].name;
+
+    const [likeCount, ___] = await pool.execute(getProductLikes, [
+      req.params.id,
+    ]);
+    productBasicInfo[0].like = likeCount[0].likeCount;
+
+    res.status(200).json({ data: productBasicInfo[0] });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -43,15 +71,12 @@ router.post('/add_product', async (req, res) => {
     ]);
     files.forEach(async (file, idx) => {
       const imageBlob = file.split(',')[1];
-      fs.writeFileSync(
-        `public/resource/productImg/ag502_${title}.jpg`,
-        imageBlob,
-        'base64'
-      );
+      const fileName = `productImg/ag502_${title}_${idx}.jpg`;
+      fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
       try {
         await pool.execute(addNewProdcutSpec, [
           curTime,
-          `productImg/ag502_${title}.jpg`,
+          `${fileName}`,
           idx === 0 ? 1 : 0,
         ]);
       } catch (error) {

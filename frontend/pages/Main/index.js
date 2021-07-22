@@ -96,7 +96,30 @@ export default class Main extends ElementBuilder {
     this.router.route('write');
   };
 
-  showAlert = (error, callback = () => {}) => {
+  convertTime(uploadTime) {
+    const passedTime = new Date().getTime() - uploadTime;
+    let result = passedTime / 1000;
+    // millsec / 1000 -> 초
+    // millsec / 1000 / 60 -> 분
+    // millsec / 1000 / 60 / 60 -> 시간
+    // millsec / 1000 / 60 / 60 / 24 -> 일
+
+    if (result < 60) {
+      return `${parseInt(result)}초`;
+    }
+    result = result / 60;
+    if (result < 60) {
+      return `${parseInt(result)}분`;
+    }
+    result = result / 60;
+    if (result < 24) {
+      return `${parseInt(result)}시간`;
+    }
+    result = result / 24;
+    return `${parseInt(result)}일`;
+  }
+  
+  showAlert = (error) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -191,15 +214,17 @@ export default class Main extends ElementBuilder {
           isActive: element.likeId ? true : false,
           onAlert: this.showAlert,
           onClick: () => {
-            // TODO : ADD event to refresh... this.fetchContents();
-            // const $newPage = new ProductPage({
-            //   parent: this.parent,
-            //   element,
-            //   router: this.router,
-            //   routeTo: 'main',
-            // });
-            // this.router.addScreen('newPage', $newPage);
-            // this.router.route('newPage');
+            const $newPage = new ProductPage({
+              parent: this.parent,
+              productId: element.productId,
+              location: element.area_1,
+              isActive: element.likeId ? true : false,
+              uploadTime: this.convertTime(element.uploadTime),
+              router: this.router,
+              routeTo: 'main',
+            });
+            this.router.addScreen('newPage', $newPage);
+            this.router.route('newPage');
           },
         });
       }

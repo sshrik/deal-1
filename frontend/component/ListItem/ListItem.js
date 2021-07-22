@@ -93,7 +93,7 @@ export default class ListItem extends ElementBuilder {
   };
 
   constructElement() {
-    const { title, lastTime, price, comment, like, area_1, imgSrc, type } =
+    const { title, uploadTime, price, comment, like, area_1, imgSrc, type } =
       this.props;
     const { isOpen, menuItems, likeActive } = this.state;
     const $listItem = $.create('div').addClass('list-item');
@@ -107,7 +107,7 @@ export default class ListItem extends ElementBuilder {
     const $contentLocationTime = $.create('div').addClass('content__lo-time')
       .setHTML(`
       <span>${area_1}</span>
-      <span>${lastTime}시간 전</span>
+      <span>${uploadTime} 전</span>
     `);
 
     const $contentPrice = $.create('span')

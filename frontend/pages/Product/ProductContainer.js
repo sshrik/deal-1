@@ -6,23 +6,24 @@ import './product.css';
 
 export default class ProductPage extends ElementBuilder {
   constructElement() {
-    const { title, imgSrc } = this.props;
+    const { productInfo } = this.props;
+    // console.log(productInfo);
     const $element = $.create('div').addClass('product--middle--container');
     new SlidingWindowShower({
       parent: this,
-      specImage: [imgSrc],
+      specImage: productInfo?.imgSrc ? productInfo.imgSrc : [],
     });
     new ProductContent({
       parent: this,
-      title: this.props.element.title,
-      lastTime: this.props.element.lastTime,
-      location: this.props.element.location,
-      category: this.props.element.category,
-      specDetail: this.props.element.specDetail,
-      seller: this.props.element.seller,
-      chat: this.props.element.chat,
-      view: this.props.element.view,
-      like: this.props.element.like,
+      title: productInfo.title,
+      lastTime: productInfo.uploadTime,
+      location: productInfo.location,
+      category: productInfo.category,
+      specDetail: productInfo.detail,
+      seller: productInfo.sellerName,
+      // chat: this.props.element.chat,
+      view: productInfo.viewCount,
+      like: productInfo.like,
     });
     return $element;
   }

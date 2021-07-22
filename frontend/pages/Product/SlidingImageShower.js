@@ -22,7 +22,7 @@ export default class SlidingWindowShower extends ElementBuilder {
       'sliding-window--circle-container'
     );
 
-    let $ShowImage;
+    const $ShowImage = $.create('img');
     this.props.specImage.forEach((element, index) => {
       if (index === this.state.nowImageIndex) {
         $circleButtonContainer.appendChild(
@@ -30,7 +30,7 @@ export default class SlidingWindowShower extends ElementBuilder {
             .addClass('sliding-window__circle')
             .addClass('circle__full')
         );
-        $ShowImage = $.create('img');
+        // $ShowImage = $.create('img');
         $ShowImage.src = element;
       } else {
         $circleButtonContainer.appendChild(

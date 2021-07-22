@@ -5,7 +5,7 @@ import IconButtons from '../../../component/Button/IconButtons';
 
 export default class ChatInput extends ElementBuilder {
   constructElement() {
-    const { message, isSendActivated, onChange, onSend } = this.props;
+    const { message, onChange, onSend, sendBtn } = this.props;
     const $chatInputContainer = $.create('div').addClass(
       'chat-input-container'
     );
@@ -21,12 +21,8 @@ export default class ChatInput extends ElementBuilder {
       value: message,
     });
 
-    const $sendBtn = $.create('button')
-      .addClass('send', isSendActivated ? 'active' : 'not-active')
-      .setHTML(IconButtons.send);
-    $sendBtn.addEventListener('click', onSend);
-
-    $chatInputContainer.addElement($sendBtn);
+    sendBtn.addEventListener('click', onSend);
+    $chatInputContainer.addElement(sendBtn);
 
     return $chatInputContainer;
   }

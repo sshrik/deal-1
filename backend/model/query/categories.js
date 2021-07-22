@@ -1,3 +1,5 @@
 const getAllCategories = 'SELECT * FROM categories';
 
-module.exports = { getAllCategories };
+const getCertainCateogories = 'SELECT * FROM categories WHERE id = ?';
+
+module.exports = { getAllCategories, getCertainCateogories };
