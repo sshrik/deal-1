@@ -24,29 +24,35 @@ export default class LoginContainer extends ElementBuilder {
     return true;
   }
 
+  onAlert = (error) => {
+    const $alert = new Alert({
+      parent: this,
+      titleText: error,
+      proceedText: '다시 입력',
+      onCancel: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+      onProceed: (e) => {
+        this.getContentsElement().removeChild($alert.getContentsElement());
+      },
+    });
+    this.getContentsElement().appendChild($alert.getContentsElement());
+  };
+
   handleLoginBtnClick = () => {
     const { id, password } = this.state;
     const { router } = this.props;
     api
       .fetchPost('/login', { userName: id, password: password })
       .then((res) => {
-        router.globalState.isLogin = true;
-        router.route('main', { props: { filter: '' } });
-      })
-      .catch((error) => {
-        const $alert = new Alert({
-          parent: this,
-          titleText: error,
-          proceedText: '다시 입력',
-          onCancel: (e) => {
-            this.getContentsElement().removeChild($alert.getContentsElement());
-          },
-          onProceed: (e) => {
-            this.getContentsElement().removeChild($alert.getContentsElement());
-          },
+        api.fetchGet('/auth/location').then((res) => {
+          router.globalState.isLogin = true;
+          router.route('main', {
+            props: { filter: '', location: [...res.data] },
+          });
         });
-        this.getContentsElement().appendChild($alert.getContentsElement());
-      });
+      })
+      .catch((error) => this.onAlert(error));
   };
 
   handleInputChange = ({ target }) => {

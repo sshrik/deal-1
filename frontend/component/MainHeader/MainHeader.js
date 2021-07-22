@@ -7,10 +7,40 @@ import './mainHeader.css';
 export default class MainHeader extends ElementBuilder {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false,
-      locations: [
-        { id: 1, name: '역삼동', color: 'black', onClick: () => {} },
+    let locationState = [];
+    if (this.props.location[0] && this.props.location[1]) {
+      locationState = [
+        {
+          id: 1,
+          name: this.props.location[0],
+          color: 'black',
+          onClick: () => {},
+        },
+        {
+          id: 2,
+          name: this.props.location[1],
+          color: 'black',
+          onClick: () => {
+            this.swapLocation();
+          },
+        },
+        {
+          id: 3,
+          name: '내 동네 설정하기',
+          color: 'black',
+          onClick: (e) => {
+            this.props.moveToSetLocation(e);
+          },
+        },
+      ];
+    } else if (this.props.location[0] && !this.props.location[1]) {
+      locationState = [
+        {
+          id: 1,
+          name: this.props.location[0],
+          color: 'black',
+          onClick: () => {},
+        },
         {
           id: 2,
           name: '내 동네 설정하기',
@@ -19,8 +49,32 @@ export default class MainHeader extends ElementBuilder {
             this.props.moveToSetLocation(e);
           },
         },
-      ],
+      ];
+    } else {
+      locationState = [
+        { id: 1, name: '역삼동', color: 'black', onClick: () => {} },
+        {
+          id: 2,
+          name: '로그인 후 지역 설정',
+          color: 'black',
+          onClick: (e) => {
+            this.props.toLogin();
+          },
+        },
+      ];
+    }
+    this.state = {
+      isOpen: false,
+      locations: locationState,
     };
+  }
+
+  swapLocation() {
+    const newLocationState = { ...this.state.locations };
+    let temp = newLocationState[0].name;
+    newLocationState[0].name = newLocationState[1].name;
+    newLocationState[1].name = temp;
+    this.setState(newLocationState);
   }
 
   compareState(prevState, newState) {
@@ -52,7 +106,7 @@ export default class MainHeader extends ElementBuilder {
     );
     const $locationBtn = $.create('div').addClass('location-btn').setHTML(`
       ${IconBtns.mapPin().outerHTML}
-      <span>${this.props.location}</span>
+      <span>${this.state.locations[0].name}</span>
     `);
     $locationBtn.addEventListener('click', (e) => {
       if (isOpen) {

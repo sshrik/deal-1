@@ -69,7 +69,8 @@ export default class Router {
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
-      destObject.setState(option.props);
+      console.log({ ...option.props });
+      destObject.setState({ ...option.props });
       if (!destObject.isInited()) {
         destObject.render();
       }
