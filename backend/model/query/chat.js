@@ -19,6 +19,14 @@ const updateLast2 = `UPDATE chatrooms SET lastview2 = ? where productId = ? and 
 
 const searchUser = `SELECT userName from users where id = ?`;
 
+const searchMyRoom = `SELECT id from chatrooms where user1 = (SELECT id FROM users WHERE userName = ?) or user2 = (SELECT id FROM users WHERE userName = ?)`;
+
+const getRoomProductInfo = `
+SELECT p.id, p.title, p.uploadTime, p.price, p.detail, p.seller, p.category, p.viewCount, p.nowSelling, ps.imgSrc, u.userName as sellerName
+FROM products p JOIN productSpecs ps on p.id = ps.productId JOIN users u on p.seller = u.id 
+WHERE p.id = (SELECT productId FROM chatrooms where id=?)
+`;
+
 module.exports = {
   enterChattingRoom,
   getChatLog,
@@ -27,4 +35,6 @@ module.exports = {
   updateLast1,
   updateLast2,
   searchUser,
+  searchMyRoom,
+  getRoomProductInfo,
 };

@@ -8,8 +8,10 @@ const {
   getChatLog,
   sendChat,
   getChattingRoom,
+  searchMyRoom,
   updateLast1,
   updateLast2,
+  getRoomProductInfo,
 } = require('../model/query/chat');
 
 async function updateLast(productId, user1, user2, nowTime) {
@@ -76,7 +78,6 @@ router.post('/get_log', async (req, res) => {
     const roomId = req.body.roomId;
     const nowTime = new Date().getTime();
 
-    console.log(roomId);
     const [results, _] = await pool.execute(getChatLog, [roomId]);
 
     util.sendJson(res, { data: results });
@@ -107,6 +108,31 @@ router.post('/set_log', async (req, res) => {
     ]);
 
     // await updateLast(productId, sendName, sendName, nowTime);
+    util.sendJson(res, { data: results });
+  } catch (error) {
+    console.log(error);
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
+
+router.post('/get_my_room', async (req, res) => {
+  try {
+    const userName = req.body.userName;
+    console.log(userName);
+
+    const [results, _] = await pool.execute(searchMyRoom, [userName, userName]);
+    util.sendJson(res, { data: results });
+  } catch (error) {
+    console.log(error);
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
+
+router.post('/get_room_info', async (req, res) => {
+  try {
+    const roomId = req.body.roomId;
+
+    const [results, _] = await pool.execute(getRoomProductInfo, [roomId]);
     util.sendJson(res, { data: results });
   } catch (error) {
     console.log(error);
