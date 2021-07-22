@@ -33,7 +33,7 @@ export default class LogoutContainer extends ElementBuilder {
     const $logoutContentContainer = $.create('div').addClass(
       'logout-content-container'
     ).setHTML(`
-      <div class=user-name>USERNAME</div>
+      <div class=user-name>${this.props.userName}</div>
     `);
 
     new Button({

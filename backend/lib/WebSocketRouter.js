@@ -40,7 +40,6 @@ class WebSocketRouter {
 
   addUser(id, ws) {
     const index = this.getIdIndex(id);
-    console.log(index);
     if (index !== null) {
       this.userList.id.push(id);
       this.userList.ws.push(ws);

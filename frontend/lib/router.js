@@ -69,7 +69,6 @@ export default class Router {
     if (Object.prototype.hasOwnProperty.call(this.screens, destScreenName)) {
       const destObject = this.screens[destScreenName];
 
-      console.log({ ...option.props });
       destObject.setState({ ...option.props });
       if (!destObject.isInited()) {
         destObject.render();
@@ -97,7 +96,7 @@ export default class Router {
         destObject.render({ clearAll: true });
       }, animateTime);
     } else {
-      console.log('Not Included');
+      console.log('Not Included Page');
     }
   }
 }

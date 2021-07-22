@@ -15,7 +15,6 @@ router.get('/location', async (req, res) => {
     const bmCookie = req.cookies.bmCookie;
     const id = req.session[bmCookie];
     const [results, _] = await pool.execute(selectLocation, [id]);
-    console.log(results);
     util.sendJson(res, { data: [results[0].area_1, results[0].area_2] });
   } catch (error) {
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);

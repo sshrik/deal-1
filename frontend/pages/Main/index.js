@@ -55,6 +55,7 @@ export default class Main extends ElementBuilder {
       const $logoutPage = new Logout({
         parent: this.parent,
         router: this.router,
+        userName: this.router.globalState.userName,
       });
       this.router.addScreen('logout', $logoutPage);
       this.router.route('logout');
@@ -120,7 +121,7 @@ export default class Main extends ElementBuilder {
   
   showAlert = (error) => {
     const $alert = new Alert({
-      parent: this,
+      parent: this.parent,
       titleText: error,
       proceedText: '확인',
       onCancel: (e) => {
@@ -128,6 +129,7 @@ export default class Main extends ElementBuilder {
       },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
+        callback();
       },
     });
     this.getContentsElement().appendChild($alert.getContentsElement());
@@ -170,6 +172,8 @@ export default class Main extends ElementBuilder {
       moveHandler: this.moveHandler,
       moveToSetLocation: this.moveToSetLocation,
       toLogin: this.toLogin,
+      isLogin: this.router.globalState.isLogin,
+      showAlert: this.showAlert,
     });
 
     const $emptyDiv = new DragDownItem({
