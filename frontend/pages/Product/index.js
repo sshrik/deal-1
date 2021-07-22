@@ -114,6 +114,10 @@ export default class ProductPage extends ElementBuilder {
       like: isActive,
       price: productInfo.price,
       onClick: this.handleLikeBtnToggle,
+      isActive: () => {
+        // TODO : this.router.globalState.userName과 같지 않은지 비교 필요
+        return productInfo.seller === this.props.router.globalState.userName;
+      },
     });
     return $element;
   }

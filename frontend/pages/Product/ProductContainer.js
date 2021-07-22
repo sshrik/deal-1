@@ -1,18 +1,25 @@
 import ElementBuilder from '../../lib/ElementBuilder';
 import SlidingWindowShower from './SlidingImageShower';
 import ProductContent from './ProductContent';
+import SellerButton from './SellerButton';
 import $ from '../../util/domControll';
 import './product.css';
 
-export default class ProductPage extends ElementBuilder {
+export default class ProductContainer extends ElementBuilder {
   constructElement() {
     const { productInfo } = this.props;
-    // console.log(productInfo);
     const $element = $.create('div').addClass('product--middle--container');
     new SlidingWindowShower({
       parent: this,
       specImage: productInfo?.imgSrc ? productInfo.imgSrc : [],
     });
+
+    // TODO : this.router.globalState.userName과 비교 필요
+    if (productInfo.sellerName === 'ag502') {
+      new SellerButton({
+        parent: this,
+      });
+    }
     new ProductContent({
       parent: this,
       title: productInfo.title,
