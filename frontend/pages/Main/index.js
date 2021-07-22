@@ -86,18 +86,22 @@ export default class Main extends ElementBuilder {
   }
 
   toWritePage = () => {
-    const { categories } = this.state;
-    const $writePage = new Write({
-      parent: this.parent,
-      categories,
-      routeTo: '',
-      router: this.router,
-    });
-    this.router.addScreen('write', $writePage);
-    this.router.route('write');
+    if (this.router.globalState.isLogin) {
+      const { categories } = this.state;
+      const $writePage = new Write({
+        parent: this.parent,
+        categories,
+        routeTo: '',
+        router: this.router,
+      });
+      this.router.addScreen('write', $writePage);
+      this.router.route('write');
+    } else {
+      this.showAlert('글을 쓰려면 로그인부터 해야합니다.', this.toLogin);
+    }
   };
 
-  showAlert = (error) => {
+  showAlert = (error, callback = () => {}) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -114,6 +118,7 @@ export default class Main extends ElementBuilder {
   };
 
   fetchMine = () => {
+    console;
     api
       .fetchGet('/auth/products_user')
       .then((products) => {
@@ -132,7 +137,6 @@ export default class Main extends ElementBuilder {
   };
 
   fetchContents = () => {
-    this.setState({ filter: '' });
     if (this.router.globalState.isLogin) {
       this.fetchMine();
     } else {
@@ -193,6 +197,7 @@ export default class Main extends ElementBuilder {
           isActive: element.likeId ? true : false,
           onAlert: this.showAlert,
           onClick: () => {
+            // TODO :새로운 페이지 만들기
             const $newPage = new ProductPage({
               parent: this.parent,
               productId: element.productId,

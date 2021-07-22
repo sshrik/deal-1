@@ -123,7 +123,9 @@ export default class Write extends ElementBuilder {
           files,
           category: activeBtn,
         })
-        .then((res) => console.log(res))
+        .then((res) => {
+          this.router.route('main');
+        })
         .catch((error) => console.log(error));
     }
   };

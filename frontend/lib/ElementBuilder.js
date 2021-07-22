@@ -161,6 +161,17 @@ export default class ElementBuilder {
     // Update가 호출된 경우 실행
   }
 
+  componentDidMount() {
+    // Render가 호출 된 이후 한번만 실행
+  }
+
+  afterRender() {
+    if (!this.isMount) {
+      this.isMount = true;
+      this.componentDidMount();
+    }
+  }
+
   render(option = {}) {
     // init() 이 한번도 안됐다면 init 해주기 -> 내용이 바뀐게 있어도 init() 하며 바꿔주기
     if (!this.contents) {
@@ -189,5 +200,7 @@ export default class ElementBuilder {
       this.pageScroll();
       this.setScrolledEvent();
     }
+
+    this.afterRender();
   }
 }

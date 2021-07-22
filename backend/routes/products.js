@@ -16,6 +16,7 @@ const {
   getAllProductsAuth,
   getCetainProduct,
   getProductLikes,
+  changeSellState,
   deleteSellingProduct,
 } = require('../model/query/products');
 
@@ -58,6 +59,8 @@ router.get('/product/:id', async (req, res) => {
 
 router.post('/add_product', async (req, res) => {
   try {
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
     const { title, price, detail, category, files } = req.body;
     const curTime = new Date().getTime();
     await pool.execute(addNewProduct, [
@@ -65,14 +68,14 @@ router.post('/add_product', async (req, res) => {
       curTime,
       parseInt(price),
       detail,
-      'ag502',
+      id,
       category,
       0,
       1,
     ]);
     files.forEach(async (file, idx) => {
       const imageBlob = file.split(',')[1];
-      const fileName = `productImg/ag502_${title}_${idx}.jpg`;
+      const fileName = `productImg/${id}_${title}_${idx}.jpg`;
       fs.writeFileSync(`public/resource/${fileName}`, imageBlob, 'base64');
       try {
         await pool.execute(addNewProdcutSpec, [
@@ -133,6 +136,18 @@ router.get('/user_like_list', async (req, res) => {
   }
 });
 
+router.post('/set_sell_state', async (req, res) => {
+  try {
+    console.log(req.body);
+    const [results, _] = await pool.execute(changeSellState, [
+      req.body.nowSelling,
+      req.body.productId,
+    ]);
+    util.sendJson(res, { data: results });
+  } catch (error) {
+    util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
+  }
+});
 router.post('/delete_selling_product', async (req, res) => {
   try {
     const { productId } = req.body;
