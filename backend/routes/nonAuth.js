@@ -5,7 +5,7 @@ const util = require('../lib/util');
 const router = express.Router();
 const {
   getAllProducts,
-  getCetainProduct,
+  getCertainProduct,
   getProductLikes,
 } = require('../model/query/products');
 const { getCertainCateogories } = require('../model/query/categories');
@@ -21,7 +21,7 @@ router.get('/products', async (req, res) => {
 
 router.get('/product/:id', async (req, res) => {
   try {
-    const [productBasicInfo, _] = await pool.execute(getCetainProduct, [
+    const [productBasicInfo, _] = await pool.execute(getCertainProduct, [
       req.params.id,
     ]);
     const imgSrc = [];
@@ -39,6 +39,7 @@ router.get('/product/:id', async (req, res) => {
     productBasicInfo[0].like = likeCount[0].likeCount;
     res.status(200).json({ data: productBasicInfo[0] });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 });

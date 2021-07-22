@@ -62,12 +62,17 @@ export default class ProductPage extends ElementBuilder {
 
       this.getContentsElement().appendChild($spinner.getContentsElement());
 
-      const { productId } = this.props;
+      const { productId, router } = this.props;
       api
-        .fetchGet(`/product/${productId}`, {
-          delayTime: 2000,
-          startTime: new Date().getTime(),
-        })
+        .fetchGet(
+          !router.globalState.isLogin
+            ? `/product/${productId}`
+            : `/auth/product/${productId}`,
+          {
+            delayTime: 2000,
+            startTime: new Date().getTime(),
+          }
+        )
         .then((res) => {
           this.setState({ productInfo: res.data });
           this.getContentsElement().removeChild($spinner.getContentsElement());
@@ -91,7 +96,7 @@ export default class ProductPage extends ElementBuilder {
       .then((res) => {
         this.setState({ isActive: !isActive });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => this.showAlert(error));
   };
 
   constructElement() {
