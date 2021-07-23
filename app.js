@@ -7,7 +7,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const livereload = require('livereload');
 const { bundle } = require('./webpack.config');
-
+const cors = require('cors');
 const authMw = require('./backend/middleware/auth');
 
 const indexRouter = require('./backend/routes/index');
@@ -57,6 +57,8 @@ app.use(
     },
   })
 );
+
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use(express.static(path.join(__dirname, 'public/resource')));
 

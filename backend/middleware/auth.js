@@ -19,12 +19,13 @@ function addSession(req, res, next) {
   if (!req.session[req.body.userName] && !req.session[bmCookie]) {
     req.session[req.body.userName] = bmCookie;
     req.session[bmCookie] = req.body.userName;
-    res.append('Set-Cookie', `bmCookie=${bmCookie}`);
+    res.append('Set-Cookie', `bmCookie=${bmCookie};`);
   } else {
     // 이미 session 정보가 있는 경우
     // TODO : 중복 로그인 관련 처리도 할 수 있을 것 같다.
   }
   // req.session.save 는 http call 맨 마지막에 자동 호출.
+  console.log(req.session);
   next();
 }
 
