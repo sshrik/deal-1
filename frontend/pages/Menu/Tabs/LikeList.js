@@ -18,7 +18,7 @@ export default class LikeList extends ElementBuilder {
 
   fetchData = () => {
     api
-      .fetchGet('/api/user_like_list')
+      .fetchGet('/auth/user_like_list')
       .then((res) => {
         this.setState({ likeList: [...res.data] });
       })

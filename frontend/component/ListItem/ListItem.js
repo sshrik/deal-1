@@ -133,7 +133,7 @@ export default class ListItem extends ElementBuilder {
     like > 0 && $bottomIconInfoContainer.appendChild(Like(like));
 
     $listItem
-      .addElement(Image('large', `http://localhost:3000/${imgSrc}`))
+      .addElement(Image('large', `http://52.79.43.67/:3000/${imgSrc}`))
       .addElement($listItemContent)
       .addElement($listItemActions)
       .addElement($bottomIconInfoContainer);
