@@ -33,7 +33,7 @@ export default class ProductPage extends ElementBuilder {
     return false;
   }
 
-  showAlert = (error) => {
+  showAlert = (error, route = true) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -43,7 +43,9 @@ export default class ProductPage extends ElementBuilder {
       },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
-        this.props.router.route(this.props.routeTo);
+        if (route) {
+          this.props.router.route(this.props.routeTo);
+        }
       },
     });
     this.getContentsElement().appendChild($alert.getContentsElement());
@@ -61,11 +63,11 @@ export default class ProductPage extends ElementBuilder {
       });
 
       this.getContentsElement().appendChild($spinner.getContentsElement());
-
+      const waitTime = Math.random() * 500 + 250;
       const { productId } = this.props;
       api
         .fetchGet(`/product/${productId}`, {
-          delayTime: 2000,
+          delayTime: waitTime,
           startTime: new Date().getTime(),
         })
         .then((res) => {
@@ -103,6 +105,7 @@ export default class ProductPage extends ElementBuilder {
       transparent: true,
       moveHandler: () => this.props.router.route(this.props.routeTo),
     });
+
     new ProductContainer({
       parent: this,
       router: this.props.router,
@@ -113,12 +116,16 @@ export default class ProductPage extends ElementBuilder {
         location,
       },
     });
-    console.log(this.props.router.globalState);
+
     new ProductBar({
       parent: this,
       like: isActive,
+      pid: this.props.productId,
       price: productInfo.price,
+      productInfo: productInfo,
       onClick: this.handleLikeBtnToggle,
+      showAlert: this.showAlert,
+      router: this.props.router,
       isActive: () => {
         return (
           productInfo.sellerName !== this.props.router.globalState.userName

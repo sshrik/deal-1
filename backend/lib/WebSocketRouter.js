@@ -40,7 +40,7 @@ class WebSocketRouter {
 
   addUser(id, ws) {
     const index = this.getIdIndex(id);
-    if (index !== null) {
+    if (index === null) {
       this.userList.id.push(id);
       this.userList.ws.push(ws);
     } else {
@@ -65,7 +65,7 @@ class WebSocketRouter {
 
   getWsWithId(id) {
     const index = this.getIdIndex(id);
-    if (!index) {
+    if (index !== null) {
       return this.userList.ws[index];
     } else {
       throw new Error('ID Do not match with anyone in list.');
@@ -193,8 +193,9 @@ class WebSocketRouter {
         const destWs = this.getWsWithId(res.sendTo);
         destWs.send(JSON.stringify(res));
       } catch (e) {
+        console.log(e);
         if (this.userList.id.includes(res.sendTo)) {
-          // Real error occured
+          console.log('ERROR :: NON_USERLIST_REQUEST!');
         }
       }
     }

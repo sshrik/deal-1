@@ -3,6 +3,8 @@ import ElementBuilder from '../../../lib/ElementBuilder';
 import ChatLog from './ChatLog';
 import ChatInput from './ChatInput';
 import IconButtons from '../../../component/Button/IconButtons';
+import api from '../../../util/api';
+import { sendChat } from '../../../util/webSocketApi';
 
 export default class Chat extends ElementBuilder {
   constructor(props) {
@@ -12,34 +14,15 @@ export default class Chat extends ElementBuilder {
       curScrollPos: 0,
       scrollTarget: null,
       isSendActivated: false,
-      chatLogs: [
-        { sender: 'other', content: '안녕하세요?' },
-        {
-          sender: 'me',
-          content:
-            "What is Lorem Ipsum?Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        },
-        { sender: 'other', content: 'a' },
-        { sender: 'other', content: 'b' },
-        { sender: 'me', content: 'c' },
-        { sender: 'me', content: 'd' },
-        { sender: 'me', content: 'e' },
-        { sender: 'me', content: 'f' },
-        { sender: 'me', content: 'g' },
-        { sender: 'me', content: 'h' },
-        { sender: 'me', content: 'i' },
-        { sender: 'me', content: 'j' },
-        { sender: 'me', content: 'k' },
-        { sender: 'me', content: 'l' },
-      ],
+      chatLogs: this.props.chatLogs,
     };
   }
 
   compareState(prevState, newState) {
     if (prevState.message !== newState.message) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   handleInputChange = ({ target }) => {
@@ -63,13 +46,37 @@ export default class Chat extends ElementBuilder {
 
   handleSendBtnClick = () => {
     const { message, chatLogs, scrollTarget } = this.state;
-    this.setState({
-      message: '',
-      // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음
-      curScrollPos: scrollTarget.clientHeight * 2,
-      isSendActivated: false,
-      chatLogs: [...chatLogs, { sender: 'me', content: message }],
-    });
+    const webSocket = this.props.socket;
+
+    // 실제 DB에 데이터 보내기.
+    api
+      .fetchPost('/auth/chat/set_log', {
+        sendName: this.props.myName,
+        recvName: this.props.otherName,
+        productId: this.props.productId,
+        chatMsg: message,
+        type: 'chat',
+        roomId: this.props.roomId,
+      })
+      .then((res) => {
+        // Websocket으로 핑퐁 보내기
+        sendChat(
+          webSocket,
+          this.props.myName,
+          this.props.otherName,
+          this.props.productId,
+          this.props.roomId,
+          message
+        );
+
+        this.setState({
+          message: '',
+          // TODO : Safari에서 scrollTarget.clientHeight 적용시 맨 밑으로 이동하지 않음
+          curScrollPos: scrollTarget.clientHeight * 10,
+          isSendActivated: false,
+          chatLogs: [...chatLogs, { sender: 'me', content: message }],
+        });
+      });
   };
 
   setScrollTarget = (target) => {

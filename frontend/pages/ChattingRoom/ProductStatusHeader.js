@@ -9,20 +9,22 @@ export default class ProductStatusHeader extends ElementBuilder {
     const $productStatus = $.create('div').addClass('product-status');
 
     const $productInfo = $.create('div').addClass('product-info').setHTML(`
-      <span class=price-info--name>빈티지 롤러 스케이트</span>
-      <span class=price-info--price>160,000원</span>
+      <span class=price-info--name>${this.props.title}</span>
+      <span class=price-info--price>${this.props.price}원</span>
     `);
 
+    let setText = '예약중';
+    if (this.props.nowSelling) setText = '판매중';
     new Button({
       parent: this,
-      text: '판매중',
+      text: setText,
       type: 'default',
       fontColor: 'white',
       size: 'medium',
     });
 
     $productStatus
-      .addElement(Image('small', 'roller1.png'))
+      .addElement(Image('small', this.props.imgSrc))
       .addElement($productInfo);
 
     return $productStatus;
