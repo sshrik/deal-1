@@ -77,7 +77,8 @@ export default class SellingList extends ElementBuilder {
             id: 1,
             name: '수정하기',
             color: 'black',
-            onClick: () => {
+            onClick: (e) => {
+              e.stopPropagation();
               const { router } = this.props;
               router.addScreen(
                 'newPage',
@@ -100,12 +101,13 @@ export default class SellingList extends ElementBuilder {
           },
         ],
         onClick: () => {
+          const { router } = this.props;
           router.addScreen(
             'newPage',
             new ProductPage({
-              parent: this.parent,
+              parent: router.root,
               productId: element.productId,
-              loaction: element.area_1,
+              location: element.area_1,
               isActive: element.likeId ? true : false,
               uploadTime: convertTime(element.uploadTime),
               router,

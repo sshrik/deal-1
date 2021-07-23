@@ -12,9 +12,15 @@ LEFT OUTER JOIN (SELECT * FROM likes WHERE likes.userId = (SELECT id FROM users 
 WHERE ps.isMain = 1
 `;
 
-const getCetainProduct = `
+const getCertainProduct = `
 SELECT p.title, p.uploadTime, p.price, p.detail, p.seller, p.category, p.viewCount, p.nowSelling, ps.imgSrc, u.userName as sellerName
 FROM products p JOIN productSpecs ps on p.id = ps.productId JOIN users u on p.seller = u.id WHERE p.id = ?
+`;
+
+const getCertainProductAuth = `
+SELECT p.title, p.uploadTime, p.price, p.detail, p.seller, p.category, p.viewCount, p.nowSelling, ps.imgSrc, u.userName as sellerName, l.userId as likeId
+FROM products p JOIN productSpecs ps on p.id = ps.productId JOIN users u on p.seller = u.id LEFT OUTER JOIN (SELECT * FROM likes WHERE likes.userId = (SELECT id FROM users WHERE users.userName = ?)) l ON p.id = l.productId
+WHERE p.id = ?
 `;
 
 const getProductLikes = `
@@ -44,10 +50,6 @@ WHERE ps.isMain = 1 AND p.seller = (SELECT id FROM users WHERE userName = ?)
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
-const deleteSellingProduct = `
-DELETE FROM products WHERE id = ?;
-`;
-
 const deleteProductSpecs = `
 DELETE FROM productSpecs WHERE productId = ?
 `;
@@ -74,7 +76,8 @@ module.exports = {
   getUserSellingProducts,
   getUserLikeProducts,
   getAllProductsAuth,
-  getCetainProduct,
+  getCertainProduct,
+  getCertainProductAuth,
   getProductLikes,
   changeSellState,
   deleteSellingProduct,

@@ -16,6 +16,11 @@ const router = new Router($root);
 // 전역변수로 로그인 여부를 관리
 router.globalState.isLogin = false;
 
+if (window.localStorage.getItem('userName')) {
+  router.globalState.isLogin = true;
+  router.globalState.userName = window.localStorage.getItem('userName');
+}
+
 const $mainPage = new Main({
   parent: $root,
   routeTo: 'category',

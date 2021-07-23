@@ -26,11 +26,20 @@ export default class Write extends ElementBuilder {
     this.fetchProductData();
   }
 
+  compareState(prevState, newState) {
+    if (prevState.files !== newState.files) {
+      return true;
+    }
+    if (prevState.categories !== newState.categories) {
+      return true;
+    }
+    return false;
+  }
+
   fetchCategory = () => {
     api
       .fetchGet('/categories')
       .then((res) => {
-        console.log(res);
         const categories = res.data;
         this.setState({
           buttonState: new Array(categories.length).fill('deactive'),
@@ -46,7 +55,6 @@ export default class Write extends ElementBuilder {
       api
         .fetchGet(`/auth/product/${productId}`)
         .then((res) => {
-          console.log(res.data);
           const { title, detail, price, category, imgSrc } = res.data;
           const newBtnState = [...this.state.buttonState];
           newBtnState[category - 1] = 'active';
@@ -62,16 +70,6 @@ export default class Write extends ElementBuilder {
         .catch((error) => console.log(error));
     }
   };
-
-  compareState(prevState, newState) {
-    if (prevState.files !== newState.files) {
-      return true;
-    }
-    if (prevState.categories !== newState.categories) {
-      return true;
-    }
-    return false;
-  }
 
   canSubmit = () => {
     let isSubmit = true;

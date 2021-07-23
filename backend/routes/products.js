@@ -15,13 +15,13 @@ const {
   getUserSellingProducts,
   getUserLikeProducts,
   getAllProductsAuth,
-  getCetainProduct,
   getProductLikes,
   changeSellState,
   deleteSellingProduct,
   updateProduct,
   deleteProductSpecs,
   updateProductSpecs,
+  getCertainProductAuth,
 } = require('../model/query/products');
 
 router.get('/products_user', async (req, res) => {
@@ -38,7 +38,10 @@ router.get('/products_user', async (req, res) => {
 
 router.get('/product/:id', async (req, res) => {
   try {
-    const [productBasicInfo, _] = await pool.execute(getCetainProduct, [
+    const bmCookie = req.cookies.bmCookie;
+    const id = req.session[bmCookie];
+    const [productBasicInfo, _] = await pool.execute(getCertainProductAuth, [
+      id,
       req.params.id,
     ]);
     const imgSrc = [];
@@ -57,6 +60,7 @@ router.get('/product/:id', async (req, res) => {
 
     res.status(200).json({ data: productBasicInfo[0] });
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 });

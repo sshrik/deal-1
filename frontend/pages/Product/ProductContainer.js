@@ -8,6 +8,7 @@ import './product.css';
 export default class ProductContainer extends ElementBuilder {
   constructElement() {
     const { productInfo } = this.props;
+    console.log(productInfo);
     const $element = $.create('div').addClass('product--middle--container');
     new SlidingWindowShower({
       parent: this,

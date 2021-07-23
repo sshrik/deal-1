@@ -1,29 +1,32 @@
 import $ from '../../util/domControll';
 import ElementBuilder from '../../lib/ElementBuilder';
+import { priceCommaSeperator } from '../../util/utils';
 import ChattingRoom from '../ChattingRoom/index';
 import api from '../../util/api';
 import './product.css';
 
 export default class ProductBar extends ElementBuilder {
   constructElement() {
-    const { onClick } = this.props;
+    const { onClick, isActive, sellerName } = this.props;
     const $element = $.create('div').addClass('product-bar--container');
 
     const $likeButton = $.create('img');
-    $likeButton.src = this.props.like ? 'like-full.png' : 'like-empty.png';
+    $likeButton.src = isActive ? 'like-full.png' : 'like-empty.png';
     $likeButton.addEventListener('click', onClick);
 
     const $verticalLine = $.create('div').addClass(
       'product-bar--vertical-line'
     );
 
-    const $price = $.create('p').setText(this.props.price);
+    const $price = $.create('p').setText(
+      priceCommaSeperator(String(this.props.price))
+    );
 
     $element.appendChild($likeButton);
     $element.appendChild($verticalLine);
     $element.appendChild($price);
 
-    if (!this.props.isActive()) {
+    if (sellerName === this.props.router.globalState.userName) {
       const $callButton = $.create('button')
         .addClass('deactive-bar--button')
         .setText('채팅 목록 보기');

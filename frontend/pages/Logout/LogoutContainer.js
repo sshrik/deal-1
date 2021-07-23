@@ -11,6 +11,7 @@ export default class LogoutContainer extends ElementBuilder {
       .fetchGet('/logout')
       .then((res) => {
         router.globalState.isLogin = false;
+        window.localStorage.removeItem('userName');
         router.route('main', { props: { filter: '', location: [null, null] } });
       })
       .catch((error) => {

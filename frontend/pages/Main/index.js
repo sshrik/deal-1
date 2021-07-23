@@ -24,6 +24,7 @@ export default class Main extends ElementBuilder {
       products: [],
       categories: [],
       location: [null, null],
+      curLocation: '',
       filter: '',
     };
     this.mouseLocation = {
@@ -44,6 +45,9 @@ export default class Main extends ElementBuilder {
       if (prevState.location[i] !== newState.location[i]) return true;
     }
     if (prevState.filter !== newState.filter) return true;
+    if (prevState.products !== newState.products) {
+      return true;
+    }
     return false;
   }
 
@@ -91,7 +95,7 @@ export default class Main extends ElementBuilder {
       const $writePage = new Write({
         parent: this.parent,
         categories,
-        routeTo: '',
+        routeTo: 'main',
         router: this.router,
       });
       this.router.addScreen('write', $writePage);
@@ -123,6 +127,7 @@ export default class Main extends ElementBuilder {
     api
       .fetchGet('/auth/products_user')
       .then((products) => {
+        console.log(products.data);
         this.setState({ products: [...products.data] });
       })
       .catch((error) => this.showAlert(error));
@@ -145,6 +150,10 @@ export default class Main extends ElementBuilder {
     }
   };
 
+  handleChangeLocation(location) {
+    console.log(location);
+  }
+
   constructElement() {
     const { products } = this.state;
     const $element = $.create('div').addClass('main-contianer');
@@ -157,6 +166,7 @@ export default class Main extends ElementBuilder {
       toLogin: this.toLogin,
       isLogin: this.router.globalState.isLogin,
       showAlert: this.showAlert,
+      onChangeLocation: this.handleChangeLocation,
     });
 
     const $emptyDiv = new DragDownItem({
@@ -198,12 +208,10 @@ export default class Main extends ElementBuilder {
           isActive: element.likeId ? true : false,
           onAlert: this.showAlert,
           onClick: () => {
-            // TODO :새로운 페이지 만들기
             const $newPage = new ProductPage({
               parent: this.parent,
               productId: element.productId,
               location: element.area_1,
-              isActive: element.likeId ? true : false,
               uploadTime: convertTime(element.uploadTime),
               router: this.router,
               routeTo: 'main',

@@ -55,6 +55,7 @@ router.post('/register', async (req, res) => {
     await pool.execute(createUser, [userName, hashedPw, area]);
     util.sendJson(res, { userName });
   } catch (error) {
+    console.log(error.message);
     util.sendError(res, CONSTANT.INTERNAL_SERVER_ERROR.type);
   }
 });

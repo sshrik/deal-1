@@ -1,6 +1,7 @@
 import ElementBuilder from '../../lib/ElementBuilder';
 import $ from '../../util/domControll';
 import IconBtns from '../Button/IconButtons';
+import DropDown from '../DropDown/DropDown';
 import './subHeader.css';
 
 export default class SubHeader extends ElementBuilder {
@@ -14,6 +15,7 @@ export default class SubHeader extends ElementBuilder {
   }
 
   constructElement() {
+    const { isOpen, menuItems, onClose } = this.props;
     const $element = $.create('div').addClass('sub-header-container');
     $element.appendChild(IconBtns.back(this.onMove));
     if (this.transparent) {
@@ -31,6 +33,16 @@ export default class SubHeader extends ElementBuilder {
       const $actionBtn = $.create('div').addClass('sub-header__action');
       $actionBtn.appendChild(this.action);
       $element.appendChild($actionBtn);
+    }
+
+    if (menuItems) {
+      new DropDown({
+        parent: this,
+        isOpen,
+        dropDownInfo: menuItems,
+        onClose,
+        position: { top: '50px', right: '20px' },
+      });
     }
 
     return $element;
