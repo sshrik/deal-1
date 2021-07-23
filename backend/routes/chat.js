@@ -46,10 +46,11 @@ wsRouter.open('/', (req, res, next) => {
 
 wsRouter.post('/', (req, res, next) => {
   res.serverMsg = 'Chat message arrive.';
-  res.type = wsRouter.constant.msg_arrive; // TODO : Client 는 msgType에 따라서 알람이나 DB로부터 갱신 기능을 구현해야함.
+  res.type = wsRouter.constant.msg_arrive;
+  res.productId = req.productId;
   res.data = req.data;
   res.sendTo = req.sendTo;
-  // TODO : DB에 Chatting Message 등록해야함.
+  console.log(res);
 });
 
 module.exports = wsRouter;

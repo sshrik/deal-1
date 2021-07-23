@@ -1,15 +1,32 @@
 import ElementBuilder from '../../../../lib/ElementBuilder';
 import $ from '../../../../util/domControll';
 import Image from '../../../../component/Image';
+import ChattingRoom from '../../../ChattingRoom/index';
 
 export default class ChatListItem extends ElementBuilder {
+  goToChatRoom = () => {
+    const dcRoom = new ChattingRoom({
+      parent: this.props.router.root,
+      router: this.props.router,
+      productId: this.props.productId,
+      sellerName: this.props.sellerName,
+      title: this.props.title,
+      price: this.props.price,
+      nowSelling: this.props.nowSelling === 1,
+      imgSrc: this.props.imgSrc,
+      roomId: this.props.roomId,
+    });
+    this.props.router.addScreen('newChat', dcRoom);
+    this.props.router.route('newChat');
+  };
+
   constructElement() {
     const { sender, lastMsg, isCheck, timeStemp, imgSrc, unChecked, router } =
       this.props;
     const $chatItemContainer = $.create('div').addClass('chat-item');
-    $chatItemContainer.addEventListener('click', () =>
-      router.route('chattingRoom')
-    );
+    $chatItemContainer.addEventListener('click', () => {
+      this.goToChatRoom();
+    });
 
     const $chatLeftSide = $.create('div').addClass('chat-item--left').setHTML(`
       <span class="sender">${sender}</span>

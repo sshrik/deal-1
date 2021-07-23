@@ -17,6 +17,7 @@ const nonAuthRouter = require('./backend/routes/nonAuth');
 const categoryRouter = require('./backend/routes/categories');
 const productRouter = require('./backend/routes/products');
 const locationRouter = require('./backend/routes/location');
+const expressChatRouter = require('./backend/routes/expressChat');
 
 const app = express();
 
@@ -74,6 +75,7 @@ app.use('/api', nonAuthRouter);
 app.use('/api/auth', productRouter);
 app.use('/api/auth', locationRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/auth/chat', expressChatRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -37,7 +37,7 @@ export default class ProductPage extends ElementBuilder {
     return false;
   }
 
-  showAlert = (error) => {
+  showAlert = (error, route = true) => {
     const $alert = new Alert({
       parent: this.parent,
       titleText: error,
@@ -47,7 +47,9 @@ export default class ProductPage extends ElementBuilder {
       },
       onProceed: (e) => {
         this.getContentsElement().removeChild($alert.getContentsElement());
-        this.props.router.route(this.props.routeTo);
+        if (route) {
+          this.props.router.route(this.props.routeTo);
+        }
       },
     });
     this.getContentsElement().appendChild($alert.getContentsElement());
@@ -67,16 +69,15 @@ export default class ProductPage extends ElementBuilder {
       this.getContentsElement().appendChild($spinner.getContentsElement());
 
       const { productId, router } = this.props;
+      const waitTime = Math.random() * 500 + 250;
       api
         .fetchGet(
           !router.globalState.isLogin
             ? `/product/${productId}`
-            : `/auth/product/${productId}`,
-          {
-            delayTime: 2000,
-            startTime: new Date().getTime(),
-          }
-        )
+            : `/auth/product/${productId}`, {
+          delayTime: waitTime,
+          startTime: new Date().getTime(),
+        })
         .then((res) => {
           this.setState({
             productInfo: res.data,
@@ -171,6 +172,7 @@ export default class ProductPage extends ElementBuilder {
         },
       ],
     });
+
     new ProductContainer({
       parent: this,
       router: this.props.router,
@@ -181,14 +183,18 @@ export default class ProductPage extends ElementBuilder {
         location,
       },
     });
+    
     new ProductBar({
       parent: this,
       router: this.props.router,
       sellerName: productInfo.sellerName,
       like: productInfo.likeId ? true : false,
+      pid: this.props.productId,
       price: productInfo.price,
+      productInfo: productInfo,
       onClick: this.handleLikeBtnToggle,
       isActive,
+      showAlert: this.showAlert,
     });
     return $element;
   }

@@ -49,6 +49,13 @@ const DB_QUERY_ERROR = new ErrorMetaData(
   'DB 처리중에 문제가 발생했습니다.'
 );
 
+// Chatting 문제 관련
+const ALREADY_EXIST_ROOM = new ErrorMetaData(
+  'ERR_200',
+  406,
+  '이미 실행중인 채팅방이 있어 생성 할 수 없습니다.'
+);
+
 module.exports = {
   NO_BMCOOKIE_ERROR,
   NO_SESSION_INFOR_ERROR,
@@ -57,4 +64,5 @@ module.exports = {
   DB_QUERY_ERROR,
   UNVALID_LOGIN_INFO_ERROR,
   DUPLICATE_ID_INFO_ERROR,
+  ALREADY_EXIST_ROOM,
 };
