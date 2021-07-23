@@ -1,5 +1,5 @@
 # 우아마켓 ( 배달의 민족 중고 거래 Appliction )
-![APP LOGO](https://github.com/woowa-techcamp-2021/deal-1/blob/fix/projectInfor/PROJ_INFO/우아마켓%20로고와%20글자.png?raw=true)
+![우아마켓 로고와 글자](https://user-images.githubusercontent.com/35404137/126738630-ce243f9b-408a-4f2a-bbe1-5897af394f07.png)
 
 ## To Run
 먼저 Project를 Clone합니다. 이후 module을 설치합니다.
@@ -12,7 +12,7 @@ dev server를 돌리는 방법
 ```
 npm run dev 
 ```
-이후 http://localhost:3000 으로 접속하면 됩니다.
+이후 http://woowamarket.space 으로 접속하면 됩니다.
 
 ## Project Architecture
 ### asset
@@ -39,4 +39,22 @@ bundling 된 js들도 여기로 들어가게 됩니다.
 
 ## Backend 구조
 ### DB 구조
-![DB 구조](https://github.com/woowa-techcamp-2021/deal-1/blob/fix/projectInfor/PROJ_INFO/deal1%20ERD.png?raw=true)
+![deal1 ERD](https://user-images.githubusercontent.com/35404137/126738632-42c64d13-419d-4959-afeb-1d6b6749d2dc.png)
+
+## 폴더 구조
+```
++-- frontend
+        +-- component
+        +-- pages
+        +-- constant
+        +-- lib
+        +-- util
++-- backend
+        +-- routes
+        +-- model
+        +-- middleware
+        +-- lib
++-- public
++-- views
++-- app.js
+```
