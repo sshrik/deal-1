@@ -9,11 +9,12 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
+/*
   animation-name: opacityOut;
   animation-delay: 1.7s;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
+  */
 }
 
 .transparent-modal--container {
