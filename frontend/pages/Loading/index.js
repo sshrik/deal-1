@@ -18,6 +18,7 @@ export default class Main extends ElementBuilder {
       delayTime: 1800,
       startTime: animationStartTime,
     };
+    /*
     Promise.all([
       api.fetchGet('/products', animationOptions),
       api.fetchGet('/categories', animationOptions),
@@ -31,6 +32,14 @@ export default class Main extends ElementBuilder {
         });
       })
       .catch((error) => console.log(error));
+      */
+    api.fetchGet('/products', animationOptions).then((produtcs) => {
+      this.router.route(this.routeTo, {
+        props: {
+          products: [...products.data],
+        },
+      });
+    });
   };
 
   constructElement() {
