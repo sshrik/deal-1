@@ -12,24 +12,6 @@ export default class Main extends ElementBuilder {
     this.routeTo = routeTo;
   }
 
-  checkAnimationEnd(animationStartTime, waitTime, next, timeInterval = 100) {
-    let nowTime = new Date().getTime();
-
-    // 만약 에니메이션 시간이 지나지 않았으면 timeInterval 만큼 기다린 다음 다시 자긴을 수행.
-    if (nowTime - animationStartTime < waitTime) {
-      setTimeout((e) => {
-        this.checkAnimationEnd(
-          animationStartTime,
-          waitTime,
-          next,
-          timeInterval
-        );
-      }, timeInterval);
-    } else {
-      next();
-    }
-  }
-
   fetchData = () => {
     const animationStartTime = new Date().getTime();
     const animationOptions = {
