@@ -29,7 +29,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
         },
-	mode: 'cors',
+        mode: 'cors',
         body: JSON.stringify(params),
       })
         .then((res) => {
@@ -63,8 +63,8 @@ export default {
   ) => {
     return new Promise((resolve, reject) =>
       fetch(`${API_ADDRESS}${path}`, {
-	method: 'GET',
-	mode: 'cors',
+        method: 'GET',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },

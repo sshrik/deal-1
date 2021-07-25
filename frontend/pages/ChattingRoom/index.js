@@ -11,7 +11,7 @@ export default class ChattingRoom extends ElementBuilder {
   constructor(props) {
     super(props);
     this.state = { chatLogs: [], myName: 0, otherName: 0 };
-    this.socket = new WebSocket('ws://52.79.43.67:3000/');
+    this.socket = new WebSocket('ws://woowamarket.space/');
   }
 
   compareState(prevState, nextState) {

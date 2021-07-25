@@ -47,6 +47,7 @@ FROM products p JOIN users u ON p.seller = u.id JOIN productSpecs ps ON p.id = p
 LEFT OUTER JOIN (SELECT * FROM likes WHERE likes.userId = (SELECT id FROM users WHERE users.userName = ?)) l ON p.id = l.productId
 WHERE ps.isMain = 1 AND p.seller = (SELECT id FROM users WHERE userName = ?)
 `;
+
 const getUserLikeProducts =
   'SELECT * FROM products JOIN productSpecs ON products.id = productSpecs.productId JOIN likes on products.id = likes.productId WHERE likes.userId = (SELECT id FROM users WHERE userName = ?)';
 
