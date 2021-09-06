@@ -9,6 +9,8 @@ import DropDown from '../DropDown/DropDown';
 
 import './listItem.css';
 
+import { ADDR } from '../../constant/urls';
+
 function Comment(comment) {
   return $.create('div').addClass('actions__comments').setHTML(`
     <div class="actions__comments">
@@ -133,7 +135,7 @@ export default class ListItem extends ElementBuilder {
     like > 0 && $bottomIconInfoContainer.appendChild(Like(like));
 
     $listItem
-      .addElement(Image('large', `http://52.79.43.67:3000/${imgSrc}`))
+      .addElement(Image('large', `http://${ADDR}/${imgSrc}`))
       .addElement($listItemContent)
       .addElement($listItemActions)
       .addElement($bottomIconInfoContainer);

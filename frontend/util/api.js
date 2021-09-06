@@ -1,4 +1,4 @@
-const API_ADDRESS = 'http://deal.sshrik.com/api';
+import { API_ADDRESS } from '../../constant/urls';
 
 function delayPromise(startTime, waitTime, next, checkInterval = 100) {
   // 만약 에니메이션 시간이 지나지 않았으면 checkInterval 만큼 기다린 다음 다시 자긴을 수행.
@@ -29,7 +29,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
         },
-	mode: 'cors',
+        mode: 'cors',
         body: JSON.stringify(params),
       })
         .then((res) => {
@@ -63,8 +63,8 @@ export default {
   ) => {
     return new Promise((resolve, reject) =>
       fetch(`${API_ADDRESS}${path}`, {
-	method: 'GET',
-	mode: 'cors',
+        method: 'GET',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },

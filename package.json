@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "build": "webpack --config webpack.config.js",
-    "dev": "NODE_ENV=dev nodemon -e js,css,html ./bin/www"
+    "dev": "NODE_ENV=dev nodemon -e js,css,html ./bin/www",
+    "window-dev": "SET NODE_ENV=dev & nodemon -e js,css,html ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
